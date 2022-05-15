@@ -1,118 +1,40 @@
 package com.example.nordicmotorhomef4final.model;
 
-
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
+@Data
 @Entity
 @Table(name = "customers")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private Integer id;
+    @Column(columnDefinition = "INT AUTO_INCREMENT")
+    private Integer customerId;
 
-    @Column(nullable = false, name = "first_name")
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String firstName;
 
-    @Column(nullable = false, name = "last_name")
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String lastName;
 
-    @Column(nullable = false, unique = true, name = "phone_number")
+    @Column(columnDefinition = "INT NOT NULL")
     private Integer phoneNumber;
 
-    @Column(nullable = false, unique = true, name = "license_number")
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String licenseNumber;
 
-    @Column(nullable = false, name = "c_license")
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String cLicense;
 
-    @Column(nullable = false, name = "date_of_birth")
+    @Column(columnDefinition = "DATE NOT NULL")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
-    public Customer() {
-    }
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Booking> bookings;
 
-    public Customer(Integer id, String firstName, String lastName, Integer phoneNumber, String licenseNumber, String cLicense, LocalDate dateOfBirth) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.licenseNumber = licenseNumber;
-        this.cLicense = cLicense;
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer customerId) {
-        this.id = customerId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Integer getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Integer phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public String getcLicense() {
-        return cLicense;
-    }
-
-    public void setcLicense(String cLicense) {
-        this.cLicense = cLicense;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerId=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", licenseNumber='" + licenseNumber + '\'' +
-                ", cLicense='" + cLicense + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                '}';
-    }
 }
 

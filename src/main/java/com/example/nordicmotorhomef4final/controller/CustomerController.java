@@ -22,8 +22,8 @@ public class CustomerController {
     @GetMapping("/customerPage")
     public String showCustomerList(Model model) {
 
-        List<Customer> customerList = customerService.listAll();
-        model.addAttribute("customerList", customerList);
+//        List<Customer> customerList = customerService.listAll();
+//        model.addAttribute("customerList", customerList);
         return "customerPage";
     }
 
@@ -37,34 +37,35 @@ public class CustomerController {
     @PostMapping("/customers/save")
     public String saveNewCustomer(Customer customer, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
-        customerService.saveCustomer(customer);
+//        customerService.saveCustomer(customer);
         return "redirect:/customerPage";
     }
 
     @GetMapping("/customers/edit/{id}")
     public String editCustomer(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-        try {
-            Customer customer = customerService.getCustomerById(id);
-            model.addAttribute("newCustomer", customer);
-            model.addAttribute("pageTitle", "Edit customer (ID: "+ id+" )");
-            redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
-            return "newCustomerForm";
-        } catch (CustomerNotFoundException e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:/customerPage";
-        }
+//        try {
+////            Customer customer = customerService.getCustomerById(id);
+////            model.addAttribute("newCustomer", customer);
+//            model.addAttribute("pageTitle", "Edit customer (ID: "+ id+" )");
+//            redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
+//            return "newCustomerForm";
+//        } catch (CustomerNotFoundException e) {
+//            e.printStackTrace();
+//            redirectAttributes.addFlashAttribute("message", e.getMessage());
+//            return "redirect:/customerPage";
+//        }
+        return "redirect:/customerPage";
     }
 
     @GetMapping("/customers/delete/{id}")
     public String deleteCustomer(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-        try {
-            customerService.deleteCustomerById(id);
-            redirectAttributes.addFlashAttribute("message", "Customer ID: "+ id +" has been saved successfully.");
-        } catch (CustomerNotFoundException e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-        }
+//        try {
+////            customerService.deleteCustomerById(id);
+////            redirectAttributes.addFlashAttribute("message", "Customer ID: "+ id +" has been saved successfully.");
+////        } catch (CustomerNotFoundException e) {
+////            e.printStackTrace();
+//            redirectAttributes.addFlashAttribute("message", e.getMessage());
+//        }
         return "redirect:/customerPage";
     }
 }

@@ -23,7 +23,7 @@ public class CustomerRepoTest {
         Customer customer = new Customer();
         customer.setFirstName("Róbert");
         customer.setLastName("Bári");
-        customer.setcLicense("yes");
+        customer.setCLicense("yes");
         customer.setLicenseNumber("aaa000");
         customer.setDateOfBirth(LocalDate.of(1995,1,1));
         customer.setPhoneNumber(1234567);
@@ -31,7 +31,7 @@ public class CustomerRepoTest {
         Customer savedCustomer = customerRepo.save(customer);
 
         Assertions.assertThat(savedCustomer).isNotNull();
-        Assertions.assertThat(savedCustomer.getId()).isGreaterThan(0);
+        Assertions.assertThat(savedCustomer.getCustomerId()).isGreaterThan(0);
     }
 
     @Test
