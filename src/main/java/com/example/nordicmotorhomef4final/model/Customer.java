@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "customers")
 public class Customer {
     @Id
-    @Column(columnDefinition = "INT ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")

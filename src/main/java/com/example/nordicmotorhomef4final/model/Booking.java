@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "bookings")
 public class Booking {
     @Id
-    @Column(columnDefinition = "INT")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
 
     @ManyToOne
