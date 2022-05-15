@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NordicMotorhomeF4</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div>
+        <h1 class="h2">CustomersPage</h1>
+    </div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/customers/new}" >
+            addNewCustomer
+        </a>
+    </div>
+    <div>
+        <a class="h5" th:href="@{/}" >
+            backHome
+        </a>
+    </div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date Of Birth</th>
+                <th>License Number</th>
+                <th>C License</th>
+                <th>Phone</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="customer : ${customerList}" >
+                <td th:text="${customer.getId()}"></td>
+                <td th:text="${customer.getFirstName()}"></td>
+                <td th:text="${customer.getLastName()}"></td>
+                <td th:text="${customer.getDateOfBirth()}"></td>
+                <td th:text="${customer.getLicenseNumber()}"></td>
+                <td th:text="${customer.getcLicense()}"></td>
+                <td th:text="${customer.getPhoneNumber()}"></td>
+                <td>
+                    <a class="h4" th:href="@{'/customers/edit/' + ${customer.getId()}}">Edit</a>
+                    <a class="h4" th:href="@{'/customers/delete/' + ${customer.getId()}}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
