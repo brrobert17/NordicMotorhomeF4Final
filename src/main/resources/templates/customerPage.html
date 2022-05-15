@@ -39,16 +39,16 @@
             <tbody>
 
             <tr th:each="customer : ${customerList}" >
-                <td th:text="${customer.getId()}"></td>
+                <td th:text="${customer.getCustomerId()}"></td>
                 <td th:text="${customer.getFirstName()}"></td>
                 <td th:text="${customer.getLastName()}"></td>
                 <td th:text="${customer.getDateOfBirth()}"></td>
                 <td th:text="${customer.getLicenseNumber()}"></td>
-                <td th:text="${customer.getcLicense()}"></td>
+                <td th:text="${customer.getCLicense()}"></td>
                 <td th:text="${customer.getPhoneNumber()}"></td>
                 <td>
-                    <a class="h4" th:href="@{'/customers/edit/' + ${customer.getId()}}">Edit</a>
-                    <a class="h4" th:href="@{'/customers/delete/' + ${customer.getId()}}">Delete</a>
+                    <a class="h4" th:href="@{'/customers/edit/' + ${customer.getCustomerId()}}">Edit</a>
+                    <a class="h4" th:href="@{'/customers/delete/' + ${customer.getCustomerId()}}">Delete</a>
                 </td>
             </tr>
             </tbody>

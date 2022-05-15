@@ -1,15 +1,15 @@
 package com.example.nordicmotorhomef4final.model;
 
-import lombok.Data;
+
 
 import javax.persistence.*;
 
-@Data
+
 @Entity
 @Table(name = "bookings")
 public class Booking {
     @Id
-    @Column(columnDefinition = "INT AUTO_INCREMENT ")
+    @Column(columnDefinition = "INT")
     private Long bookingId;
 
     @ManyToOne
@@ -25,4 +25,44 @@ public class Booking {
 
     @Column(name = "end_date",nullable = false)
     private String endDate;
+
+    public Long getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 }

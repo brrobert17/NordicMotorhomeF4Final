@@ -4,5 +4,5 @@ import com.example.nordicmotorhomef4final.model.Customer;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CustomerRepo extends CrudRepository<Customer, Integer> {
-//    public Long countByCustomerId(Integer id);
+    public Long countByCustomerId(Integer id);
 }
