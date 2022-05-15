@@ -30,14 +30,14 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Start Date </label>
                             <div class="col-8">
-                                <input type="date" th:field="*{start_date}" class="form-control"/>
+                                <input type="date" th:field="*{startDate}" class="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-4 col-form-label">End Date </label>
                             <div class="col-8">
-                                <input type="date" th:field="*{end_date}" class="form-control"/>
+                                <input type="date" th:field="*{endDate}" class="form-control"/>
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -80,7 +80,7 @@
                     <td th:text="${Vehicles.brand}"></td>
                     <td th:text="${Vehicles.model}"></td>
                     <td th:text="${Vehicles.capacity}"></td>
-                    <td th:text="${Vehicles.license}"></td>
+                    <td th:text="${Vehicles.cLicense}"></td>
                     <td th:text="${Vehicles.totalKm}"></td>
                     <td th:text="${Vehicles.registrationPlate}"></td>
                     <td th:text="${available}"></td>
