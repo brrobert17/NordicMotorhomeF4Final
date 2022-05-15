@@ -1,9 +1,6 @@
 package com.example.nordicmotorhomef4final.model;
 
-
-
 import javax.persistence.*;
-
 
 @Entity
 @Table(name = "bookings")

@@ -1,11 +1,9 @@
 package com.example.nordicmotorhomef4final.model;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Entity
 @Table(name = "customers")
@@ -35,7 +33,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Booking> bookings;
-
 
     public Integer getCustomerId() {
         return customerId;
