@@ -44,7 +44,7 @@
                 <td th:text="${customer.getLastName()}"></td>
                 <td th:text="${customer.getDateOfBirth()}"></td>
                 <td th:text="${customer.getLicenseNumber()}"></td>
-                <td th:text="${customer.getCLicense()}"></td>
+                <td th:text="${customer.getcLicense()}"></td>
                 <td th:text="${customer.getPhoneNumber()}"></td>
                 <td>
                     <a class="h4" th:href="@{'/customers/edit/' + ${customer.getCustomerId()}}">Edit</a>
