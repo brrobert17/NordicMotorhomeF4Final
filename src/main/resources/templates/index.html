@@ -6,12 +6,23 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
 </head>
 <body>
-<div class="container-fluid text-center">
-    <h1>Hello World!</h1>
-    <a class="h2" th:href="@{/customerPage}" >
-        Customers
-    </a>
-</div>
+<header>
+    <div class="container-fluid flex-header">
+        <div class="container-fluid float-md-none " style="width: 15%;">
+            <h1 class="logo">NordicMotorHomeF4</h1>
+        </div>
+
+        <div class="container-fluid float-left" style="width: 60%;">
+            <ul class="ul">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/customerPage}">Customer</a></li>
+                <li><a th:href="@{/}">Vehicles</a></li>
+                <li><a th:href="@{/}">Booking</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
 
 </body>
 </html>

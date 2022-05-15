@@ -24,9 +24,9 @@ public class CustomerRepoTest {
         customer.setFirstName("Róbert");
         customer.setLastName("Bári");
         customer.setCLicense("yes");
-        customer.setLicenseNumber("aaa000");
+        customer.setLicenseNumber("aaa008980");
         customer.setDateOfBirth(LocalDate.of(1995,1,1));
-        customer.setPhoneNumber(1234567);
+        customer.setPhoneNumber(12345467);
 
         Customer savedCustomer = customerRepo.save(customer);
 
@@ -46,7 +46,7 @@ public class CustomerRepoTest {
 
     @Test
     public void testUpdate() {
-        Integer customerId = 101;
+        Integer customerId = 95;
         Optional<Customer> optionalCustomer = customerRepo.findById(customerId);
         Customer customer = optionalCustomer.get();
         customer.setPhoneNumber(666);
@@ -58,7 +58,7 @@ public class CustomerRepoTest {
 
     @Test
     public void testGet() {
-        Integer customerId = 101;
+        Integer customerId = 95;
         Optional<Customer> optionalCustomer = customerRepo.findById(customerId);
         Assertions.assertThat(optionalCustomer).isPresent();
         System.out.println(optionalCustomer.get());
@@ -66,7 +66,7 @@ public class CustomerRepoTest {
 
     @Test
     public void testDelete() {
-        Integer customerId = 101;
+        Integer customerId = 105;
         customerRepo.deleteById(customerId);
         Optional<Customer> optionalCustomer = customerRepo.findById(customerId);
         Assertions.assertThat(optionalCustomer).isNotPresent();
