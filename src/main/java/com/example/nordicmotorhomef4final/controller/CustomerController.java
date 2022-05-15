@@ -31,7 +31,7 @@ public class CustomerController {
     public String showNewCustomerForm(Model model) {
         model.addAttribute("newCustomer", new Customer());
         model.addAttribute("pageTitle", "Add new customer");
-        return "newCustomerForm";
+        return "customers/newCustomerForm";
     }
 
     @PostMapping("/customers/save")
