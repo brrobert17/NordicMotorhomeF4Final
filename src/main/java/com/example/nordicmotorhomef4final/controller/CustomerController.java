@@ -19,12 +19,12 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/customerPage")
+    @GetMapping("customers/customerPage")
     public String showCustomerList(Model model) {
 
         List<Customer> customerList = customerService.listAll();
         model.addAttribute("customerList", customerList);
-        return "customerPage";
+        return "customers/customerPage";
     }
 
     @GetMapping("/customers/new")
@@ -37,8 +37,7 @@ public class CustomerController {
     @PostMapping("/customers/save")
     public String saveNewCustomer(Customer customer, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
-
-        customerService.saveCustomer(customer);
+//        customerService.saveCustomer(customer);
         return "redirect:/customerPage";
     }
 
