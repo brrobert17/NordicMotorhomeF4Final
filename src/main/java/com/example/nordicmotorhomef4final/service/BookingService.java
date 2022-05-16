@@ -15,4 +15,6 @@ public class BookingService {
     public List<Booking> showAllBookings() {
         return bookingRepo.findAll();
     }
+    //    ListAll: returns a List of Booking objects that contain the keyword
+
 }

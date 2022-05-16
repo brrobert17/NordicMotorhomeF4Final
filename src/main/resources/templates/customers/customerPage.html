@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
 </head>
 <body>
+
+
+
 <div class="container-fluid text-center">
     <div>
         <h1 class="h2">CustomersPage</h1>
@@ -26,6 +29,11 @@
     <div>
         <table class="table table-bordered">
             <thead class="table-dark">
+
+
+
+
+
             <tr>
                 <th>Customer ID</th>
                 <th>First Name</th>
@@ -35,7 +43,9 @@
                 <th>C License</th>
                 <th>Phone</th>
             </tr>
+
             </thead>
+
             <tbody>
 
             <tr th:each="customer : ${customerList}" >
