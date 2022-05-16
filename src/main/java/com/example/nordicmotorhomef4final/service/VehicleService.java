@@ -39,6 +39,8 @@ public class VehicleService {
 
     public void saveVehicle(Vehicle vehicle){ vehicleRepo.save(vehicle);}
 
+    public void deleteVehicle(Vehicle vehicle) {vehicleRepo.delete(vehicle);}
+
     public Vehicle getVehicleById(String registrationPlate) throws CustomerNotFoundException {
         Vehicle vehicle = vehicleRepo.searchByRegistrationPlate(registrationPlate);
         if (vehicle != null) {
@@ -46,4 +48,7 @@ public class VehicleService {
         }
         throw new CustomerNotFoundException("Could not find any vehicle with Registration Plate: " + registrationPlate);
     }
+
+
+
 }

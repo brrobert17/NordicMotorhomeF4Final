@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <title>F4_Nordic_Motorhome</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
-<!--    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>-->
-<!--    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>-->
 </head>
 <body>
+<!-- Side navigation -->
+<div class="sideBnav">
+    <li><a th:href="@{../customers/customerPage}">Customer</a></li>
+    <li><a th:href="@{../vehicles/vehiclePage}">Vehicles</a></li>
+    <li><a th:href="@{../bookings/bookingPage}">Booking</a></li>
+</div>
+
 
 <div class="container text-center">
     <!--    link to homepage-->
     <div>
         <a class="h5" th:href="@{/}" >
-            backHome
+            Homepage
         </a>
     </div>
     <!--    Search Bookings part-->
@@ -52,6 +57,7 @@
                                 <input type="date" th:field="*{endDate}" class="form-control"/>
                             </div>
                         </div>
+
                         <!--                        Search function-->
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Search Vehicles</label>
@@ -96,11 +102,17 @@
                         <td th:text="${vehicle.registrationPlate}"></td>
                         <td th:text="${available}"></td>
                         <td>
-                            <a class="h4" th:href="@{'vehicles/edit/' + ${vehicle.getRegistrationPlate()}}">Edit</a>
+                            <a class="h4" th:href="@{'/edit/' + ${vehicle.getRegistrationPlate()}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a class="h4" th:href="@{'vehicles/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
+                            <a class="h4" th:href="@{'/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
                             &nbsp;&nbsp;
-<!--                            <a class="h4" th:href="@{'/customers/delete/' + ${customer.getCustomerId()}}">Delete</a>-->
+<!--                            <select >-->
+<!--                                <option th:each="vehicle : ${vehiclesList}">-->
+<!--                                    <span th:text=${vehicle.getRegistrationPlate()}></span>-->
+<!--                                </option>-->
+<!--                            </select>-->
+
+                            <!--                            <a class="h4" th:href="@{'/customers/delete/' + ${customer.getCustomerId()}}">Delete</a>-->
                         </td>
                     </tr>
                     </tbody>
@@ -110,4 +122,41 @@
     </div>
 </div>
 </body>
+
+<style>
+    .sideBnav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .sideBnav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .sideBnav a:hover {
+        color: #f1f1f1;
+    }
+
+    .main {
+        margin-left: 160px; /* Same as the width of the sidenav */
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sideBnav {padding-top: 15px;}
+        .sideBnav a {font-size: 18px;}
+    }
+</style>
 </html>

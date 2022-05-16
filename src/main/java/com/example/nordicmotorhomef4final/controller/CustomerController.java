@@ -48,11 +48,11 @@ public class CustomerController {
             model.addAttribute("newCustomer", customer);
             model.addAttribute("pageTitle", "Edit customer (ID: "+ id+" )");
             redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
-            return "newCustomerForm";
+            return "/";
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:customers/customerPage";
+            return "customers/customerPage";
         }
     }
 

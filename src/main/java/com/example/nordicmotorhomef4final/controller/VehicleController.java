@@ -75,12 +75,13 @@ public class VehicleController {
         return "redirect:vehiclePage";
     }
 
-    @GetMapping("vehicles/edit/{reg}")
+    @GetMapping("/edit/{registrationPlate}")
     public String editVehicle(@PathVariable("registrationPlate") String registrationPlate, Model model, RedirectAttributes redirectAttributes) {
         try {
             Vehicle vehicle = vehicleService.getVehicleById(registrationPlate);
+            System.out.println("vehicle");
             model.addAttribute("newVehicle", vehicle);
-            model.addAttribute("pageTitle", "Edit vehicle (Reg: "+ vehicle.getRegistrationPlate()+" )");
+            model.addAttribute("pageTitle", "Edit vehicle (Reg: "+ registrationPlate+" )");
             redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
             return "vehicles/editVehicleForm";
         } catch (CustomerNotFoundException e) {
@@ -88,19 +89,18 @@ public class VehicleController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/vehiclePage";
         }
-//        return "vehicles/editVehicleForm";
     }
-//
-//    @GetMapping("/customers/delete/{id}")
-//    public String deleteCustomer(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-////        try {
-////            customerService.deleteCustomerById(id);
-////            redirectAttributes.addFlashAttribute("message", "Customer ID: "+ id +" has been saved successfully.");
-////        } catch (CustomerNotFoundException e) {
-////            e.printStackTrace();
-////            redirectAttributes.addFlashAttribute("message", e.getMessage());
-////        }
-//        return "redirect:/customerPage";
-//    }
+
+    @GetMapping("/delete/{registrationPlate}")
+    public String deleteCustomer(@PathVariable("registrationPlate") String registrationPlate, RedirectAttributes redirectAttributes) {
+        try {
+            vehicleService.deleteVehicle(vehicleService.getVehicleById(registrationPlate));
+            redirectAttributes.addFlashAttribute("message", "Vehicle: "+ registrationPlate +" has been deleted.");
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/vehiclePage";
+    }
 
 }
