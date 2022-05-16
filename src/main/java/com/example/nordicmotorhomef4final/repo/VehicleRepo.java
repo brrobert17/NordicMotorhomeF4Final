@@ -31,5 +31,7 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
             "GROUP BY van.registrationPlate")
     List<Vehicle> searchKeywordAndDates(String keyword,String startDate, String endDate);
 
+    @Query("select v from Vehicle v where v.registrationPlate = ?1")
+    Vehicle searchByRegistrationPlate(String registrationPlate);
 
 }

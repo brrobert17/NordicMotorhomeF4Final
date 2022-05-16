@@ -37,8 +37,8 @@ public class CustomerController {
     @PostMapping("/customers/save")
     public String saveNewCustomer(Customer customer, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
-//        customerService.saveCustomer(customer);
-        return "redirect:/customerPage";
+        customerService.saveCustomer(customer);
+        return "redirect:customerPage";
     }
 
     @GetMapping("/customers/edit/{id}")
@@ -52,7 +52,7 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:/customerPage";
+            return "redirect:customers/customerPage";
         }
     }
 
@@ -65,6 +65,6 @@ public class CustomerController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/customerPage";
+        return "redirect:customers/customerPage";
     }
 }

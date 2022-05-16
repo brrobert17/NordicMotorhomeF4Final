@@ -16,17 +16,17 @@ public class BookingController {
     BookingRepo bookingRepo;
 
     //    Bookings html connector GET
-    @GetMapping("booking/bookingsPage")
+    @GetMapping("bookings/bookingPage")
     public String showBooking(Model model) {
         List<Booking> listBooking = bookingRepo.findAll();
         model.addAttribute("listBooking", listBooking);
         model.addAttribute("bookinG", new Booking());
         model.addAttribute("searchBook", new Booking());
-        return "booking/bookingsPage";
+        return "bookings/bookingPage";
     }
 
     //    Bookings html connector Post
-    @PostMapping("booking/bookingsPage")
+    @PostMapping("bookings/bookingPage")
     public String searchBooking(Model model, Booking bookings) {
         List<Booking> listBooking = bookingRepo.findByVehicleRegistrationPlate(bookings.getVehicle().getRegistrationPlate().toString());
         if (bookings.getVehicle().getRegistrationPlate().toString().isEmpty()) {
@@ -36,7 +36,7 @@ public class BookingController {
         model.addAttribute("listBooking", listBooking);
         model.addAttribute("bookinG", new Booking());
         model.addAttribute("searchBook", new Booking());
-        return "booking/bookingsPage";
+        return "bookings/bookingPage";
     }
 
 }

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>F4_Nordic_Motorhome</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<!--    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>-->
+<!--    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>-->
 </head>
 <body>
 
@@ -17,6 +17,16 @@
         <div>
             <h1>Show Vehicles Availability</h1>
         </div>
+        <div class="container text-center">
+            <a class="h3" th:href="@{/vehicles/new}" >
+                Add New Vehicle
+            </a>
+        </div>
+
+        <div th:if="${message}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+
         <!--        Div for Filter-->
         <div class="container text-center">
             <form th:action="@{/vehicles/vehiclePage}" th:object="${keyword}" method="post"
@@ -37,9 +47,6 @@
                             <div class="col-8">
                                 <input type="date" th:field="*{endDate}" class="form-control"/>
                             </div>
-                            <!--                            <div>-->
-                            <!--                                <button type="submit" class="btn btn-primary">Sign Up</button>-->
-                            <!--                            </div>-->
                         </div>
                         <!--                        Search function-->
                         <div class="form-group row">
@@ -76,20 +83,20 @@
                     </thead>
                     <tbody>
 
-                    <tr th:each="Vehicles : ${vehiclesList}">
-                        <td th:text="${Vehicles.brand}"></td>
-                        <td th:text="${Vehicles.model}"></td>
-                        <td th:text="${Vehicles.capacity}"></td>
-                        <td th:text="${Vehicles.cLicense}"></td>
-                        <td th:text="${Vehicles.totalKm}"></td>
-                        <td th:text="${Vehicles.registrationPlate}"></td>
+                    <tr th:each="Vehicle : ${vehiclesList}">
+                        <td th:text="${Vehicle.brand}"></td>
+                        <td th:text="${Vehicle.model}"></td>
+                        <td th:text="${Vehicle.capacity}"></td>
+                        <td th:text="${Vehicle.cLicense}"></td>
+                        <td th:text="${Vehicle.totalKm}"></td>
+                        <td th:text="${Vehicle.registrationPlate}"></td>
                         <td th:text="${available}"></td>
                         <td>
-                            <a href="/">Edit</a>
+                            <a class="h4" th:href="@{'vehicles/edit/' + ${customer.getCustomerId()}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a href="/">Delete</a>
+                            <a class="h4" th:href="@{'vehicles/delete/' + ${customer.getCustomerId()}}">Delete</a>
                             &nbsp;&nbsp;
-                            <a href="/">Choose</a>
+<!--                            <a class="h4" th:href="@{'/customers/delete/' + ${customer.getCustomerId()}}">Delete</a>-->
                         </td>
                     </tr>
                     </tbody>
