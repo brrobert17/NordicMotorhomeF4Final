@@ -4,6 +4,7 @@ import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 import com.example.nordicmotorhomef4final.service.VehicleService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +17,8 @@ import java.util.List;
 @Controller
 public class VehicleController {
 
-    final
+    @Autowired
     VehicleService vehicleService;
-
-    public VehicleController(VehicleService vehicleService) {
-        this.vehicleService = vehicleService;
-    }
 
     @GetMapping("vehicles/vehiclePage")
     public String showVehicles(Model model) {
@@ -38,9 +35,14 @@ public class VehicleController {
     @PostMapping("vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
-                                 Booking searchB) {
+                                 Booking searchBooking) {
         String available = "Insert Date";
-        List<Vehicle> vehiclesList = vehicleService.showFilteredVehicles(keyword,searchB);
+        //keyword is the search word, searchBooking is a booking object with Dates inside
+        List<Vehicle> vehiclesList = vehicleService.showFilteredVehicles(keyword,searchBooking);
+        //Passes the String Available to the page if the dates are not null
+            if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
+                    available = "Available: "+searchBooking.getStartDate()+ " "+searchBooking.getEndDate();
+                }
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("available", available);
