@@ -96,11 +96,12 @@ public class VehicleController {
         try {
             vehicleService.deleteVehicle(vehicleService.getVehicleById(registrationPlate));
             redirectAttributes.addFlashAttribute("message", "Vehicle: "+ registrationPlate +" has been deleted.");
+
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/vehiclePage";
+        return "redirect:../vehicles/vehiclePage";
     }
 
 }
