@@ -2,12 +2,49 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Show Bookings</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="container-fluid float-md-none " style="width: 15%;">
-    <h1 class="logo">bookings</h1>
+<div class="container-fluid text-center">
+    <div><h2>Show all bookings</h2></div>
+
+    <div class="container-fluid text-left">
+        <a href="/">
+            <h4>Go back to frontpage</h4>
+        </a>
+    </div>
 </div>
+
+<div>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <th>Booking ID</th>
+        <th>Customer ID</th>
+        <th>Registration Plate</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>More</th>
+        </thead>
+        <tbody>
+        <tr th:each="booking : ${bookingList}">
+            <td th:text="${booking.getBookingId()}"></td>
+            <td th:text="${booking.getCustomer().getCustomerId()}"></td>
+            <td th:text="${booking.getVehicle().getRegistrationPlate()}"></td>
+            <td th:text="${booking.getStartDate()}"></td>
+            <td th:text="${booking.getEndDate()}"></td>
+            <td>
+                <a href="/">Edit</a>&nbsp;&nbsp;&nbsp;
+                <a href="/">Delete</a>&nbsp;&nbsp;
+                <a href="/">Choose</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
