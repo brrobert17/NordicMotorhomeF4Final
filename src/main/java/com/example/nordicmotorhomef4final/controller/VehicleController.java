@@ -31,12 +31,13 @@ public class VehicleController {
         return "vehicles/vehiclePage";
     }
 
-    @PostMapping("vehicles/vehiclesPage")
+    @PostMapping("vehicles/vehiclePage")
     public String filterVehicles(Model model,
-                                 @Param("keyword") String keyword, Booking searchB) {
+                                 @Param("keyword") String keyword,
+                                 Booking searchB) {
 //        System.out.println(searchB.getStartDate().toString()+" "+searchB.getEnd_date().toString());
         String available = "Insert Date";
-        if (searchB.getStartDate() == null || searchB.getStartDate() == null) {
+        if (searchB.getStartDate() == null || searchB.getEndDate() == null) {
             if (keyword == null) {
                 List<Vehicle> vehiclesList = vehicleService.findAll();
                 model.addAttribute("vehiclesList", vehiclesList);
@@ -61,7 +62,7 @@ public class VehicleController {
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("available", available);
 
-        return "vehicles/vehiclesPage";
+        return "vehicles/vehiclePage";
     }
 
 }
