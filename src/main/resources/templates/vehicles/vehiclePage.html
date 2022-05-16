@@ -11,7 +11,11 @@
 
 <div class="container text-center">
     <!--    link to homepage-->
-
+    <div>
+        <a class="h5" th:href="@{/}" >
+            backHome
+        </a>
+    </div>
     <!--    Search Bookings part-->
     <div>
         <div>
@@ -83,18 +87,18 @@
                     </thead>
                     <tbody>
 
-                    <tr th:each="Vehicle : ${vehiclesList}">
-                        <td th:text="${Vehicle.brand}"></td>
-                        <td th:text="${Vehicle.model}"></td>
-                        <td th:text="${Vehicle.capacity}"></td>
-                        <td th:text="${Vehicle.cLicense}"></td>
-                        <td th:text="${Vehicle.totalKm}"></td>
-                        <td th:text="${Vehicle.registrationPlate}"></td>
+                    <tr th:each="vehicle : ${vehiclesList}">
+                        <td th:text="${vehicle.getBrand()}"></td>
+                        <td th:text="${vehicle.getModel()}"></td>
+                        <td th:text="${vehicle.getCapacity()}"></td>
+                        <td th:text="${vehicle.getcLicense()}"></td>
+                        <td th:text="${vehicle.getRegistrationPlate()}"></td>
+                        <td th:text="${vehicle.registrationPlate}"></td>
                         <td th:text="${available}"></td>
                         <td>
-                            <a class="h4" th:href="@{'vehicles/edit/' + ${customer.getCustomerId()}}">Edit</a>
+                            <a class="h4" th:href="@{'vehicles/edit/' + ${vehicle.getRegistrationPlate()}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a class="h4" th:href="@{'vehicles/delete/' + ${customer.getCustomerId()}}">Delete</a>
+                            <a class="h4" th:href="@{'vehicles/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
                             &nbsp;&nbsp;
 <!--                            <a class="h4" th:href="@{'/customers/delete/' + ${customer.getCustomerId()}}">Delete</a>-->
                         </td>

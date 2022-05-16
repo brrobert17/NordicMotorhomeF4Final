@@ -69,26 +69,26 @@ public class VehicleController {
 
     @PostMapping("vehicles/save")
 //    TODO Handle registration plate duplicate
-    public String saveNewCustomer(Vehicle vehicle, RedirectAttributes redirectAttributes){
+    public String saveNewVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
         vehicleService.saveVehicle(vehicle);
         return "redirect:vehiclePage";
     }
 
-    @GetMapping("vehicles/edit/{id}")
-    public String editCustomer(@PathVariable("registrationPlate") String registrationPlate, Model model, RedirectAttributes redirectAttributes) {
-//        try {
-//            Vehicle vehicle = vehicleService.getVehicleById(registrationPlate);
-//            model.addAttribute("newVehicle", vehicle);
-//            model.addAttribute("pageTitle", "Edit vehicle (Reg: "+ vehicle.getRegistrationPlate()+" )");
-//            redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
-//            return "newCustomerForm";
-//        } catch (CustomerNotFoundException e) {
-//            e.printStackTrace();
-//            redirectAttributes.addFlashAttribute("message", e.getMessage());
-//            return "redirect:/customerPage";
-//        }
-        return "vehicles/editVehicleForm";
+    @GetMapping("vehicles/edit/{reg}")
+    public String editVehicle(@PathVariable("registrationPlate") String registrationPlate, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            Vehicle vehicle = vehicleService.getVehicleById(registrationPlate);
+            model.addAttribute("newVehicle", vehicle);
+            model.addAttribute("pageTitle", "Edit vehicle (Reg: "+ vehicle.getRegistrationPlate()+" )");
+            redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
+            return "vehicles/editVehicleForm";
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/vehiclePage";
+        }
+//        return "vehicles/editVehicleForm";
     }
 //
 //    @GetMapping("/customers/delete/{id}")
