@@ -3,21 +3,25 @@ package com.example.nordicmotorhomef4final.controller;
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 import com.example.nordicmotorhomef4final.service.VehicleService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.util.List;
 
 @Controller
 public class VehicleController {
 
-    @Autowired
+    final
     VehicleService vehicleService;
+
+    public VehicleController(VehicleService vehicleService) {
+        this.vehicleService = vehicleService;
+    }
 
     @GetMapping("vehicles/vehiclePage")
     public String showVehicles(Model model) {
@@ -49,13 +53,13 @@ public class VehicleController {
             }
         } else {
             if (keyword == null) {
-                List<Vehicle> vehiclesList = vehicleService.findByDate(searchB.getStartDate().toString(), searchB.getEndDate().toString());
+                List<Vehicle> vehiclesList = vehicleService.findByDate(searchB.getStartDate(), searchB.getEndDate());
                 model.addAttribute("vehiclesList", vehiclesList);
-                available = "Available: "+searchB.getStartDate().toString()+searchB.getEndDate().toString();
+                available = "Available: "+searchB.getStartDate()+searchB.getEndDate();
             } else {
-                List<Vehicle> vehiclesList = vehicleService.searchKeywordAndDates(keyword,searchB.getStartDate().toString(), searchB.getEndDate().toString());
+                List<Vehicle> vehiclesList = vehicleService.searchKeywordAndDates(keyword,searchB.getStartDate(), searchB.getEndDate());
                 model.addAttribute("vehiclesList", vehiclesList);
-                available = "Available: "+searchB.getStartDate().toString()+ " "+searchB.getEndDate().toString();
+                available = "Available: "+searchB.getStartDate()+ " "+searchB.getEndDate();
                 System.out.println("date+kw "+ keyword);
             }
         }

@@ -2,16 +2,18 @@ package com.example.nordicmotorhomef4final.service;
 
 import com.example.nordicmotorhomef4final.model.Vehicle;
 import com.example.nordicmotorhomef4final.repo.VehicleRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class VehicleService {
-    @Autowired
-//    Uses the vehicles repository
-    private VehicleRepo repo;
+    //    Uses the vehicles repository
+    private final VehicleRepo repo;
+
+    public VehicleService(VehicleRepo repo) {
+        this.repo = repo;
+    }
 
     //    ListAll: returns a List of Vehicles objects that contain the keyword
     public List<Vehicle> listAll(String keyword) {
