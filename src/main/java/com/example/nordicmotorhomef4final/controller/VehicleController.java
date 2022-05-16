@@ -27,7 +27,7 @@ public class VehicleController {
     public String showVehicles(Model model) {
         String keyword = "";
         String available = "Insert Date";
-        List<Vehicle> vehiclesList = vehicleService.findAll();
+        List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("keyword", keyword);
         model.addAttribute("available", available);
@@ -39,30 +39,9 @@ public class VehicleController {
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
                                  Booking searchB) {
-//        System.out.println(searchB.getStartDate().toString()+" "+searchB.getEnd_date().toString());
         String available = "Insert Date";
-        if (searchB.getStartDate() == null || searchB.getEndDate() == null) {
-            if (keyword == null) {
-                List<Vehicle> vehiclesList = vehicleService.findAll();
-                model.addAttribute("vehiclesList", vehiclesList);
-
-            } else {
-                System.out.println("the string is " + keyword);
-                List<Vehicle> vehiclesList = vehicleService.listAll(keyword);
-                model.addAttribute("vehiclesList", vehiclesList);
-            }
-        } else {
-            if (keyword == null) {
-                List<Vehicle> vehiclesList = vehicleService.findByDate(searchB.getStartDate(), searchB.getEndDate());
-                model.addAttribute("vehiclesList", vehiclesList);
-                available = "Available: "+searchB.getStartDate()+searchB.getEndDate();
-            } else {
-                List<Vehicle> vehiclesList = vehicleService.searchKeywordAndDates(keyword,searchB.getStartDate(), searchB.getEndDate());
-                model.addAttribute("vehiclesList", vehiclesList);
-                available = "Available: "+searchB.getStartDate()+ " "+searchB.getEndDate();
-                System.out.println("date+kw "+ keyword);
-            }
-        }
+        List<Vehicle> vehiclesList = vehicleService.showFilteredVehicles(keyword,searchB);
+        model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("available", available);
 

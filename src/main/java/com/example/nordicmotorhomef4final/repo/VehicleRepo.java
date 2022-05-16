@@ -12,7 +12,7 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
             + " OR van.model LIKE %?1%"
             + " OR van.cLicense LIKE %?1%"
             + " OR CONCAT(van.capacity, '') LIKE %?1%")
-    List<Vehicle> search(String keyword);
+    List<Vehicle> searchForKeyword(String keyword);
 
 
     @Query("SELECT v from Vehicle v JOIN v.bookings b "
@@ -29,7 +29,7 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
             + " OR van.cLicense LIKE %?1%"
             + " OR CONCAT(van.capacity, '') LIKE %?1%)" +
             "GROUP BY van.registrationPlate")
-    List<Vehicle> searchKeywordANDDates(String keyword,String startDate, String endDate);
+    List<Vehicle> searchKeywordAndDates(String keyword,String startDate, String endDate);
 
 
 }

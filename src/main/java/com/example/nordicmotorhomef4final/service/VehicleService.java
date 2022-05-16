@@ -1,5 +1,6 @@
 package com.example.nordicmotorhomef4final.service;
 
+import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 import com.example.nordicmotorhomef4final.repo.VehicleRepo;
 import org.springframework.stereotype.Service;
@@ -16,23 +17,24 @@ public class VehicleService {
     }
 
     //    ListAll: returns a List of Vehicles objects that contain the keyword
-    public List<Vehicle> listAll(String keyword) {
-        if (keyword != null) {
-            return repo.search(keyword);
+    public List<Vehicle> showFilteredVehicles(String keyword, Booking searchBooking) {
+        if (searchBooking.getStartDate() == null || searchBooking.getEndDate() == null) {
+            if (keyword == null) {
+                return repo.findAll();
+            } else {
+                return repo.searchForKeyword(keyword);
+            }
+        } else {
+            if (keyword == null) {
+                return repo.searchAvailable(searchBooking.getStartDate(), searchBooking.getEndDate());
+            } else {
+                return repo.searchKeywordAndDates(keyword,searchBooking.getStartDate(), searchBooking.getEndDate());
+            }
         }
+    }
+
+    public List<Vehicle> showAllVehicles() {
         return repo.findAll();
-    }
-
-    public List<Vehicle> findAll() {
-        return repo.findAll();
-    }
-
-    public List<Vehicle> findByDate(String start, String  end){
-        return repo.searchAvailable(start,end);
-    }
-
-    public List<Vehicle> searchKeywordAndDates(String keyword, String start, String  end){
-        return repo.searchKeywordANDDates(keyword,start,end);
     }
 
 }
