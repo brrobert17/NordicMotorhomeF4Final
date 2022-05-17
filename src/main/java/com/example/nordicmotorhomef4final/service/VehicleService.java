@@ -6,9 +6,11 @@ import com.example.nordicmotorhomef4final.model.Vehicle;
 import com.example.nordicmotorhomef4final.repo.VehicleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Optional;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.*;
 
 @Service
 public class VehicleService {
@@ -37,9 +39,32 @@ public class VehicleService {
         return vehicleRepo.findAll();
     }
 
-    public void saveVehicle(Vehicle vehicle){ vehicleRepo.save(vehicle);}
+    public List<String> brandList() {
+        List<String> brandList = new ArrayList<String>(){};
+        brandList.add("Brand");
+        for (Vehicle v:vehicleRepo.findAll()
+             ) {
+            if (!brandList.contains(v.getBrand()))
+            brandList.add(v.getBrand());
+        }
+        return brandList;
+    }
 
-    public void deleteVehicle(Vehicle vehicle) {vehicleRepo.delete(vehicle);}
+    public RedirectAttributes saveVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes){
+        if(vehicle.getcLicense()== null || vehicle.getBrand()==null||vehicle.getCapacity()==null||vehicle.getModel()==null){
+            return redirectAttributes.addFlashAttribute("alert", "Missing Fields");
+        }
+        if (vehicleRepo.searchByRegistrationPlate(vehicle.getRegistrationPlate()) == null) {
+            vehicleRepo.save(vehicle);
+            return redirectAttributes.addFlashAttribute("message", "Vehicle: " + vehicle.getRegistrationPlate() + " was saved to the database");
+        } else {
+            return redirectAttributes.addFlashAttribute("alert", "Vehicle: " + vehicle.getRegistrationPlate() + " already exists");
+        }
+    }
+
+    public void deleteVehicle(Vehicle vehicle) {
+        vehicleRepo.delete(vehicle);
+    }
 
     public Vehicle getVehicleById(String registrationPlate) throws CustomerNotFoundException {
         Vehicle vehicle = vehicleRepo.searchByRegistrationPlate(registrationPlate);
@@ -48,7 +73,6 @@ public class VehicleService {
         }
         throw new CustomerNotFoundException("Could not find any vehicle with Registration Plate: " + registrationPlate);
     }
-
 
 
 }

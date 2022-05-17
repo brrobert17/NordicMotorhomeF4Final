@@ -1,6 +1,9 @@
 package com.example.nordicmotorhomef4final.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "bookings")
@@ -18,10 +21,18 @@ public class Booking {
     private Customer customer;
 
     @Column(name = "start_date", nullable = false)
-    private String startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
     @Column(name = "end_date",nullable = false)
-    private String endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
+
+    @ManyToOne
+    @JoinColumn(name = "extra_id")
+    private Extra extra;
+
+
 
     // getters
     public int getBookingId() {
@@ -33,11 +44,14 @@ public class Booking {
     public Customer getCustomer() {
         return customer;
     }
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
+    }
+    public Extra getExtra() {
+        return extra;
     }
 
     // setters
@@ -50,11 +64,14 @@ public class Booking {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+    public void setExtra(Extra extra) {
+        this.extra = extra;
     }
 }
 

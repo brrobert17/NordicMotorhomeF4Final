@@ -4,6 +4,7 @@ import com.example.nordicmotorhomef4final.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
@@ -19,7 +20,7 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
             +"WHERE v.registrationPlate NOT in (" +
             "Select v.registrationPlate From Vehicle v JOIN v.bookings b where ((b.startDate BETWEEN ?1 AND ?2) and (b.endDate BETWEEN ?1 and ?2))) "+
             " GROUP BY v.registrationPlate")
-    List<Vehicle> searchAvailable(String startDate, String endDate);
+    List<Vehicle> searchAvailable(LocalDate startDate, LocalDate endDate);
 
     @Query("SELECT van from Vehicle van "+
             "WHERE van.registrationPlate NOT IN (Select v.registrationPlate From Vehicle v JOIN v.bookings b where ((b.startDate BETWEEN ?2 AND ?3) OR (b.startDate BETWEEN ?2 and ?3)))" +
@@ -29,7 +30,7 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
             + " OR van.cLicense LIKE %?1%"
             + " OR CONCAT(van.capacity, '') LIKE %?1%)" +
             "GROUP BY van.registrationPlate")
-    List<Vehicle> searchKeywordAndDates(String keyword,String startDate, String endDate);
+    List<Vehicle> searchKeywordAndDates(String keyword,LocalDate startDate, LocalDate endDate);
 
     @Query("select v from Vehicle v where v.registrationPlate = ?1")
     Vehicle searchByRegistrationPlate(String registrationPlate);

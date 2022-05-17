@@ -1,12 +1,10 @@
 package com.example.nordicmotorhomef4final.controller;
 
 import com.example.nordicmotorhomef4final.model.Booking;
-import com.example.nordicmotorhomef4final.model.Customer;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
 import com.example.nordicmotorhomef4final.service.VehicleService;
 
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,7 +30,9 @@ public class VehicleController {
         String keyword = "";
         String available = "Insert Date";
         List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
+        List<String> brandList =vehicleService.brandList();
         model.addAttribute("vehiclesList", vehiclesList);
+        model.addAttribute("brandList", brandList);
         model.addAttribute("keyword", keyword);
         model.addAttribute("available", available);
         model.addAttribute("searchDateVehicle", new Booking());
@@ -39,7 +40,7 @@ public class VehicleController {
     }
 
 //    Post Mapping for Vehicle Page
-    @PostMapping("vehicles/vehiclePage")
+    @PostMapping("/vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
                                  Booking searchBooking) {
@@ -59,7 +60,6 @@ public class VehicleController {
     }
 
 //  Get Mapping for Adding New Vehicle
-
     @GetMapping("vehicles/new")
     public String showNewCustomerForm(Model model) {
         model.addAttribute("newVehicle", new Vehicle());
@@ -68,10 +68,10 @@ public class VehicleController {
     }
 
     @PostMapping("vehicles/save")
-//    TODO Handle registration plate duplicate
-    public String saveNewVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
-        vehicleService.saveVehicle(vehicle);
+//    vehicle is a string that saves the vehicle and returns ok or duplicate message
+    public String saveNewVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
+        RedirectAttributes due = redirectAttributes;
+        redirectAttributes.addFlashAttribute(vehicleService.saveVehicle(vehicle, due));
         return "redirect:vehiclePage";
     }
 

@@ -3,73 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>F4_Nordic_Motorhome</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
 </head>
 <body>
 <!-- Side navigation -->
 <div class="sideBnav">
-    <li><a th:href="@{../customers/customerPage}">Customer</a></li>
-    <li><a th:href="@{../vehicles/vehiclePage}">Vehicles</a></li>
-    <li><a th:href="@{../bookings/bookingPage}">Booking</a></li>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{../vehicles/vehiclePage}">Vehicles</a>
+    <a th:href="@{../customers/customerPage}">Customer</a>
+    <a th:href="@{../bookings/bookingPage}">Booking</a>
 </div>
-
+<!--End of sidebar-->
 
 <div class="container text-center">
-    <!--    link to homepage-->
-    <div>
-        <a class="h5" th:href="@{/}" >
-            Homepage
-        </a>
-    </div>
     <!--    Search Bookings part-->
     <div>
         <div>
             <h1>Show Vehicles Availability</h1>
         </div>
-        <div class="container text-center">
-            <a class="h3" th:href="@{/vehicles/new}" >
-                Add New Vehicle
-            </a>
-        </div>
-
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
+        </div>
+        <div th:if="${alert}" class="alert alert-danger text-center">
+            [[${alert}]]
         </div>
 
         <!--        Div for Filter-->
         <div class="container text-center">
-            <form th:action="@{/vehicles/vehiclePage}" th:object="${keyword}" method="post"
-                  style="max-width: 600px; margin: 0 auto;">
-                <form th:action="@{/vehicles/vehiclePage}" th:object="${searchDateVehicle}"
-                      method="post" style="max-width: 600px; margin: 0 auto;">
-                    <div class="m-3">
-                        <!--                        Start date input-->
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Start Date </label>
-                            <div class="col-8">
-                                <input type="date" th:field="*{startDate}" class="form-control"/>
+            <div class="text-center border border-secondary rounded p-3">
+                <form th:action="@{/vehicles/vehiclePage}" th:object="${keyword}" method="post"
+                      style="max-width: 600px; margin: 0 auto;">
+                    <form th:action="@{/vehicles/vehiclePage}" th:object="${searchDateVehicle}"
+                          method="post" style="max-width: 600px; margin: 0 auto;">
+                        <div class="m-3">
+                            <!--                        Start date input-->
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Start Date </label>
+                                <div class="col-8">
+                                    <input type="date" th:field="*{startDate}" class="form-control"/>
+                                </div>
                             </div>
-                        </div>
-                        <!--                        End date input-->
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">End Date </label>
-                            <div class="col-8">
-                                <input type="date" th:field="*{endDate}" class="form-control"/>
+                            <!--                        End date input-->
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">End Date </label>
+                                <div class="col-8">
+                                    <input type="date" th:field="*{endDate}" class="form-control"/>
+                                </div>
                             </div>
-                        </div>
 
-                        <!--                        Search function-->
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Search Vehicles</label>
-                            <div class="col-8">
-                                <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
-
+                            <!--                        Search function-->
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Search Vehicles
+                                </label><input type="text"
+                                               name="keyword"
+                                               id="keyword" size="50"
+                                               th:value="${keyword}"/>
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </div>
+                            <div class="form-group row">
+                                <div class="container text-center">
+                                    <a class="btn btn-danger py-2" th:href="@{/vehicles/new}">Add New Vehicle</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </form>
-            </form>
+            </div>
         </div>
 
 
@@ -80,14 +81,51 @@
                 <table class="table table-striped table-bordered">
                     <thead class="thead-dark">
                     <tr>
-                        <th>Brand</th>
-                        <th>Model</th>
-                        <th>Capacity</th>
-                        <th>C License Requirement</th>
-                        <th>Total km</th>
-                        <th>Registration Plate</th>
-                        <th>More</th>
-                        <th>More</th>
+                        <th>Brand
+                            <!--                            <select>-->
+                            <!--                                <option th:each="brand : ${brandList}">-->
+                            <!--                                    <span th:text=${brand}></span>-->
+                            <!--                                </option>-->
+                            <!--                            </select>-->
+                        </th>
+                        <th>Model
+                            <!--                            <select>-->
+                            <!--                                <option th:each="model : ${modelList}">-->
+                            <!--                                    <span th:text=${model}></span>-->
+                            <!--                                </option>-->
+                            <!--                            </select>-->
+                        </th>
+                        <th>Capacity
+                            <!--                            <select>-->
+                            <!--                                <option th:each="capacity : ${capacityList}">-->
+                            <!--                                    <span th:text=${capacity}></span>-->
+                            <!--                                </option>-->
+                            <!--                            </select>-->
+                        </th>
+                        <th>C License
+                            <!--                            <select>-->
+                            <!--                                <option th:each="cLicense : ${cLicenseList}">-->
+                            <!--                                    <span th:text=${cLicense}></span>-->
+                            <!--                                </option>-->
+                            <!--                            </select>-->
+                        </th>
+                        <th>TotalKm
+                            <!--                            <select>-->
+                            <!--                            <option th:each="totalKm : ${totalKmList}">-->
+                            <!--                                <span th:text=${totalKm}></span>-->
+                            <!--                            </option>-->
+                            <!--                        </select>-->
+                        </th>
+                        <th>Reg Plate
+                            <!--                            <select>-->
+                            <!--                                <option th:each="registrationPlate : ${registrationPlateList}">-->
+                            <!--                                    <span th:text=${registrationPlate}></span>-->
+                            <!--                                </option>-->
+                            <!--                            </select>-->
+                        </th>
+                        <th>Availability</th>
+                        <th>Edit/Delete</th>
+                        <th>Choose</th>
 
                     </tr>
                     </thead>
@@ -98,22 +136,26 @@
                         <td th:text="${vehicle.getModel()}"></td>
                         <td th:text="${vehicle.getCapacity()}"></td>
                         <td th:text="${vehicle.getcLicense()}"></td>
+                        <td th:text="${vehicle.getTotalKm()}"></td>
                         <td th:text="${vehicle.getRegistrationPlate()}"></td>
-                        <td th:text="${vehicle.registrationPlate}"></td>
                         <td th:text="${available}"></td>
                         <td>
-                            <a class="h4" th:href="@{'/edit/' + ${vehicle.getRegistrationPlate()}}">Edit</a>
+                            <a class="btn btn-info" th:href="@{'/edit/' + ${vehicle.getRegistrationPlate()}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a class="h4" th:href="@{'/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
-                            &nbsp;&nbsp;
-<!--                            <select >-->
-<!--                                <option th:each="vehicle : ${vehiclesList}">-->
-<!--                                    <span th:text=${vehicle.getRegistrationPlate()}></span>-->
-<!--                                </option>-->
-<!--                            </select>-->
+                            <a class="btn btn-info"
+                               th:href="@{'/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
+                        </td>   <!--edit/delete-->
+                        <td>
+                                <form th:action="@{../bookings/newfromVehicles}" th:object="${vehicle}"
+                                      method="post" style="max-width: 600px; margin: 0 auto;">
+                                    <form th:action="@{../bookings/newfromVehicles}" th:object="${searchDateVehicle}"
+                                          method="post" style="max-width: 600px; margin: 0 auto;">
+                                        <button type="submit" class="btn btn-success">Choose</button>
+                                    </form>
+                                </form>
 
-                            <!--                            <a class="h4" th:href="@{'/customers/delete/' + ${customer.getCustomerId()}}">Delete</a>-->
-                        </td>
+
+                        </td>   <!--choose-->
                     </tr>
                     </tbody>
                 </table>
@@ -124,6 +166,10 @@
 </body>
 
 <style>
+    .button-red {
+        background-color: red;
+    }
+
     .sideBnav {
         height: 100%;
         width: 160px;
@@ -155,8 +201,13 @@
     }
 
     @media screen and (max-height: 450px) {
-        .sideBnav {padding-top: 15px;}
-        .sideBnav a {font-size: 18px;}
+        .sideBnav {
+            padding-top: 15px;
+        }
+
+        .sideBnav a {
+            font-size: 18px;
+        }
     }
 </style>
 </html>

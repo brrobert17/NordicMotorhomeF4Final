@@ -34,6 +34,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
+
     public Integer getCustomerId() {
         return customerId;
     }
@@ -96,6 +97,24 @@ public class Customer {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    public String miniString(){
+        return firstName +", " + lastName + ", "+ phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", licenseNumber='" + licenseNumber + '\'' +
+                ", cLicense='" + cLicense + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", bookings=" + bookings +
+                '}';
     }
 }
 

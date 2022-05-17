@@ -19,6 +19,11 @@
                 </a>
             </div>
         </div>
+        <div class="container text-center">
+            <a class="h3" th:href="@{/bookings/new}" >
+                Add New Booking
+            </a>
+        </div>
 
         <div class="container text-center">
             <form th:action="@{/bookings/bookingPage}" th:object="${keyword}" method="post"
