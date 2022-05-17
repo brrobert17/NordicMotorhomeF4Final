@@ -5,12 +5,12 @@ import com.example.nordicmotorhomef4final.repo.BookingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookingService {
+
     @Autowired
     private BookingRepo bookingRepo;
 
@@ -18,29 +18,19 @@ public class BookingService {
         return bookingRepo.findAll();
     }
 
-    public List<Booking> showAllBookingsByUser(String bookingkeyword) {
-        if (bookingkeyword != null) {
-            return bookingRepo.searchForKeywordBooking(bookingkeyword);
+    public List<Booking> showFilteredBookings(String keyword, Booking searchBooking) {
+        if (searchBooking.getStartDate() == null || searchBooking.getEndDate() == null) {
+            if (keyword == null) {
+                return bookingRepo.findAll();
+            } else {
+                return bookingRepo.searchBookingByKeyword(keyword);
+            }
+        } else {
+            if (keyword == null) {
+                return bookingRepo.searchBookingByDate(searchBooking.getStartDate(), searchBooking.getEndDate());
+            } else {
+                return bookingRepo.searchBookingByDateAndKeyword(searchBooking.getStartDate(), searchBooking.getEndDate(), keyword);
+            }
         }
-        return bookingRepo.findAll();
-        //
-
-
-
     }
-    //get booking by id
-    public Booking getBookingById(Integer id) throws CustomerNotFoundException {
-       Optional<Booking> result=bookingRepo.findById(id);
-        if(result.isPresent()){
-            return result.get();
-        }
-        throw new CustomerNotFoundException("Did not find booking id - "+id);
-    }
-    //save booking
-    public void saveBooking(Booking booking) {
-        bookingRepo.save(booking);
-    }
-
-
-
 }
