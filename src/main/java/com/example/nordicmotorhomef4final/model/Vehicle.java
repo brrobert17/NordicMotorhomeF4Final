@@ -2,6 +2,7 @@ package com.example.nordicmotorhomef4final.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "vehicles")
@@ -83,4 +84,27 @@ public class Vehicle {
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
-}
+
+    @Override
+    public String toString() {
+        if (cLicense.equals("Yes")){
+            return "Van "+ registrationPlate + " " + brand +" " + model + ", cap " + capacity + ", full Lic.";}
+        else
+            return "Van "+ registrationPlate + " " + brand +" " + model + ", cap " + capacity;}
+
+//    @Override
+//    public String toString() {
+//        return "Vehicle{" +
+//                "registrationPlate='" + registrationPlate + '\'' +
+//                ", capacity=" + capacity +
+//                ", brand='" + brand + '\'' +
+//                ", model='" + model + '\'' +
+//                ", cLicense='" + cLicense + '\'' +
+//                ", totalKm=" + totalKm +
+//                ", bookings=" + bookings +
+//                '}';
+//    }
+
+
+    }
+

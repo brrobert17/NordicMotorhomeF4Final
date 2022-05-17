@@ -57,8 +57,8 @@
                 <td th:text="${customer.getcLicense()}"></td>
                 <td th:text="${customer.getPhoneNumber()}"></td>
                 <td>
-                    <a class="h4" th:href="@{'/customers/edit/' + ${customer.getCustomerId()}}">Edit</a>
-                    <a class="h4" th:href="@{'/customers/delete/' + ${customer.getCustomerId()}}">Delete</a>
+                    <a class="h4" th:href="@{'/customers/edit/' + ${customer.customerId}}">Edit</a>
+                    <a class="h4" th:href="@{'/customers/delete/' + ${customer.customerId}}">Delete</a>
                 </td>
             </tr>
             </tbody>
