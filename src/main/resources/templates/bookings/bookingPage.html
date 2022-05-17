@@ -19,20 +19,38 @@
                 </a>
             </div>
         </div>
+        <div class="m-2">
+            <a class="h3" th:href="@{/bookings/new}" >
+                addNewBooking
+            </a>
+        </div>
 
         <div class="container text-center">
             <form th:action="@{/bookings/bookingPage}" th:object="${keyword}" method="post"
                   style="max-width: 600px; margin: 0 auto;">
 
+                <!--                        keyword highlight in text-->
 
-                    <div class="m-3">
+
+
+
+
+
+
+
+                    <div class="m-5">
 
 
                         <!--                        Search function-->
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Search Vehicles</label>
+                            <label class="col-4 col-form-label">Search Booking</label>
                             <div class="col-8">
                                 <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
+                                <!--                        mark keyword in table-->
+
+
+
+
 
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </div>
@@ -68,11 +86,17 @@
                     <td th:text="${booking.getStartDate()}"></td>
                     <td th:text="${booking.getEndDate()}"></td>
                     <td>
-                        <a href="/">Edit</a>&nbsp;&nbsp;&nbsp;
-                        <a href="/">Delete</a>&nbsp;&nbsp;
-                        <a href="/">Choose</a>
+
+
+
+                        <a class="h4" th:href="@{'/bookings/update/' + ${booking.getBookingId()}}">Update</a>
+                        <a class="h4" th:href="@{'/bookings/delete/' + ${booking.getBookingId()}}">Delete</a>
+
+
                     </td>
+
                 </tr>
+
                 </tbody>
             </table>
         </div>
