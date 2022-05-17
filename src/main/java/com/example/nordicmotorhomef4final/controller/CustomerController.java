@@ -38,7 +38,7 @@ public class CustomerController {
     public String saveNewCustomer(Customer customer, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
         customerService.saveCustomer(customer);
-        return "redirect:customerPage";
+        return "redirect:/customers/customerPage";
     }
 
     @GetMapping("/customers/edit/{id}")
@@ -48,11 +48,11 @@ public class CustomerController {
             model.addAttribute("newCustomer", customer);
             model.addAttribute("pageTitle", "Edit customer (ID: "+ id+" )");
             redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
-            return "/";
+            return "customers/newCustomerForm";
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "customers/customerPage";
+            return  "redirect:/customer/customerPage";
         }
     }
 
@@ -65,6 +65,6 @@ public class CustomerController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:customers/customerPage";
+        return "redirect:/customers/customerPage";
     }
 }
