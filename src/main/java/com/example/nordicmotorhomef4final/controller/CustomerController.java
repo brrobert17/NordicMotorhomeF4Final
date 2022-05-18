@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -24,6 +25,13 @@ public class CustomerController {
 
         List<Customer> customerList = customerService.listAll();
         model.addAttribute("customerList", customerList);
+        return "customers/customerPage";
+    }
+
+    @PostMapping("customers/search")
+    public String searchCustomer(Model model, @RequestParam("keyword") String keyword) {
+        List<Customer> searchResult = customerService.searchCustomer(keyword);
+        model.addAttribute("customerList", searchResult);
         return "customers/customerPage";
     }
 
@@ -52,7 +60,7 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return  "redirect:/customer/customerPage";
+            return  "redirect:/customers/customerPage";
         }
     }
 
@@ -67,4 +75,88 @@ public class CustomerController {
         }
         return "redirect:/customers/customerPage";
     }
+
+    @GetMapping("customers/chooseCustomer")
+    public String chooseFromCustomerList(Model model) {
+
+        List<Customer> customerList = customerService.listAll();
+        model.addAttribute("customerList", customerList);
+        return "customers/chooseCustomer";
+    }
+
+    @GetMapping("/customers/addToNewBooking/{customerId}")
+    public String addCustomerToBooking(
+            @PathVariable("customerId") Integer customerId, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            Customer customer = customerService.getCustomerById(customerId);
+            model.addAttribute("addedCustomer", customer);
+            redirectAttributes.addFlashAttribute(
+                    "message", "Customer ID: "+ customerId +" has been added to the booking successfully.");
+
+            return "bookings/newBooking";
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return  "redirect:/customers/customerPage";
+        }
+    }
+
+
+
+
+
+
+
+
+    //test functions
+    @GetMapping("/customers/addToBooking/{id}")
+    public String addCustomerToBookingTest(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+
+        try {
+            Customer customer = customerService.getCustomerById(id);
+            model.addAttribute("customerToAdd", customer);
+            redirectAttributes.addFlashAttribute("message", "Customer ID: "+ id +" has been added to the booking successfully.");
+            return "customers/addCustomerTest";
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return  "redirect:/customers/customerPage";
+        }
+    }
+
+    @GetMapping("customers/addMore/{id}")
+    public String addMoreTest(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+        List<Customer> customerList = customerService.listAll();
+        model.addAttribute("customerList", customerList);
+        try {
+            Customer customer1 = customerService.getCustomerById(id);
+            model.addAttribute("customerToAdd", customer1);
+            return "customers/choose2CustomerTest";
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return  "redirect:/customers/customerPage";
+        }
+
+
+    }
+
+    @GetMapping("/customers/addCustomer2Test/{id}/{id2}")
+    public String addCustomer2ToBookingTest(@PathVariable("id") Integer id, @PathVariable("id2") Integer id2, Model model, RedirectAttributes redirectAttributes) {
+
+        try {
+            Customer customer = customerService.getCustomerById(id);
+            Customer customer2 = customerService.getCustomerById(id2);
+            model.addAttribute("customerToAdd", customer);
+            model.addAttribute("customerToAdd2", customer2);
+        } catch (CustomerNotFoundException e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return  "redirect:/customers/customerPage";
+        }
+
+        return "customers/addCustomer2Test";
+    }
+
+
 }
