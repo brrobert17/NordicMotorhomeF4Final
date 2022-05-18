@@ -2,7 +2,7 @@ package com.example.nordicmotorhomef4final.controller;
 
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Vehicle;
-import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
+
 import com.example.nordicmotorhomef4final.service.VehicleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,13 +23,13 @@ public class VehicleController {
     @Autowired
     VehicleService vehicleService;
 
-//  Get Mapping for Vehicle Page
+    //  Get Mapping for Vehicle Page
     @GetMapping("vehicles/vehiclePage")
     public String showVehicles(Model model) {
         String keyword = "";
         String available = "Insert Date";
         List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
-        List<String> brandList =vehicleService.brandList();
+        List<String> brandList = vehicleService.brandList();
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("brandList", brandList);
         model.addAttribute("keyword", keyword);
@@ -39,26 +38,26 @@ public class VehicleController {
         return "vehicles/vehiclePage";
     }
 
-//    Post Mapping for Vehicle Page
+    //    Post Mapping for Vehicle Page
     @PostMapping("/vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
                                  Booking searchBooking) {
         String available = "Insert Date";
         //keyword is the search word, searchBooking is a booking object with Dates inside
-        List<Vehicle> vehiclesList = vehicleService.showFilteredVehicles(keyword,searchBooking);
+        List<Vehicle> vehiclesList = vehicleService.showFilteredVehicles(keyword, searchBooking);
         //Passes the String Available to the page if the dates are not null
-            if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
-                    available = "Available: "+searchBooking.getStartDate()+ " "+searchBooking.getEndDate();
-                }
+        if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
+            available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
+        }
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("available", available);
-
+        model.addAttribute("searchedBooking", searchBooking);
         return "vehicles/vehiclePage";
     }
 
-//  Get Mapping for Adding New Vehicle
+    //  Get Mapping for Adding New Vehicle
     @GetMapping("vehicles/new")
     public String showNewCustomerForm(Model model) {
         model.addAttribute("newVehicle", new Vehicle());
@@ -76,30 +75,19 @@ public class VehicleController {
 
     @GetMapping("/edit/{registrationPlate}")
     public String editVehicle(@PathVariable("registrationPlate") String registrationPlate, Model model, RedirectAttributes redirectAttributes) {
-        try {
-            Vehicle vehicle = vehicleService.getVehicleById(registrationPlate);
-            System.out.println("vehicle");
-            model.addAttribute("newVehicle", vehicle);
-            model.addAttribute("pageTitle", "Edit vehicle (Reg: "+ registrationPlate+" )");
-            redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
-            return "vehicles/editVehicleForm";
-        } catch (CustomerNotFoundException e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "redirect:/vehiclePage";
-        }
+        Vehicle vehicle = vehicleService.getVehicleById(registrationPlate);
+        System.out.println("vehicle");
+        model.addAttribute("newVehicle", vehicle);
+        model.addAttribute("pageTitle", "Edit vehicle (Reg: " + registrationPlate + " )");
+        redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
+        return "vehicles/editVehicleForm";
+
     }
 
     @GetMapping("/delete/{registrationPlate}")
     public String deleteCustomer(@PathVariable("registrationPlate") String registrationPlate, RedirectAttributes redirectAttributes) {
-        try {
-            vehicleService.deleteVehicle(vehicleService.getVehicleById(registrationPlate));
-            redirectAttributes.addFlashAttribute("message", "Vehicle: "+ registrationPlate +" has been deleted.");
-
-        } catch (CustomerNotFoundException e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-        }
+        vehicleService.deleteVehicle(vehicleService.getVehicleById(registrationPlate));
+        redirectAttributes.addFlashAttribute("message", "Vehicle: " + registrationPlate + " has been deleted.");
         return "redirect:../vehicles/vehiclePage";
     }
 

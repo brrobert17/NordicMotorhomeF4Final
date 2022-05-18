@@ -40,15 +40,17 @@
                         <div class="m-3">
                             <!--                        Start date input-->
                             <div class="form-group row">
-                                <label class="col-4 col-form-label">Start Date </label>
+
                                 <div class="col-8">
+                                    <label class="col-4 col-form-label">Start Date </label>
                                     <input type="date" th:field="*{startDate}" class="form-control"/>
                                 </div>
                             </div>
                             <!--                        End date input-->
                             <div class="form-group row">
-                                <label class="col-4 col-form-label">End Date </label>
+
                                 <div class="col-8">
+                                    <label class="col-4 col-form-label">End Date </label>
                                     <input type="date" th:field="*{endDate}" class="form-control"/>
                                 </div>
                             </div>
@@ -56,7 +58,8 @@
                             <!--                        Search function-->
                             <div class="form-group row">
                                 <label class="col-4 col-form-label">Search Vehicles
-                                </label><input type="text"
+                                </label>
+                                <input type="text"
                                                name="keyword"
                                                id="keyword" size="50"
                                                th:value="${keyword}"/>
@@ -146,13 +149,22 @@
                                th:href="@{'/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
                         </td>   <!--edit/delete-->
                         <td>
-                                <form th:action="@{../bookings/newfromVehicles}" th:object="${vehicle}"
-                                      method="post" style="max-width: 600px; margin: 0 auto;">
-                                    <form th:action="@{../bookings/newfromVehicles}" th:object="${searchDateVehicle}"
-                                          method="post" style="max-width: 600px; margin: 0 auto;">
-                                        <button type="submit" class="btn btn-success">Choose</button>
-                                    </form>
-                                </form>
+                            <a class="btn btn-success"
+                               th:href="@{'../bookings/newFromVehicles/'
+                               + ${vehicle.getRegistrationPlate()}+'/'
+                               + ${searchedBooking.getStartDate()}+'/'
+                               + ${searchedBooking.getEndDate()}}">
+                            Chooser</a>
+
+
+<!--                            <form th:action="@{../bookings/newFromVehicles}" th:object="${vehicle}"-->
+<!--                                  method="post" style="max-width: 600px; margin: 0 auto;">-->
+<!--                                <form th:action="@{../bookings/newFromVehicles}" th:object="${searchDateVehicle}"-->
+<!--                                      method="post" style="max-width: 600px; margin: 0 auto;">-->
+<!--                                    -->
+<!--                                        <button type="submit" class="btn btn-success">Choose</button>-->
+<!--                                </form>-->
+<!--                            </form>-->
 
 
                         </td>   <!--choose-->
@@ -194,11 +206,6 @@
         color: #f1f1f1;
     }
 
-    .main {
-        margin-left: 160px; /* Same as the width of the sidenav */
-        font-size: 28px; /* Increased text to enable scrolling */
-        padding: 0px 10px;
-    }
 
     @media screen and (max-height: 450px) {
         .sideBnav {
