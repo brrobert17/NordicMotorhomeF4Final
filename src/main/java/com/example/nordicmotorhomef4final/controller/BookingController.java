@@ -49,6 +49,7 @@ public class BookingController {
 
     //TODO new get mapping from Vehicles
     //       {customerId}/{registrationPlate}/{bookStart}/{bookend}
+    //       after all is chosen
 
 
     @GetMapping("bookings/new")
