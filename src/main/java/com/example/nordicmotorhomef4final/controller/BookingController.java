@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -80,5 +81,24 @@ public class BookingController {
 
         return "bookings/newBookingForm";
     }
+    @GetMapping("/vehicles/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
+    public String addCustomerToBooking(
+            @PathVariable("customerId") Integer customerId, @PathVariable("registrationPlate") String registrationPlate,
+            @PathVariable("bookStart") LocalDate bookStart, @PathVariable("bookEnd") LocalDate bookEnd,Model model, RedirectAttributes redirectAttributes) {
 
-}
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("registrationPlate", registrationPlate);
+        model.addAttribute("bookStart", bookStart);
+        model.addAttribute("bookEnd", bookEnd);
+        model.addAttribute("newBooking", new Booking());
+        model.addAttribute("pageTitle", "Make New Booking");
+
+        redirectAttributes.addFlashAttribute("message", "Customer ID: "
+                + customerId + " has been added to the booking successfully.");
+
+        return "bookings/newBookingForm";
+    }
+
+
+    }
+
