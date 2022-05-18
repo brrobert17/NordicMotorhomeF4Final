@@ -25,6 +25,10 @@
             <a class="h3" th:href="@{/bookings/new}">Make a New Booking</a>
         </div>
 
+        <div th:if="${message}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+
         <div class="container-fluid text-left">
             <a href="/">
                 <h4>Go back to frontpage</h4>
@@ -61,6 +65,7 @@
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
                     </div>
+
 
 
             </form>
