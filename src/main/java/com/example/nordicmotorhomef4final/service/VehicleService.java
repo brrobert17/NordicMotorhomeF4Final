@@ -66,12 +66,8 @@ public class VehicleService {
         vehicleRepo.delete(vehicle);
     }
 
-    public Vehicle getVehicleById(String registrationPlate) throws CustomerNotFoundException {
-        Vehicle vehicle = vehicleRepo.searchByRegistrationPlate(registrationPlate);
-        if (vehicle != null) {
-            return vehicle;
-        }
-        throw new CustomerNotFoundException("Could not find any vehicle with Registration Plate: " + registrationPlate);
+    public Vehicle getVehicleById(String registrationPlate){
+        return vehicleRepo.searchByRegistrationPlate(registrationPlate);
     }
 
 
