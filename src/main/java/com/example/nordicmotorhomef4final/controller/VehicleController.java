@@ -34,40 +34,20 @@ public class VehicleController {
     public String showVehicles(Model model) {
         String keyword = "";
         String available = "Insert Date";
-        List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
-        List<String> brandList = vehicleService.brandList();
-        model.addAttribute("vehiclesList", vehiclesList);
-        model.addAttribute("brandList", brandList);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("available", available);
-        model.addAttribute("searchDateVehicle", new Booking());
-        return "vehicles/vehiclePage";
-    }
-
-    // TODO by Zaland and Soheil
-    // Connect to this getmapping!!
-
-    //  Get Mapping for choosing Vehicle After having Chosen the Customer
-    @SneakyThrows
-    @GetMapping("vehicles/vehiclePage/{customerId}")
-    public String selectVehiclesAfterCustomer(@PathVariable("customerId") Integer customerId,Model model) {
-        String keyword = "";
-        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
-                + " " +customerService.getCustomerById(customerId).getLastName();
-        String available = "Insert Date";
+        String titlePage = "Nordic Motorhome Vehicles";
         List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
         List<String> brandList = vehicleService.brandList();
         model.addAttribute("titlePage", titlePage);
-        model.addAttribute("customerId", customerId);
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("brandList", brandList);
         model.addAttribute("keyword", keyword);
         model.addAttribute("available", available);
         model.addAttribute("searchDateVehicle", new Booking());
+        model.addAttribute("searchedBooking", new Booking());
         return "vehicles/vehiclePage";
     }
 
-    //    Post Mapping for Vehicle Page
+    //   1st    Post Mapping for Vehicle Page
     @PostMapping("/vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
@@ -80,6 +60,8 @@ public class VehicleController {
         if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
             available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
         }
+        String titlePage = "Nordic Motorhome Vehicles";
+        model.addAttribute("titlePage", titlePage);
         model.addAttribute("customerId", customerId);
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("searchDateVehicle", new Booking());
@@ -87,6 +69,58 @@ public class VehicleController {
         model.addAttribute("searchedBooking", searchBooking);
         return "vehicles/vehiclePage";
     }
+
+
+
+    // TODO by Zaland and Soheil
+    // Connect to this getmapping!!
+
+    //  Get Mapping for choosing Vehicle After having Chosen the Customer
+    @SneakyThrows
+    @GetMapping("vehicles/vehiclePage/{customerId}")
+    public String selectVehiclesAfterCustomer(@PathVariable("customerId") Integer customerId, Model model) {
+        String keyword = "";
+        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
+                + " " + customerService.getCustomerById(customerId).getLastName();
+        String available = "Insert Date";
+        model.addAttribute("titlePage", titlePage);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("vehiclesList", vehicleService.showAllVehicles());
+        model.addAttribute("brandList", vehicleService.brandList());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("available", available);
+        model.addAttribute("searchDateVehicle", new Booking());
+        model.addAttribute("searchedBooking", new Booking());
+        return "vehicles/vehiclePage";
+    }
+
+
+    //  2nd   Post Mapping for Vehicle Page [for choosing Vehicle After having Chosen the Customer]
+    @SneakyThrows
+    @PostMapping("/vehicles/vehiclePageWithCustomer")
+    public String filterVehiclesForCustomer(Model model,
+                                            @Param("customerId") Integer customerId,
+                                            @Param("keyword") String keyword,
+                                            Booking searchBooking) {
+        String available = "Insert Date";
+        //keyword is the search word, searchBooking is a booking object with Dates inside
+        List<Vehicle> vehiclesList = vehicleService.showFilteredVehicles(keyword, searchBooking);
+        //Passes the String Available to the page if the dates are not null
+        if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
+            available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
+        }
+        String titlePage = "Choose a vehicle for " ;
+//                + customerService.getCustomerById(customerId).getFirstName()
+//                + " " + customerService.getCustomerById(customerId).getLastName();
+        model.addAttribute("titlePage", titlePage);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("vehiclesList", vehiclesList);
+        model.addAttribute("searchDateVehicle", new Booking());
+        model.addAttribute("available", available);
+        model.addAttribute("searchedBooking", searchBooking);
+        return "vehicles/vehiclePage";
+    }
+
 
     //  Get Mapping for Adding New Vehicle
     @GetMapping("vehicles/new")

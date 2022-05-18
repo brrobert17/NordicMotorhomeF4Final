@@ -31,9 +31,11 @@
         </div>
 
         <!--        Div for Filter-->
-        <div class="container text-center">
-            <div class="text-center border border-secondary rounded p-3">
-                <form th:action="@{/vehicles/vehiclePage}" th:object="${keyword}" method="post"
+<!--        Search if we come from Index-->
+        <div th:if="${titlePage.contains('Nordic')}" class="container text-center">
+            <div th:if="${titlePage.contains('Nordic')}" class="text-center border border-secondary rounded p-3">
+                <form th:if="${titlePage.contains('Nordic')}" th:action="@{/vehicles/vehiclePage}"
+                      th:object="${keyword}" method="post"
                       style="max-width: 600px; margin: 0 auto;">
                     <form th:action="@{/vehicles/vehiclePage}" th:object="${searchDateVehicle}"
                           method="post" style="max-width: 600px; margin: 0 auto;">
@@ -43,7 +45,7 @@
 
                                 <div class="col-8">
                                     <label class="col-4 col-form-label">Start Date </label>
-                                    <input type="date" th:field="*{startDate}" class="form-control"/>
+                                    <input type="date" id="startDate" th:field="*{startDate}" class="form-control"/>
                                 </div>
                             </div>
                             <!--                        End date input-->
@@ -51,24 +53,63 @@
 
                                 <div class="col-8">
                                     <label class="col-4 col-form-label">End Date </label>
-                                    <input type="date" th:field="*{endDate}" class="form-control"/>
+                                    <input type="date" id="endDate" th:field="*{endDate}" class="form-control"/>
                                 </div>
                             </div>
 
                             <!--                        Search function-->
-                            <div class="form-group row">
-                                <label class="col-4 col-form-label">Search Vehicles
-                                </label>
-                                <input type="text"
-                                               name="keyword"
-                                               id="keyword" size="50"
-                                               th:value="${keyword}"/>
-                                <button type="submit" class="btn btn-primary">Search</button>
+                            <div>
+                                <label class="col-4 col-form-label">Search Vehicles</label>
+                                <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
+                                <button type="submit" id="searchVehicle" class="btn btn-primary">Search</button>
                             </div>
                             <div class="form-group row">
                                 <div class="container text-center">
-                                    <a class="btn btn-danger py-2" th:href="@{/vehicles/new}">Add New Vehicle</a>
+                                    <a class="btn btn-danger py-2"
+                                       th:href="@{/vehicles/new}">Add New Vehicle</a>
                                 </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </form>
+            </div>
+        </div>
+
+<!--Search if we come from Booking,  points to filterVehiclesForCustomer, 2nd PostMapping-->
+        <div th:if="${!titlePage.contains('Nordic')}" class="container text-center">
+            <div  class="text-center border border-secondary rounded p-3">
+                <form th:action="@{/vehicles/vehiclePageWithCustomer}"
+                      th:object="${keyword}"
+                      method="post"
+                      style="max-width: 600px; margin: 0 auto;">
+                    <form th:action="@{/vehicles/vehiclePageWithCustomer}" th:object="${searchDateVehicle}"
+                          method="post" style="max-width: 600px; margin: 0 auto;">
+                        <div class="m-3">
+                            <!--                        Start date input-->
+                            <div class="form-group row">
+
+                                <div class="col-8">
+                                    <label class="col-4 col-form-label">Start Date </label>
+                                    <input type="date" id="startDateCustomer" th:field="*{startDate}"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                            <!--                        End date input-->
+                            <div class="form-group row">
+
+                                <div class="col-8">
+                                    <label class="col-4 col-form-label">End Date </label>
+                                    <input type="date" id="endDateCustomer" th:field="*{endDate}" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <!--                        Search function-->
+
+                            <div>
+                                <label class="col-4 col-form-label">Search Vehicles</label>
+                                <input type="text" name="keyword" id="keywordForCustomer" size="50" th:value="${keyword}"/>
+                                <button type="submit" id="searchVehicForCustomer" class="btn btn-primary">Search</button>
                             </div>
                         </div>
                     </form>
@@ -126,9 +167,11 @@
                             <!--                                </option>-->
                             <!--                            </select>-->
                         </th>
-                        <th>Availability</th>
+
+                        <th th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">Availability</th>
                         <th>Edit/Delete</th>
-                        <th>Choose</th>
+                        <th th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">Choose</th>
+
 
                     </tr>
                     </thead>
@@ -141,36 +184,23 @@
                         <td th:text="${vehicle.getcLicense()}"></td>
                         <td th:text="${vehicle.getTotalKm()}"></td>
                         <td th:text="${vehicle.getRegistrationPlate()}"></td>
-                        <td th:text="${available}"></td>
+                        <td th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}"
+                            th:text="${available}"></td>
                         <td>
                             <a class="btn btn-info" th:href="@{'/edit/' + ${vehicle.getRegistrationPlate()}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
                             <a class="btn btn-info"
                                th:href="@{'/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
                         </td>   <!--edit/delete-->
-                        <td>
+                        <td th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">
                             <a class="btn btn-success" id="choose"
-<!--                               th:if="searchDateVehicle=null"-->
-                               th:href=
-                                       "@{../bookings/new}">
-<!--                                       "@{'../bookings/newFromVehicles/'-->
-<!--                               + ${customerId}+'/'-->
-<!--                               + ${vehicle.getRegistrationPlate()}+'/'-->
-<!--                               + ${searchedBooking.getStartDate()}+'/'-->
-<!--                               + ${searchedBooking.getEndDate()}}">-->
-                            Choose</a>
-
-
-<!--                            <form th:action="@{../bookings/newFromVehicles}" th:object="${vehicle}"-->
-<!--                                  method="post" style="max-width: 600px; margin: 0 auto;">-->
-<!--                                <form th:action="@{../bookings/newFromVehicles}" th:object="${searchDateVehicle}"-->
-<!--                                      method="post" style="max-width: 600px; margin: 0 auto;">-->
-<!--                                    -->
-<!--                                        <button type="submit" class="btn btn-success">Choose</button>-->
-<!--                                </form>-->
-<!--                            </form>-->
-
-
+                               th:if="${searchedBooking.startDate != null}" th:href="@{../bookings/new}">Choose</a>
+                            <!--                                       "@{../bookings/new}">-->
+                            <!--                                       "@{'../bookings/newFromVehicles/'-->
+                            <!--                               + ${customerId}+'/'-->
+                            <!--                               + ${vehicle.getRegistrationPlate()}+'/'-->
+                            <!--                               + ${searchedBooking.getStartDate()}+'/'-->
+                            <!--                               + ${searchedBooking.getEndDate()}}">-->
                         </td>   <!--choose-->
                     </tr>
                     </tbody>
@@ -182,15 +212,6 @@
 </body>
 <footer>
     <script>
-        var hidden = false;
-        function action() {
-            hidden = !hidden;
-            if(keyword) {
-                document.getElementById('choose').style.visibility = 'hidden';
-            } else {
-                document.getElementById('choose').style.visibility = 'visible';
-            }
-        }
     </script>
 </footer>
 <style>
