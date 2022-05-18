@@ -17,6 +17,9 @@ public class BookingService {
     public List<Booking> showAllBookings() {
         return bookingRepo.findAll();
     }
+    public void saveBooking(Booking booking) {
+        bookingRepo.save(booking);
+    }
     //filter by start date, end date and keyword
 
 
@@ -39,6 +42,7 @@ public class BookingService {
     public List<Booking> showAllBookingKeyword(String keyword) {
         return bookingRepo.searchBookingByKeyword(keyword);
     }
+
 }
 //show only a booking with a keyword
 

@@ -1,8 +1,6 @@
 package com.example.nordicmotorhomef4final.controller;
 
 import com.example.nordicmotorhomef4final.model.Booking;
-import com.example.nordicmotorhomef4final.model.Vehicle;
-import com.example.nordicmotorhomef4final.repo.BookingRepo;
 import com.example.nordicmotorhomef4final.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -10,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -45,6 +43,19 @@ public class BookingController {
 
     @GetMapping("bookings/update/{id}")
     public String updateBooking() {
-        return "bookings/editBooking";
+        return "newBookingForm";
+    }
+    @GetMapping("bookings/new")
+    public String showNewBookingForm(Model model) {
+        model.addAttribute("newBooking", new Booking());
+        model.addAttribute("pageTitle", "Make New Booking");
+        return "bookings/newBookingForm";
+    }
+
+    @PostMapping("bookings/save")
+    public String saveBooking(Booking booking, RedirectAttributes redirectAttributes) {
+        bookingService.saveBooking(booking);
+        redirectAttributes.addFlashAttribute("message", "The booking has been saved successfully");
+        return "redirect:/bookings/bookingPage";
     }
 }
