@@ -49,11 +49,6 @@ public class BookingController {
         return "newBookingForm";
     }
 
-    //TODO new get mapping from Vehicles
-    //       {customerId}/{registrationPlate}/{bookStart}/{bookend}
-    //       after all is chosen
-
-
     @GetMapping("bookings/new")
     public String showNewBookingForm(Model model) {
         model.addAttribute("newBooking", new Booking());
@@ -99,6 +94,5 @@ public class BookingController {
         return "bookings/newBookingForm";
     }
 
-
-    }
+}
 
