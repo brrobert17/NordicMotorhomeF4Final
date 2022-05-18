@@ -195,12 +195,11 @@
                         <td th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">
                             <a class="btn btn-success" id="choose"
                                th:if="${searchedBooking.startDate != null}" th:href="@{../bookings/new}">Choose</a>
-                            <!--                                       "@{../bookings/new}">-->
-                            <!--                                       "@{'../bookings/newFromVehicles/'-->
-                            <!--                               + ${customerId}+'/'-->
-                            <!--                               + ${vehicle.getRegistrationPlate()}+'/'-->
-                            <!--                               + ${searchedBooking.getStartDate()}+'/'-->
-                            <!--                               + ${searchedBooking.getEndDate()}}">-->
+<!--                                                           + ${customerId}+'/'-->
+<!--                                                           + ${vehicle.getRegistrationPlate()}+'/'-->
+<!--                                                           + ${searchedBooking.getStartDate()}+'/'-->
+<!--                                                           + ${searchedBooking.getEndDate()}-->
+
                         </td>   <!--choose-->
                     </tr>
                     </tbody>
