@@ -22,13 +22,15 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Customer ID</label>
 
-                <a th:href="@{/customers/customerPage}" class="col-sm-4 col-form-label">Choose Customer</a>
+                <div th:if="${customerId==null}">
+                    <a th:href="@{/customers/customerPage}" class="col-sm-4 col-form-label">Choose Customer</a>
+                </div>
 
                 <div th:if="${customerId}" class="col-sm-8">
                     <div class="col-sm-8">
-                        [[${customerId}]]
+                        <!--[[${customerId}]]-->
+                        <input type="number" th:value="${customerId}" id="customerId" name="customerId" class="form-control" required/>
                     </div>
-                    <input type="number" th:field="customer.customerId" th:insert="${customerId}" class="form-control" required/>
                 </div>
 
             </div>
