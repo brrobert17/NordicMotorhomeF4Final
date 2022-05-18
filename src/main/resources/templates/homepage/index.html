@@ -6,23 +6,60 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
 </head>
 <body>
-<header>
-    <div class="container-fluid flex-header">
-        <div class="container-fluid float-md-none " style="width: 15%;">
-            <h1 class="logo">NordicMotorHomeF4</h1>
-        </div>
+<!-- Side navigation -->
+<div class="sideBnav">
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{../vehicles/vehiclePage}">Vehicles</a>
+    <a th:href="@{../customers/customerPage}">Customer</a>
+    <a th:href="@{../bookings/bookingPage}">Booking</a>
+</div>
 
-        <div class="container-fluid float-left" style="width: 60%;">
-            <ul class="ul">
-                <li><a th:href="@{/}">Home</a></li>
-                <li><a th:href="@{customers/customerPage}">Customer</a></li>
-                <li><a th:href="@{vehicles/vehiclePage}">Vehicles</a></li>
-                <li><a th:href="@{bookings/bookingPage}">Booking</a></li>
-            </ul>
-        </div>
-    </div>
-</header>
 
 
 </body>
+<style>
+    .button-red {
+        background-color: red;
+    }
+
+    .sideBnav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .sideBnav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .sideBnav a:hover {
+        color: #f1f1f1;
+    }
+
+    .main {
+        margin-left: 160px; /* Same as the width of the sidenav */
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sideBnav {
+            padding-top: 15px;
+        }
+
+        .sideBnav a {
+            font-size: 18px;
+        }
+    }
+</style>
 </html>

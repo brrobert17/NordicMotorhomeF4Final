@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -27,11 +28,18 @@ public class BookingController {
     }
 
     @PostMapping("bookings/bookingPage")
-    public String filterBooking(Model model, @Param("keyword") String keyword, Booking searchBooking) {
-        //MAKE A DINAMIC FILTER FOR SEARCH WITH KEYWORD
-        List<Booking> bookingList = bookingService.showFilteredBookings(keyword, searchBooking);
+    public String filterBooking(Model model, @Param("keyword") String keyword) {
+
+       // MAKE A DINAMIC FILTER FOR SEARCH WITH KEYWORD
+
+       List<Booking> bookingList = bookingService.showAllBookingKeyword(keyword);
+
         model.addAttribute("bookingList", bookingList);
+
         model.addAttribute("keyword", keyword);
+        //model.addAttribute("bookingData", new Booking());
+
+
         return "bookings/bookingPage";
     }
 

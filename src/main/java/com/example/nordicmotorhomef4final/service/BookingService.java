@@ -17,6 +17,8 @@ public class BookingService {
     public List<Booking> showAllBookings() {
         return bookingRepo.findAll();
     }
+    //filter by start date, end date and keyword
+
 
     public List<Booking> showFilteredBookings(String keyword, Booking searchBooking) {
         if (searchBooking.getStartDate() == null || searchBooking.getEndDate() == null) {
@@ -33,4 +35,18 @@ public class BookingService {
             }
         }
     }
+    //show only a booking by id
+    public List<Booking> showAllBookingKeyword(String keyword) {
+        return bookingRepo.searchBookingByKeyword(keyword);
+    }
 }
+//show only a booking with a keyword
+
+
+
+
+    //make a general search function that can search by keyword and date
+
+
+
+

@@ -54,8 +54,7 @@ public class VehicleController {
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("available", available);
-//        TODO
-//         handle only one date inputted
+
         return "vehicles/vehiclePage";
     }
 
