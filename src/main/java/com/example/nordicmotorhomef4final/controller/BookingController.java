@@ -70,11 +70,15 @@ public class BookingController {
     @GetMapping("/customers/addToNewBooking/{customerId}")
     public String addCustomerToBooking(
             @PathVariable("customerId") Integer customerId, Model model, RedirectAttributes redirectAttributes) {
+
         model.addAttribute("customerId", customerId);
         model.addAttribute("newBooking", new Booking());
         model.addAttribute("pageTitle", "Make New Booking");
-        redirectAttributes.addFlashAttribute(
-                "message", "Customer ID: " + customerId + " has been added to the booking successfully.");
-        return "bookings/newBookingFormCustomer";
+
+        redirectAttributes.addFlashAttribute("message", "Customer ID: "
+                + customerId + " has been added to the booking successfully.");
+
+        return "bookings/newBookingForm";
     }
+
 }
