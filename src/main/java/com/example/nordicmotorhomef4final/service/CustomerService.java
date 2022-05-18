@@ -36,4 +36,9 @@ public class CustomerService {
         }
         customerRepo.deleteById(id);
     }
+
+    public List<Customer> searchCustomer(String keyword) {
+        return customerRepo.searchCustomer(keyword);
+    }
+
 }
