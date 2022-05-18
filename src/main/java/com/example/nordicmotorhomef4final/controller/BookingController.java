@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -64,5 +65,16 @@ public class BookingController {
         bookingService.saveBooking(booking);
         redirectAttributes.addFlashAttribute("message", "The booking has been saved successfully");
         return "redirect:/bookings/bookingPage";
+    }
+
+    @GetMapping("/customers/addToNewBooking/{customerId}")
+    public String addCustomerToBooking(
+            @PathVariable("customerId") Integer customerId, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("newBooking", new Booking());
+        model.addAttribute("pageTitle", "Make New Booking");
+        redirectAttributes.addFlashAttribute(
+                "message", "Customer ID: " + customerId + " has been added to the booking successfully.");
+        return "bookings/newBookingFormCustomer";
     }
 }

@@ -1,5 +1,6 @@
 package com.example.nordicmotorhomef4final.controller;
 
+import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Customer;
 import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
 import com.example.nordicmotorhomef4final.service.CustomerService;
@@ -43,7 +44,7 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/save")
-    public String saveNewCustomer(Customer customer, RedirectAttributes redirectAttributes){
+    public String saveNewCustomer(Customer customer, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
         customerService.saveCustomer(customer);
         return "redirect:/customers/customerPage";
@@ -54,13 +55,13 @@ public class CustomerController {
         try {
             Customer customer = customerService.getCustomerById(id);
             model.addAttribute("newCustomer", customer);
-            model.addAttribute("pageTitle", "Edit customer (ID: "+ id+" )");
+            model.addAttribute("pageTitle", "Edit customer (ID: " + id + " )");
             redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
             return "customers/newCustomerForm";
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return  "redirect:/customers/customerPage";
+            return "redirect:/customers/customerPage";
         }
     }
 
@@ -68,7 +69,7 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             customerService.deleteCustomerById(id);
-            redirectAttributes.addFlashAttribute("message", "Customer ID: "+ id +" has been saved successfully.");
+            redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been saved successfully.");
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
@@ -84,25 +85,6 @@ public class CustomerController {
         return "customers/chooseCustomer";
     }
 
-    @GetMapping("/customers/addToNewBooking/{customerId}")
-    public String addCustomerToBooking(
-            @PathVariable("customerId") Integer customerId, Model model, RedirectAttributes redirectAttributes) {
-        try {
-            Customer customer = customerService.getCustomerById(customerId);
-            model.addAttribute("addedCustomer", customer);
-            redirectAttributes.addFlashAttribute(
-                    "message", "Customer ID: "+ customerId +" has been added to the booking successfully.");
-
-            return "bookings/newBooking";
-        } catch (CustomerNotFoundException e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return  "redirect:/customers/customerPage";
-        }
-    }
-
-
-
 
 
 
@@ -115,17 +97,17 @@ public class CustomerController {
         try {
             Customer customer = customerService.getCustomerById(id);
             model.addAttribute("customerToAdd", customer);
-            redirectAttributes.addFlashAttribute("message", "Customer ID: "+ id +" has been added to the booking successfully.");
+            redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been added to the booking successfully.");
             return "customers/addCustomerTest";
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return  "redirect:/customers/customerPage";
+            return "redirect:/customers/customerPage";
         }
     }
 
     @GetMapping("customers/addMore/{id}")
-    public String addMoreTest(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+    public String addMoreTest(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         List<Customer> customerList = customerService.listAll();
         model.addAttribute("customerList", customerList);
         try {
@@ -135,7 +117,7 @@ public class CustomerController {
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return  "redirect:/customers/customerPage";
+            return "redirect:/customers/customerPage";
         }
 
 
@@ -149,10 +131,10 @@ public class CustomerController {
             Customer customer2 = customerService.getCustomerById(id2);
             model.addAttribute("customerToAdd", customer);
             model.addAttribute("customerToAdd2", customer2);
-        } catch (CustomerNotFoundException e){
+        } catch (CustomerNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return  "redirect:/customers/customerPage";
+            return "redirect:/customers/customerPage";
         }
 
         return "customers/addCustomer2Test";
