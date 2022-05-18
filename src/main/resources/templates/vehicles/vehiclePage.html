@@ -21,7 +21,7 @@
     <!--    Search Bookings part-->
     <div>
         <div>
-            <h1>Show Vehicles Availability</h1>
+            <h1>[[${titlePage}]]</h1>
         </div>
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
@@ -149,12 +149,16 @@
                                th:href="@{'/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
                         </td>   <!--edit/delete-->
                         <td>
-                            <a class="btn btn-success"
-                               th:href="@{'../bookings/newFromVehicles/'
-                               + ${vehicle.getRegistrationPlate()}+'/'
-                               + ${searchedBooking.getStartDate()}+'/'
-                               + ${searchedBooking.getEndDate()}}">
-                            Chooser</a>
+                            <a class="btn btn-success" id="choose"
+                               th:if="searchDateVehicle=null"
+                               th:href=
+                                       "@{../bookings/new}">
+<!--                                       "@{'../bookings/newFromVehicles/'-->
+<!--                               + ${customerId}+'/'-->
+<!--                               + ${vehicle.getRegistrationPlate()}+'/'-->
+<!--                               + ${searchedBooking.getStartDate()}+'/'-->
+<!--                               + ${searchedBooking.getEndDate()}}">-->
+                            Choose</a>
 
 
 <!--                            <form th:action="@{../bookings/newFromVehicles}" th:object="${vehicle}"-->
@@ -176,7 +180,19 @@
     </div>
 </div>
 </body>
-
+<footer>
+    <script>
+        var hidden = false;
+        function action() {
+            hidden = !hidden;
+            if(keyword) {
+                document.getElementById('choose').style.visibility = 'hidden';
+            } else {
+                document.getElementById('choose').style.visibility = 'visible';
+            }
+        }
+    </script>
+</footer>
 <style>
     .button-red {
         background-color: red;

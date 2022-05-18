@@ -3,9 +3,12 @@ package com.example.nordicmotorhomef4final.controller;
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 
+import com.example.nordicmotorhomef4final.service.CustomerService;
 import com.example.nordicmotorhomef4final.service.VehicleService;
 
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,9 @@ public class VehicleController {
     @Autowired
     VehicleService vehicleService;
 
+    @Autowired
+    CustomerService customerService;
+
     //  Get Mapping for Vehicle Page
     @GetMapping("vehicles/vehiclePage")
     public String showVehicles(Model model) {
@@ -38,10 +44,34 @@ public class VehicleController {
         return "vehicles/vehiclePage";
     }
 
+    // TODO by Zaland and Soheil
+    // Connect to this getmapping!!
+
+    //  Get Mapping for choosing Vehicle After having Chosen the Customer
+    @SneakyThrows
+    @GetMapping("vehicles/vehiclePage/{customerId}")
+    public String selectVehiclesAfterCustomer(@PathVariable("customerId") Integer customerId,Model model) {
+        String keyword = "";
+        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
+                + " " +customerService.getCustomerById(customerId).getLastName();
+        String available = "Insert Date";
+        List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
+        List<String> brandList = vehicleService.brandList();
+        model.addAttribute("titlePage", titlePage);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("vehiclesList", vehiclesList);
+        model.addAttribute("brandList", brandList);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("available", available);
+        model.addAttribute("searchDateVehicle", new Booking());
+        return "vehicles/vehiclePage";
+    }
+
     //    Post Mapping for Vehicle Page
     @PostMapping("/vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
+                                 @Param("customerId") Integer customerId,
                                  Booking searchBooking) {
         String available = "Insert Date";
         //keyword is the search word, searchBooking is a booking object with Dates inside
@@ -50,6 +80,7 @@ public class VehicleController {
         if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
             available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
         }
+        model.addAttribute("customerId", customerId);
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("available", available);

@@ -2,6 +2,7 @@ package com.example.nordicmotorhomef4final.controller;
 
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.service.BookingService;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,11 @@ public class BookingController {
     public String updateBooking() {
         return "newBookingForm";
     }
+
+    //TODO new get mapping from Vehicles
+    //       {customerId}/{registrationPlate}/{bookStart}/{bookend}
+
+
     @GetMapping("bookings/new")
     public String showNewBookingForm(Model model) {
         model.addAttribute("newBooking", new Booking());
