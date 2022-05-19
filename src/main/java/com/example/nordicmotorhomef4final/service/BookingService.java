@@ -69,6 +69,16 @@ public class BookingService {
 
         return Math.abs(period.getDays());
     }
+    //calculate the total price of a booking
+    public double calculateTotalPrice(Booking booking) {
+        double totalPrice = 0;
+        double pricePerDay = 120;
+        int days = calculateDays(booking);
+        totalPrice = pricePerDay * days;
+        return totalPrice;
+    }
+    //totalprice
+
 }
 
 

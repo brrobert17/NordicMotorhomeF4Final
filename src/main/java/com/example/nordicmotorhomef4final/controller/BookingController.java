@@ -95,6 +95,11 @@ public class BookingController {
     @GetMapping("/update/{bookingId}")
     public String updateBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
         Booking booking = bookingService.findBookingById(bookingId);
+        //calculate the total price
+
+
+        model.addAttribute("booking", booking);
+        model.addAttribute("pageTitle", "Update Booking");
 
         model.addAttribute("newBooking", booking);
         model.addAttribute("pageTitle", "Update Booking with ID: " + bookingId);
@@ -107,6 +112,7 @@ public class BookingController {
     public String deleteBooking(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.deleteBookingById(id);
+
             redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been saved successfully.");
         } catch (CustomerNotFoundException e) {
             e.printStackTrace();
@@ -120,8 +126,10 @@ public class BookingController {
         Booking booking = bookingService.findBookingById(bookingId);
 
         int days = bookingService.calculateDays(booking);
+        double totalPrice = bookingService.calculateTotalPrice(booking);
 
         model.addAttribute("days", days);
+        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("booking", booking);
         model.addAttribute("pageTitle", "Print Receipt");
 
