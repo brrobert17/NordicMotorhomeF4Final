@@ -93,12 +93,14 @@ public class BookingController {
         return "bookings/newBookingForm";
     }
 
-    @GetMapping("bookings/update/{bookingId}")
-    public String updateBooking(@PathVariable("bookingid") Integer bookingId, Model model) {
+    @GetMapping("/update/{bookingId}")
+    public String updateBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
         Booking booking = bookingService.findBookingById(bookingId);
-        model.addAttribute("booking", booking);
-        model.addAttribute("pageTitle", "Update Booking");
-        return "bookings/newBookingForm";
+
+        model.addAttribute("newBooking", booking);
+        model.addAttribute("pageTitle", "Update Booking with ID: " + bookingId);
+
+        return "bookings/updateBookingForm";
     }
 }
 

@@ -23,6 +23,6 @@ public interface BookingRepo extends JpaRepository<Booking, Integer> {
             " b.customer.phoneNumber, b.vehicle.brand, b.vehicle.model, b.vehicle.registrationPlate) LIKE %?3%")
     List<Booking> searchBookingByDateAndKeyword(LocalDate startDate, LocalDate endStart, String keyword);
 
-    @Query("SELECT b FROM Booking b WHERE b.bookingId = ?1")
+    @Query("SELECT b FROM Booking AS b WHERE b.bookingId = ?1")
     Booking getBookingById(Integer id);
 }
