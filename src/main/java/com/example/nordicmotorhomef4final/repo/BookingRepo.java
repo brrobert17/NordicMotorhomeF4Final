@@ -18,8 +18,6 @@ public interface BookingRepo extends JpaRepository<Booking, Integer> {
     @Query("SELECT b FROM Booking AS b WHERE b.startDate = ?1 AND b.endDate = ?2")
     List<Booking> searchBookingByDate(LocalDate startDate, LocalDate endStart);
 
-
-
     @Query("SELECT b FROM Booking AS b WHERE b.startDate = ?1 AND b.endDate = ?2 AND CONCAT(b.bookingId, b.customer.firstName, b.customer.lastName," +
             " b.customer.phoneNumber, b.vehicle.brand, b.vehicle.model, b.vehicle.registrationPlate) LIKE %?3%")
     List<Booking> searchBookingByDateAndKeyword(LocalDate startDate, LocalDate endStart, String keyword);

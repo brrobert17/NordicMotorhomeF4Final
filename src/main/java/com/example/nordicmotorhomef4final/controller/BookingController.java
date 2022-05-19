@@ -31,16 +31,11 @@ public class BookingController {
 
     @PostMapping("bookings/bookingPage")
     public String filterBooking(Model model, @Param("keyword") String keyword) {
-
         // MAKE A DINAMIC FILTER FOR SEARCH WITH KEYWORD
-
         List<Booking> bookingList = bookingService.showAllBookingKeyword(keyword);
-
         model.addAttribute("bookingList", bookingList);
-
         model.addAttribute("keyword", keyword);
         //model.addAttribute("bookingData", new Booking());
-
 
         return "bookings/bookingPage";
     }
@@ -118,4 +113,3 @@ public class BookingController {
         return "redirect:/bookings/bookingPage";
     }
 }
-
