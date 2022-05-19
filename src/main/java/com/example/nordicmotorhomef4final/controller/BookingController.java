@@ -1,11 +1,7 @@
 package com.example.nordicmotorhomef4final.controller;
 
-import com.example.nordicmotorhomef4final.EntityNotFoundException;
 import com.example.nordicmotorhomef4final.model.Booking;
-import com.example.nordicmotorhomef4final.model.Customer;
 import com.example.nordicmotorhomef4final.service.BookingService;
-import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -97,20 +93,12 @@ public class BookingController {
         return "bookings/newBookingForm";
     }
 
-    @GetMapping("bookings/update/{bookingid}")
+    @GetMapping("bookings/update/{bookingId}")
     public String updateBooking(@PathVariable("bookingid") Integer bookingId, Model model) {
-        try{
-            Booking booking = bookingService.getBookingById(bookingId);
-            model.addAttribute("booking", booking);
-            model.addAttribute("pageTitle", "Update Booking");
-            return "bookings/newBookingForm";
-
-        } catch (EntityNotFoundException e) {
-            return "redirect:/bookings/bookingPage";
-
-        }
-
-
+        Booking booking = bookingService.findBookingById(bookingId);
+        model.addAttribute("booking", booking);
+        model.addAttribute("pageTitle", "Update Booking");
+        return "bookings/newBookingForm";
     }
 }
 

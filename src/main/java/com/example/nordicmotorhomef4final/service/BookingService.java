@@ -1,14 +1,11 @@
 package com.example.nordicmotorhomef4final.service;
 
-import com.example.nordicmotorhomef4final.EntityNotFoundException;
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.repo.BookingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookingService {
@@ -19,20 +16,14 @@ public class BookingService {
     public List<Booking> showAllBookings() {
         return bookingRepo.findAll();
     }
+
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
     }
-    public Booking getBookingById(Integer id) throws EntityNotFoundException {
-        Optional<Booking> bookingRepoById = bookingRepo.findById(id);
-        if(bookingRepoById.isPresent()) {
-            return bookingRepoById.get();
-        }
-        throw new EntityNotFoundException("Booking with id " + id + " not found");
 
+    public Booking findBookingById(Integer id) {
+        return bookingRepo.getBookingById(id);
     }
-    //get booking by id with optional and twrow exception if not found
-
-
 
     public List<Booking> showFilteredBookings(String keyword, Booking searchBooking) {
         if (searchBooking.getStartDate() == null || searchBooking.getEndDate() == null) {
@@ -56,11 +47,7 @@ public class BookingService {
 
 }
 
-
-
-
-
-    //make a general search function that can search by keyword and date
+//make a general search function that can search by keyword and date
 
 
 

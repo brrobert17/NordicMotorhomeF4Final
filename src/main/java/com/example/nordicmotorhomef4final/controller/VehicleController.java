@@ -151,7 +151,6 @@ public class VehicleController {
         model.addAttribute("pageTitle", "Edit vehicle (Reg: " + registrationPlate + " )");
         redirectAttributes.addFlashAttribute("message", "Vehicle has been saved successfully.");
         return "vehicles/editVehicleForm";
-
     }
 
     @GetMapping("/delete/{registrationPlate}")
