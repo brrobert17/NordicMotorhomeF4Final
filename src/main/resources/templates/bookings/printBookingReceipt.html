@@ -1,25 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>[[${pageTitle}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}" />
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="sideBnav">
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{../vehicles/vehiclePage}">Vehicles</a>
+    <a th:href="@{../customers/customerPage}">Customer</a>
+    <a th:href="@{../bookings/bookingPage}">Booking</a>
+</div>
+
+<div class="container-fluid text-center">
 
     <div class="container-fluid">
         <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
-    </div>
 
-    <div>
-        [[${days}]]
-    </div>
-    <div>
-        [[${totalPrice}]] DKK
-    </div>
-</div>
+        <form th:object="${booking}" style="max-width: 500px; margin: 0 auto;">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Booking ID</label>
+                <div class="col-sm-8">
+                    <input  disabled th:value="${bookingId}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Customer's name</label>
+                <div class="col-sm-8">
+                    <input  disabled th:value="${booking.customer.firstName} + ' '+ ${booking.customer.lastName}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Customer's phone number</label>
+                <div class="col-sm-8">
+                    <input  disabled th:value="${booking.customer.phoneNumber}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Vehicle</label>
+                <div class="col-sm-8">
+                    <input  disabled th:value="${booking.vehicle.brand} + ' ' + ${booking.vehicle.model}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Vehicle type/capacity</label>
+                <div class="col-sm-8">
+                    <input  disabled th:value="${booking.vehicle.capacity}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Vehicle price/day</label>
+                <div class="col-sm-8">
+                    <div th:if="${booking.vehicle.capacity}==2">
+                        <input  disabled class="form-control" placeholder="120 DKK">
+                    </div>
+                    <div th:if="${booking.vehicle.capacity}==4">
+                        <input  disabled class="form-control" placeholder="200 DKK">
+                    </div>
+                    <div th:if="${booking.vehicle.capacity}==6">
+                        <input  disabled class="form-control" placeholder="240 DKK">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Start date</label>
+                <div class="col-sm-8">
+                    <input type="date" disabled th:value="${booking.startDate}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">End date</label>
+                <div class="col-sm-8">
+                    <input type="date" disabled th:value="${booking.endDate}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Total amount of days</label>
+                <div class="col-sm-8">
+                    <input disabled th:value="${days}" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Total price</label>
+                <div class="col-sm-8">
+                    <input disabled th:value="${totalPrice} + ' DKK'" class="form-control">
+                </div>
+            </div>
 
+        </form>
 
+        </div>
+    </div>
 </body>
+<style>
+
+    .sideBnav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .sideBnav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .sideBnav a:hover {
+        color: #f1f1f1;
+    }
+
+    .main {
+        margin-left: 160px; /* Same as the width of the sidenav */
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sideBnav {
+            padding-top: 15px;
+        }
+
+        .sideBnav a {
+            font-size: 18px;
+        }
+    }
+</style>
 </html>
