@@ -1,7 +1,10 @@
 package com.example.nordicmotorhomef4final.controller;
 
+import com.example.nordicmotorhomef4final.EntityNotFoundException;
 import com.example.nordicmotorhomef4final.model.Booking;
+import com.example.nordicmotorhomef4final.model.Customer;
 import com.example.nordicmotorhomef4final.service.BookingService;
+import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
 import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -32,9 +35,9 @@ public class BookingController {
     @PostMapping("bookings/bookingPage")
     public String filterBooking(Model model, @Param("keyword") String keyword) {
 
-       // MAKE A DINAMIC FILTER FOR SEARCH WITH KEYWORD
+        // MAKE A DINAMIC FILTER FOR SEARCH WITH KEYWORD
 
-       List<Booking> bookingList = bookingService.showAllBookingKeyword(keyword);
+        List<Booking> bookingList = bookingService.showAllBookingKeyword(keyword);
 
         model.addAttribute("bookingList", bookingList);
 
@@ -77,6 +80,7 @@ public class BookingController {
 
         return "bookings/newBookingForm";
     }
+
     @GetMapping("/vehicles/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
     public String addCustomerToBooking(
             @PathVariable("customerId") Integer customerId,
@@ -86,7 +90,6 @@ public class BookingController {
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @PathVariable("bookEnd") LocalDate bookEnd,
             Model model, RedirectAttributes redirectAttributes) {
-
 
 
         model.addAttribute("customerId", customerId);
@@ -102,5 +105,20 @@ public class BookingController {
         return "bookings/newBookingForm";
     }
 
+    @GetMapping("bookings/update/{bookingid}")
+    public String updateBooking(@PathVariable("bookingid") Integer bookingId, Model model) {
+        try{
+            Booking booking = bookingService.getBookingById(bookingId);
+            model.addAttribute("booking", booking);
+            model.addAttribute("pageTitle", "Update Booking");
+            return "bookings/newBookingForm";
+
+        } catch (EntityNotFoundException e) {
+            return "redirect:/bookings/bookingPage";
+
+        }
+
+
+    }
 }
 
