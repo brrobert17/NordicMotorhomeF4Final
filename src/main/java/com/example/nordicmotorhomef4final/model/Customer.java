@@ -5,13 +5,17 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+//This class/entity represents the database's "customers" table
 @Entity
 @Table(name = "customers")
 public class Customer {
+
+    // The "@Id" represents the column of the primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
 
+    // The individual attributes marked by "@Column" are the equivalents of each column in the table
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String firstName;
 
@@ -31,9 +35,15 @@ public class Customer {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
+    // The "@OneToMany" annotation means that one "Customer" object can be part of many "Booking" objects
+    // The meaning of CascadeType.ALL is that the persistence will propagate (cascade) all EntityManager operations:
+    // (PERSIST, REMOVE, REFRESH, MERGE, DETACH) to the relating entities.
+    // In practise: a "Booking" object has no meaning without a "Customer"
+    // if I delete a "Customer", the related "Bookings" are deleted as well
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
+    // The application only uses the default empty constructor
 
     public Integer getCustomerId() {
         return customerId;
@@ -117,4 +127,5 @@ public class Customer {
                 '}';
     }
 }
+
 
