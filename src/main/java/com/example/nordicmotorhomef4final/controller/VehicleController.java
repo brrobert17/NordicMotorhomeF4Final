@@ -1,6 +1,7 @@
 package com.example.nordicmotorhomef4final.controller;
 
 import com.example.nordicmotorhomef4final.model.Booking;
+import com.example.nordicmotorhomef4final.model.Customer;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 
 import com.example.nordicmotorhomef4final.service.CustomerService;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -51,6 +53,7 @@ public class VehicleController {
     @PostMapping("/vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
+
                                  @Param("customerId") Integer customerId,
                                  Booking searchBooking) {
         String available = "Insert Date";
@@ -77,20 +80,23 @@ public class VehicleController {
 
     //  Get Mapping for choosing Vehicle After having Chosen the Customer
     @SneakyThrows
-    @GetMapping("vehicles/vehiclePage/{customerId}")
-    public String selectVehiclesAfterCustomer(@PathVariable("customerId") Integer customerId, Model model) {
+    @GetMapping("vehicles/vehiclePage/{customerIdFromBooking}")
+    public String selectVehiclesAfterCustomer(@PathVariable("customerIdFromBooking") Integer customerIdFromBooking,
+                                              Model model, RedirectAttributes redirectAttributes) {
         String keyword = "";
-        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
-                + " " + customerService.getCustomerById(customerId).getLastName();
+        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerIdFromBooking).getFirstName()
+                + " " + customerService.getCustomerById(customerIdFromBooking).getLastName();
         String available = "Insert Date";
+        Integer custPickId = 0;
         model.addAttribute("titlePage", titlePage);
-        model.addAttribute("customerId", customerId);
+        model.addAttribute("customerIdFromBooking", customerIdFromBooking);
         model.addAttribute("vehiclesList", vehicleService.showAllVehicles());
         model.addAttribute("brandList", vehicleService.brandList());
         model.addAttribute("keyword", keyword);
         model.addAttribute("available", available);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("searchedBooking", new Booking());
+
         return "vehicles/vehiclePage";
     }
 
@@ -99,7 +105,8 @@ public class VehicleController {
     @SneakyThrows
     @PostMapping("/vehicles/vehiclePageWithCustomer")
     public String filterVehiclesForCustomer(Model model,
-                                            @Param("customerId") Integer customerId,
+                                            @Param("customerPickedId") Integer customerPickedId,
+                                            @Param("key") Integer customerId,
                                             @Param("keyword") String keyword,
                                             Booking searchBooking) {
         String available = "Insert Date";
@@ -109,11 +116,10 @@ public class VehicleController {
         if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
             available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
         }
-        String titlePage = "Choose a vehicle for " ;
-//                + customerService.getCustomerById(customerId).getFirstName()
-//                + " " + customerService.getCustomerById(customerId).getLastName();
+        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
+                + " " + customerService.getCustomerById(customerId).getLastName();
         model.addAttribute("titlePage", titlePage);
-        model.addAttribute("customerId", customerId);
+        model.addAttribute("customerPickedId", customerId);
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("available", available);

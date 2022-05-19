@@ -31,7 +31,7 @@
         </div>
 
         <!--        Div for Filter-->
-<!--        Search if we come from Index-->
+        <!--        Search if we come from Index-->
         <div th:if="${titlePage.contains('Nordic')}" class="container text-center">
             <div th:if="${titlePage.contains('Nordic')}" class="text-center border border-secondary rounded p-3">
                 <form th:if="${titlePage.contains('Nordic')}" th:action="@{/vehicles/vehiclePage}"
@@ -41,24 +41,24 @@
                           method="post" style="max-width: 600px; margin: 0 auto;">
                         <div class="m-3">
                             <!--                        Start date input-->
-                            <div class="form-group row">
 
-                                <div class="col-8">
+
+
                                     <label class="col-4 col-form-label">Start Date </label>
                                     <input type="date" id="startDate" th:field="*{startDate}" class="form-control"/>
-                                </div>
-                            </div>
-                            <!--                        End date input-->
-                            <div class="form-group row">
 
-                                <div class="col-8">
-                                    <label class="col-4 col-form-label">End Date </label>
+
+                            <!--                        End date input-->
+
+
+
+                                    <label class="col-4">End Date </label>
                                     <input type="date" id="endDate" th:field="*{endDate}" class="form-control"/>
-                                </div>
-                            </div>
+
+
 
                             <!--                        Search function-->
-                            <div>
+
                                 <label class="col-4 col-form-label">Search Vehicles</label>
                                 <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
                                 <button type="submit" id="searchVehicle" class="btn btn-primary">Search</button>
@@ -76,40 +76,37 @@
             </div>
         </div>
 
-<!--Search if we come from Booking,  points to filterVehiclesForCustomer, 2nd PostMapping-->
+        <!--Search if we come from Booking,  points to filterVehiclesForCustomer, 2nd PostMapping-->
         <div th:if="${!titlePage.contains('Nordic')}" class="container text-center">
-            <div  class="text-center border border-secondary rounded p-3">
+            <div class="text-center border border-secondary rounded p-3">
                 <form th:action="@{/vehicles/vehiclePageWithCustomer}"
                       th:object="${keyword}"
                       method="post"
                       style="max-width: 600px; margin: 0 auto;">
+                    <!--                    takes from getmapping-->
+                    <input type="hidden" name="customerId" th:value="${customerIdFromBooking}"/>
                     <form th:action="@{/vehicles/vehiclePageWithCustomer}" th:object="${searchDateVehicle}"
                           method="post" style="max-width: 600px; margin: 0 auto;">
-                        <div class="m-3">
-                            <!--                        Start date input-->
-                            <div class="form-group row">
+                        <div class="container text-center">
+                            <div class="m-3">
+                                <!--                        Start date input-->
+                                <label class="col-4 col-form-label">Start Date </label>
+                                <input type="date" id="startDateCustomer" th:field="*{startDate}"
+                                       class="form-control"/>
+                                <!--                        End date input-->
+                                <label class="col-4 col-form-label">
+                                    End Date
+                                </label>
+                                <input type="date" id="endDateCustomer" th:field="*{endDate}"
+                                       class="form-control"/>
 
-                                <div class="col-8">
-                                    <label class="col-4 col-form-label">Start Date </label>
-                                    <input type="date" id="startDateCustomer" th:field="*{startDate}"
-                                           class="form-control"/>
-                                </div>
-                            </div>
-                            <!--                        End date input-->
-                            <div class="form-group row">
-
-                                <div class="col-8">
-                                    <label class="col-4 col-form-label">End Date </label>
-                                    <input type="date" id="endDateCustomer" th:field="*{endDate}" class="form-control"/>
-                                </div>
-                            </div>
-
-                            <!--                        Search function-->
-
-                            <div>
+                                <!--                        Search function-->
                                 <label class="col-4 col-form-label">Search Vehicles</label>
-                                <input type="text" name="keyword" id="keywordForCustomer" size="50" th:value="${keyword}"/>
-                                <button type="submit" id="searchVehicForCustomer" class="btn btn-primary">Search</button>
+
+                                <input type="text" name="keyword" id="keywordForCustomer" size="50"
+                                       th:value="${keyword}"/>
+                                <button type="submit" id="searchVehicForCustomer" class="btn btn-primary">Search
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -117,9 +114,7 @@
             </div>
         </div>
 
-
         <!--    Table-->
-
         <div>
             <div>
                 <table class="table table-striped table-bordered">
@@ -168,9 +163,10 @@
                             <!--                            </select>-->
                         </th>
 
-                        <th th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">Availability</th>
-                        <th>Edit/Delete</th>
-                        <th th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">Choose</th>
+                        <th th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">Availability
+                        </th>
+                        <th th:if="${titlePage.contains('Nordic')}">Edit/Delete</th>
+                        <th th:if="${searchedBooking.startDate != null && !titlePage.contains('Nordic')}">Choose</th>
 
 
                     </tr>
@@ -186,20 +182,23 @@
                         <td th:text="${vehicle.getRegistrationPlate()}"></td>
                         <td th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}"
                             th:text="${available}"></td>
-                        <td>
+                        <td th:if="${titlePage.contains('Nordic')}">
                             <a class="btn btn-info" th:href="@{'/edit/' + ${vehicle.getRegistrationPlate()}}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
                             <a class="btn btn-info"
                                th:href="@{'/delete/' + ${vehicle.getRegistrationPlate()}}">Delete</a>
                         </td>   <!--edit/delete-->
-                        <td th:if="${searchedBooking.startDate != null || !titlePage.contains('Nordic')}">
+                        <td th:if="${searchedBooking.startDate != null && !titlePage.contains('Nordic')}">
                             <a class="btn btn-success" id="choose"
-                               th:if="${searchedBooking.startDate != null}" th:href="@{../bookings/new}">Choose</a>
-<!--                                                           + ${customerId}+'/'-->
-<!--                                                           + ${vehicle.getRegistrationPlate()}+'/'-->
-<!--                                                           + ${searchedBooking.getStartDate()}+'/'-->
-<!--                                                           + ${searchedBooking.getEndDate()}-->
+                               th:if="${searchedBooking.startDate != null}"
 
+
+                               th:href="@{'/vehicles/addToNewBooking/' + ${customerPickedId}+'/'
+                                                          + ${vehicle.getRegistrationPlate()}+'/'
+                                                           + ${searchedBooking.getStartDate()}+'/'
+                                                           + ${searchedBooking.getEndDate()}}">Choose</a>
+
+                            <!--                            th:href="@{../bookings/new}">Choose</a>-->
                         </td>   <!--choose-->
                     </tr>
                     </tbody>
@@ -251,6 +250,53 @@
         .sideBnav a {
             font-size: 18px;
         }
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover, .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
     }
 </style>
 </html>

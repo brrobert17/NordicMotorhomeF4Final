@@ -5,6 +5,7 @@ import com.example.nordicmotorhomef4final.service.BookingService;
 import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,8 +79,15 @@ public class BookingController {
     }
     @GetMapping("/vehicles/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
     public String addCustomerToBooking(
-            @PathVariable("customerId") Integer customerId, @PathVariable("registrationPlate") String registrationPlate,
-            @PathVariable("bookStart") LocalDate bookStart, @PathVariable("bookEnd") LocalDate bookEnd,Model model, RedirectAttributes redirectAttributes) {
+            @PathVariable("customerId") Integer customerId,
+            @PathVariable("registrationPlate") String registrationPlate,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @PathVariable("bookStart") LocalDate bookStart,
+            @DateTimeFormat(pattern = "yyyy-MM-dd")
+            @PathVariable("bookEnd") LocalDate bookEnd,
+            Model model, RedirectAttributes redirectAttributes) {
+
+
 
         model.addAttribute("customerId", customerId);
         model.addAttribute("registrationPlate", registrationPlate);
