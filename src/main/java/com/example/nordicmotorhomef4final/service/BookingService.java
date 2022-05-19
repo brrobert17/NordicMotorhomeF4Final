@@ -5,6 +5,8 @@ import com.example.nordicmotorhomef4final.repo.BookingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Service
@@ -20,7 +22,7 @@ public class BookingService {
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
     }
-    //edit booking
+
     public void editBooking(Booking booking) {
         bookingRepo.save(booking);
     }
@@ -50,6 +52,7 @@ public class BookingService {
         return bookingRepo.searchBookingByKeyword(keyword);
 
     }
+
     public void deleteBookingById(Integer id) throws CustomerNotFoundException {
         Long count = bookingRepo.countByBookingId(id);
         if (count== null || count ==0) {
@@ -57,9 +60,17 @@ public class BookingService {
         }
         bookingRepo.deleteById(id);
     }
+
+    public int calculateDays(Booking booking) {
+        LocalDate startDate = booking.getStartDate();
+        LocalDate endDate = booking.getEndDate();
+
+        Period period = Period.between(startDate, endDate);
+
+        return Math.abs(period.getDays());
+    }
 }
 
-//make a general search function that can search by keyword and date
 
 
 

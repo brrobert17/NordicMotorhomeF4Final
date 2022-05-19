@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface BookingRepo extends JpaRepository<Booking, Integer> {
     public Long countByBookingId(int bookingId);
+
     @Query("SELECT b FROM Booking AS b WHERE CONCAT(b.bookingId, b.customer.firstName, b.customer.lastName," +
             " b.customer.phoneNumber, b.vehicle.brand, b.vehicle.model, b.vehicle.registrationPlate)" +
             " LIKE %?1%")

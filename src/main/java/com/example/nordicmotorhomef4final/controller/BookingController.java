@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Controller
@@ -101,6 +102,7 @@ public class BookingController {
         return "bookings/updateBookingForm";
 
     }
+
     @GetMapping("/bookings/delete/{id}")
     public String deleteBooking(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
@@ -111,5 +113,19 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/bookings/bookingPage";
+    }
+
+    @GetMapping("/bookings/print/{bookingId}")
+    public String printBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
+        Booking booking = bookingService.findBookingById(bookingId);
+
+        int days = bookingService.calculateDays(booking);
+
+        model.addAttribute("days", days);
+        model.addAttribute("booking", booking);
+        model.addAttribute("pageTitle", "Print Receipt");
+
+        return "bookings/printBookingReceipt";
+
     }
 }
