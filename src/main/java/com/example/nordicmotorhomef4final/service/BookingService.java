@@ -20,14 +20,13 @@ public class BookingService {
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
     }
+    //edit booking
+    public void editBooking(Booking booking) {
+        bookingRepo.save(booking);
+    }
 
     public Booking findBookingById(Integer id) {
         return bookingRepo.getBookingById(id);
-    }
-
-    //show only a booking by id
-    public List<Booking> showAllBookingKeyword(String keyword) {
-        return bookingRepo.searchBookingByKeyword(keyword);
     }
 
     public List<Booking> showFilteredBookings(String keyword, Booking searchBooking) {
@@ -45,7 +44,22 @@ public class BookingService {
             }
         }
     }
+
+    //show only a booking by id
+    public List<Booking> showAllBookingKeyword(String keyword) {
+        return bookingRepo.searchBookingByKeyword(keyword);
+
+    }
+    public void deleteBookingById(Integer id) throws CustomerNotFoundException {
+        Long count = bookingRepo.countByBookingId(id);
+        if (count== null || count ==0) {
+            throw new CustomerNotFoundException("Could not find any customers with the ID: " + id);
+        }
+        bookingRepo.deleteById(id);
+    }
 }
+
+//make a general search function that can search by keyword and date
 
 
 

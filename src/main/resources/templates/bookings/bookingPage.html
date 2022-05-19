@@ -93,7 +93,7 @@
                 <td th:text="${booking.getEndDate()}"></td>
                 <td>
                     <a class="btn btn-info" th:href="@{'/update/' + ${booking.getBookingId()}}">Update</a>
-                    <a class="btn btn-info" th:href="@{'bookings/delete/' + ${booking.getBookingId()}}">Delete</a>
+                    <a class="btn btn-info" th:href="@{'/bookings/delete/' + ${booking.getBookingId()}}">Delete</a>
                 </td>
             </tr>
             </tbody>
