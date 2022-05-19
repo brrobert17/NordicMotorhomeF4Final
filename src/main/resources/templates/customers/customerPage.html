@@ -56,7 +56,7 @@
                 <th>Phone</th>
                 <th></th>
                 <th></th>
-                <th></th>
+                <th>Add to Booking</th>
             </tr>
             </thead>
             <tbody>
@@ -75,7 +75,7 @@
                     <a class="h5" th:href="@{'/customers/delete/' + ${customer.customerId}}">Delete</a>
                 </td>
                 <td>
-                    <a class="h5" th:href="@{'/customers/addToNewBooking/' + ${customer.customerId}}">Add</a>
+                    <a class="h5" th:href="@{'/bookings/addToNewBooking/' + ${customer.customerId}}">Add</a>
                 </td>
             </tr>
             </tbody>

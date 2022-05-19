@@ -67,21 +67,18 @@ public class BookingController {
         return "redirect:/bookings/bookingPage";
     }
 
-    @GetMapping("/customers/addToNewBooking/{customerId}")
+    @GetMapping("/bookings/addToNewBooking/{customerId}")
     public String addCustomerToBooking(
-            @PathVariable("customerId") Integer customerId, Model model, RedirectAttributes redirectAttributes) {
+            @PathVariable("customerId") Integer customerId, Model model) {
 
         model.addAttribute("customerId", customerId);
         model.addAttribute("newBooking", new Booking());
         model.addAttribute("pageTitle", "Make New Booking");
 
-        redirectAttributes.addFlashAttribute("message", "Customer ID: "
-                + customerId + " has been added to the booking successfully.");
-
         return "bookings/newBookingForm";
     }
 
-    @GetMapping("/vehicles/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
+    @GetMapping("/bookings/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
     public String addCustomerToBooking(
             @PathVariable("customerId") Integer customerId,
             @PathVariable("registrationPlate") String registrationPlate,
@@ -89,18 +86,13 @@ public class BookingController {
             @PathVariable("bookStart") LocalDate bookStart,
             @DateTimeFormat(pattern = "yyyy-MM-dd")
             @PathVariable("bookEnd") LocalDate bookEnd,
-            Model model, RedirectAttributes redirectAttributes) {
-
-
+            Model model) {
         model.addAttribute("customerId", customerId);
         model.addAttribute("registrationPlate", registrationPlate);
         model.addAttribute("bookStart", bookStart);
         model.addAttribute("bookEnd", bookEnd);
         model.addAttribute("newBooking", new Booking());
         model.addAttribute("pageTitle", "Make New Booking");
-
-        redirectAttributes.addFlashAttribute("message", "Customer ID: "
-                + customerId + " has been added to the booking successfully.");
 
         return "bookings/newBookingForm";
     }

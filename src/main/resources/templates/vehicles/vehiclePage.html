@@ -11,9 +11,9 @@
 <!-- Side navigation -->
 <div class="sideBnav">
     <a th:href="@{/}">Home</a>
-    <a th:href="@{../vehicles/vehiclePage}">Vehicles</a>
-    <a th:href="@{../customers/customerPage}">Customer</a>
-    <a th:href="@{../bookings/bookingPage}">Booking</a>
+    <a th:href="@{/vehicles/vehiclePage}">Vehicles</a>
+    <a th:href="@{/customers/customerPage}">Customer</a>
+    <a th:href="@{/bookings/bookingPage}">Booking</a>
 </div>
 <!--End of sidebar-->
 
@@ -43,33 +43,30 @@
                             <!--                        Start date input-->
 
 
-
-                                    <label class="col-4 col-form-label">Start Date </label>
-                                    <input type="date" id="startDate" th:field="*{startDate}" class="form-control"/>
+                            <label class="col-4 col-form-label">Start Date </label>
+                            <input type="date" id="startDate" th:field="*{startDate}" class="form-control"/>
 
 
                             <!--                        End date input-->
 
 
-
-                                    <label class="col-4">End Date </label>
-                                    <input type="date" id="endDate" th:field="*{endDate}" class="form-control"/>
-
+                            <label class="col-4">End Date </label>
+                            <input type="date" id="endDate" th:field="*{endDate}" class="form-control"/>
 
 
                             <!--                        Search function-->
 
-                                <label class="col-4 col-form-label">Search Vehicles</label>
-                                <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
-                                <button type="submit" id="searchVehicle" class="btn btn-primary">Search</button>
-                            </div>
-                            <div class="form-group row">
-                                <div class="container text-center">
-                                    <a class="btn btn-danger py-2"
-                                       th:href="@{/vehicles/new}">Add New Vehicle</a>
-                                </div>
+                            <label class="col-4 col-form-label">Search Vehicles</label>
+                            <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
+                            <button type="submit" id="searchVehicle" class="btn btn-primary">Search</button>
+                        </div>
+                        <div class="form-group row">
+                            <div class="container text-center">
+                                <a class="btn btn-danger py-2"
+                                   th:href="@{/vehicles/new}">Add New Vehicle</a>
                             </div>
                         </div>
+
 
                     </form>
                 </form>
@@ -193,7 +190,7 @@
                                th:if="${searchedBooking.startDate != null}"
 
 
-                               th:href="@{'/vehicles/addToNewBooking/' + ${customerPickedId}+'/'
+                               th:href="@{'/bookings/addToNewBooking/' + ${customerPickedId}+'/'
                                                           + ${vehicle.getRegistrationPlate()}+'/'
                                                            + ${searchedBooking.getStartDate()}+'/'
                                                            + ${searchedBooking.getEndDate()}}">Choose</a>

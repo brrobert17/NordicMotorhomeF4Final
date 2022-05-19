@@ -31,7 +31,7 @@ public class VehicleController {
     @Autowired
     CustomerService customerService;
 
-    //  Get Mapping for Vehicle Page
+    //  Get Mapping for Vehicle Page from Index
     @GetMapping("vehicles/vehiclePage")
     public String showVehicles(Model model) {
         String keyword = "";
@@ -49,11 +49,10 @@ public class VehicleController {
         return "vehicles/vehiclePage";
     }
 
-    //   1st    Post Mapping for Vehicle Page
+    //   1st    Post Mapping for Vehicle Page from Index
     @PostMapping("/vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
-
                                  @Param("customerId") Integer customerId,
                                  Booking searchBooking) {
         String available = "Insert Date";
@@ -79,7 +78,7 @@ public class VehicleController {
     // Connect to this getmapping!!
 
     //  Get Mapping for choosing Vehicle After having Chosen the Customer
-    @SneakyThrows
+    @SneakyThrows//Find documentation for this shit
     @GetMapping("vehicles/vehiclePage/{customerIdFromBooking}")
     public String selectVehiclesAfterCustomer(@PathVariable("customerIdFromBooking") Integer customerIdFromBooking,
                                               Model model, RedirectAttributes redirectAttributes) {
@@ -102,10 +101,9 @@ public class VehicleController {
 
 
     //  2nd   Post Mapping for Vehicle Page [for choosing Vehicle After having Chosen the Customer]
-    @SneakyThrows
+    @SneakyThrows//Find documentation for this shit
     @PostMapping("/vehicles/vehiclePageWithCustomer")
     public String filterVehiclesForCustomer(Model model,
-                                            @Param("customerPickedId") Integer customerPickedId,
                                             @Param("key") Integer customerId,
                                             @Param("keyword") String keyword,
                                             Booking searchBooking) {
@@ -137,7 +135,7 @@ public class VehicleController {
     }
 
     @PostMapping("vehicles/save")
-//    vehicle is a string that saves the vehicle and returns ok or duplicate message
+    //vehicle is a string that saves the vehicle and returns ok or duplicate message
     public String saveNewVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
         RedirectAttributes due = redirectAttributes;
         redirectAttributes.addFlashAttribute(vehicleService.saveVehicle(vehicle, due));
@@ -145,6 +143,7 @@ public class VehicleController {
     }
 
     @GetMapping("/edit/{registrationPlate}")
+    //Goes to editVehicleForm.html and allows you to edit a Vehicle
     public String editVehicle(@PathVariable("registrationPlate") String registrationPlate, Model model, RedirectAttributes redirectAttributes) {
         Vehicle vehicle = vehicleService.getVehicleById(registrationPlate);
         System.out.println("vehicle");
@@ -156,9 +155,10 @@ public class VehicleController {
     }
 
     @GetMapping("/delete/{registrationPlate}")
+    //Goes to editVehicleForm.html and allows you to delete a Vehicle
     public String deleteCustomer(@PathVariable("registrationPlate") String registrationPlate, RedirectAttributes redirectAttributes) {
         vehicleService.deleteVehicle(vehicleService.getVehicleById(registrationPlate));
-        redirectAttributes.addFlashAttribute("message", "Vehicle: " + registrationPlate + " has been deleted.");
+        redirectAttributes.addFlashAttribute("alert", "Vehicle: " + registrationPlate + " has been deleted.");
         return "redirect:../vehicles/vehiclePage";
     }
 

@@ -5,7 +5,7 @@
     <title>NordicMotorhomeF4</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}">
 </head>
-<body>
+<body th:style="'background: url(https://cdna.artstation.com/p/assets/images/images/001/345/090/large/eugenio-garcia-villarreal-7457729466-d2a7b22649-k.jpg) no-repeat center center fixed;'">
 <!-- Side navigation -->
 <div class="sideBnav">
     <a th:href="@{/}">Home</a>
@@ -14,7 +14,7 @@
     <a th:href="@{../bookings/bookingPage}">Booking</a>
 </div>
 <div class="container text-center">
-<a th:href="@{../vehicles/vehiclePage/1}">Book customer 1</a>
+<a th:href="@{../customers/customerPage}">Make a new Booking</a>
 </div>
 
 </body>
@@ -47,7 +47,10 @@
         color: #f1f1f1;
     }
 
-    .main {
+
+
+
+      .main {
         margin-left: 160px; /* Same as the width of the sidenav */
         font-size: 28px; /* Increased text to enable scrolling */
         padding: 0px 10px;
@@ -61,6 +64,13 @@
         .sideBnav a {
             font-size: 18px;
         }
+    }
+</style>
+<style th:inline="text">
+    .image-background {
+    th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}"
+    background: url{[[@{https://cdna.artstation.com/p/assets/images/images/001/345/090/large/eugenio-garcia-villarreal-7457729466-d2a7b22649-k.jpg}]]}
+    no-repeat center center fixed;
     }
 </style>
 </html>
