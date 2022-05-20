@@ -31,10 +31,12 @@ public class VehicleController {
     @Autowired
     CustomerService customerService;
 
-    //  Get Mapping for Vehicle Page from Index
+//    Get Mapping for Vehicle Page from Index:
+//    This getmapping uses the main Vehicle Page and displays informations
+//    about the Vehicles.
+//    It Contains many attributes needed to Display the html file correctly
     @GetMapping("vehicles/vehiclePage")
     public String showVehicles(Model model) {
-        String keyword = "";
         String available = "Insert Date";
         String titlePage = "Nordic Motorhome Vehicles";
         List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
@@ -42,12 +44,14 @@ public class VehicleController {
         model.addAttribute("titlePage", titlePage);
         model.addAttribute("vehiclesList", vehiclesList);
         model.addAttribute("brandList", brandList);
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("keyword", "");
         model.addAttribute("available", available);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("searchedBooking", new Booking());
         return "vehicles/vehiclePage";
     }
+
+
 
     //   1st    Post Mapping for Vehicle Page from Index
     @PostMapping("/vehicles/vehiclePage")
@@ -61,6 +65,8 @@ public class VehicleController {
         //Passes the String Available to the page if the dates are not null
         if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
             available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
+        } else if ((searchBooking.getStartDate() != null && searchBooking.getEndDate() == null) ||(searchBooking.getStartDate() == null && searchBooking.getEndDate() != null)){
+            available = "Input Both Dates";
         }
         String titlePage = "Nordic Motorhome Vehicles";
         model.addAttribute("titlePage", titlePage);
@@ -72,10 +78,6 @@ public class VehicleController {
         return "vehicles/vehiclePage";
     }
 
-
-
-    // TODO by Zaland and Soheil
-    // Connect to this getmapping!!
 
     //  Get Mapping for choosing Vehicle After having Chosen the Customer
     @SneakyThrows//Find documentation for this shit
@@ -139,6 +141,14 @@ public class VehicleController {
     public String saveNewVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
         RedirectAttributes due = redirectAttributes;
         redirectAttributes.addFlashAttribute(vehicleService.saveVehicle(vehicle, due));
+        return "redirect:vehiclePage";
+    }
+
+    @PostMapping("vehicles/edit")
+    //vehicle is a string that saves the vehicle and returns ok or duplicate message
+    public String editNewVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
+        RedirectAttributes due = redirectAttributes;
+        redirectAttributes.addFlashAttribute(vehicleService.editVehicle(vehicle, due));
         return "redirect:vehiclePage";
     }
 

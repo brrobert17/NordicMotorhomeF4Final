@@ -25,6 +25,8 @@ public class Vehicle {
     private String cLicense;
     @Column(columnDefinition = "DOUBLE NOT NULL")
     private double totalKm;
+    //Here we define the "connection" between the vehicle object and the Booking object
+    //One vehicle object appears in many bookings
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 

@@ -4,6 +4,7 @@ import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Customer;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 import com.example.nordicmotorhomef4final.repo.VehicleRepo;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -12,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
+//  TODO
+//  More information needed about @Service
 @Service
 public class VehicleService {
     //    Uses the vehicles repository
@@ -19,6 +22,7 @@ public class VehicleService {
     private VehicleRepo vehicleRepo;
 
     //    ListAll: returns a List of Vehicles objects that contain the keyword
+    //    either with bookings and/or search string (keyword) or a full List
     public List<Vehicle> showFilteredVehicles(String keyword, Booking searchBooking) {
         if (searchBooking.getStartDate() == null || searchBooking.getEndDate() == null) {
             if (keyword == null) {
@@ -35,23 +39,30 @@ public class VehicleService {
         }
     }
 
+    //   Shows all Vehicles
     public List<Vehicle> showAllVehicles() {
         return vehicleRepo.findAll();
     }
 
+    //    TODO - Remove or Implement
+//    Shows a list of Brands - Iteration 2 Filter
     public List<String> brandList() {
-        List<String> brandList = new ArrayList<String>(){};
+        List<String> brandList = new ArrayList<String>() {
+        };
         brandList.add("Brand");
-        for (Vehicle v:vehicleRepo.findAll()
-             ) {
+        for (Vehicle v : vehicleRepo.findAll()
+        ) {
             if (!brandList.contains(v.getBrand()))
-            brandList.add(v.getBrand());
+                brandList.add(v.getBrand());
         }
         return brandList;
     }
 
-    public RedirectAttributes saveVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes){
-        if(vehicle.getcLicense()== null || vehicle.getBrand()==null||vehicle.getCapacity()==null||vehicle.getModel()==null){
+    //    TODO Iteration 2 - Should throw exception?
+//    Saves a vehicle:
+//    We are using a RedirectAttribute so we can show a Success/Failure Message
+    public RedirectAttributes saveVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
+        if (vehicle.getcLicense() == null || vehicle.getBrand() == null || vehicle.getCapacity() == null || vehicle.getModel() == null) {
             return redirectAttributes.addFlashAttribute("alert", "Missing Fields");
         }
         if (vehicleRepo.searchByRegistrationPlate(vehicle.getRegistrationPlate()) == null) {
@@ -62,11 +73,23 @@ public class VehicleService {
         }
     }
 
+    public RedirectAttributes editVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
+        if (vehicle.getcLicense() == null || vehicle.getBrand() == null || vehicle.getCapacity() == null || vehicle.getModel() == null) {
+            return redirectAttributes.addFlashAttribute("alert", "Missing Fields");
+        } else {
+            vehicleRepo.save(vehicle);
+            return redirectAttributes.addFlashAttribute("message", "Vehicle: " + vehicle.getRegistrationPlate() + " was edited in the database");
+        }
+    }
+
+    //    TODO - Should it throw exception?
+//    Deletes a Vehicle in the repository
     public void deleteVehicle(Vehicle vehicle) {
         vehicleRepo.delete(vehicle);
     }
 
-    public Vehicle getVehicleById(String registrationPlate){
+    //    Simple get vehicle from registrationPlate
+    public Vehicle getVehicleById(String registrationPlate) {
         return vehicleRepo.searchByRegistrationPlate(registrationPlate);
     }
 

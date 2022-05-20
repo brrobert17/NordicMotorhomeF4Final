@@ -2,31 +2,79 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-<!--    <title>[[${pageTitle}]]</title>-->
-    <link rel="stylesheet" type="text/css" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" />
+        <title>[[${pageTitle}]]</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"/>
 </head>
 <body>
 
 <div class="container-fluid">
-    <div class="text-center">
-
-    </div>
-
-    <form th:action="@{/vehicles/save}" method="post" th:object="${newVehicle}"
+    <form th:if="${pageTitle.contains('Add')}" th:action="@{/vehicles/save}" method="post" id="addForm"
+          th:object="${newVehicle}"
           style="max-width: 500px; margin: 0 auto;">
-
         <div class="text-center border border-secondary rounded p-3">
             <div class="text-center form-group row">
-
                 <h2 class="text-center">[[${pageTitle}]]</h2>
             </div>
+            <div class="form-group row">
+                <label for="addRegPlate" class="col-sm-4 col-form-label">Registration Plate</label>
+                <div class="col-sm-8">
+                    <input id="addRegPlate" name="addRegPlate" type="text" th:field="*{registrationPlate}" class="form-control" required/>
+                </div>
+            </div>
 
+            <div class="form-group row">
+                <label for="addBrand" class="col-sm-4 col-form-label">Brand</label>
+                <div class="col-sm-8">
+                    <input id="addBrand" type="text" th:field="*{brand}" class="form-control" required/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Model</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{model}" class="form-control" required/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">C License Requirement</label>
+                <div class="col-sm-8" style="margin: 10px auto;">
+                    <input type="radio" name="radio" id="y" value="Yes" th:field="*{cLicense}" required>
+                    <label for="y" style="padding: 5px">Yes</label>
+                    <input type="radio" name="radio" id="n" value="No" checked="checked" required
+                           th:field="*{cLicense}">
+                    <label for="n" style="padding: 5px">No</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Capacity</label>
+                <div class="col-sm-8">
+                    <input type="number" th:field="*{capacity}" class="form-control" required/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Total Km</label>
+                <div class="col-sm-8">
+                    <input type="number" th:field="*{totalKm}" class="form-control"/>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary m-2" onclick="confirmAdd()">Save</button>
+            <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+        </div>
+    </form>
 
-
+    <form th:if="${pageTitle.contains('Edit')}" th:action="@{/vehicles/edit}" method="post" id="editForm"
+          th:object="${newVehicle}"
+          style="max-width: 500px; margin: 0 auto;">
+        <div class="text-center border border-secondary rounded p-3">
+            <div class="text-center form-group row">
+                <h2 class="text-center">[[${pageTitle}]]</h2>
+            </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Registration Plate</label>
                 <div class="col-sm-8">
-                    <input type="text" th:field="*{registrationPlate}" class="form-control" required/>
+                    <input id="regPlate" type="text" th:field="*{registrationPlate}" class="form-control" required/>
                 </div>
             </div>
 
@@ -45,10 +93,11 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">C License Requirement</label>
                 <div class="col-sm-8" style="margin: 10px auto;">
-                    <input type="radio" name="radio" id="y" value="Yes" th:field="*{cLicense}" required>
+                    <input type="radio" name="radio" id="editY" value="Yes" th:field="*{cLicense}" required>
                     <label for="y" style="padding: 5px">Yes</label>
-                    <input type="radio" name="radio" id="n" value="No" checked="checked"  required th:field="*{cLicense}">
-                    <label for="n"style="padding: 5px">No</label>
+                    <input type="radio" name="radio" id="editN" value="No" checked="checked" required
+                           th:field="*{cLicense}">
+                    <label for="n" style="padding: 5px">No</label>
                 </div>
             </div>
             <div class="form-group row">
@@ -65,7 +114,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-primary m-2" onclick="alert1()">Save</button>
+            <button type="button" class="btn btn-primary m-2" onclick="confirmEdit()">Edit</button>
             <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
         </div>
     </form>
@@ -79,11 +128,17 @@
         function cancelForm() {
             window.location = "/vehicles/vehiclePage"
         }
-        function alert1() {
-            alert("Hello! I am an alert box!!")
+        function confirmEdit() {
+            if (confirm("Are you sure you want to edit " + document.getElementById("regPlate").value + "?")) {
+                document.getElementById("editForm").submit();
+            }
+        }
+        function confirmAdd() {
+            if (confirm("Are you sure you want to add "+document.getElementById("addRegPlate").value+ "?")) {
+                document.getElementById("addForm").submit();
+            }
         }
     </script>
-
 </footer>
 
 </html>
