@@ -53,14 +53,12 @@ public class BookingController {
         return "bookings/newBookingForm";
     }
 
-    @PostMapping("bookings/save/")
-    public String saveBooking( Booking booking, RedirectAttributes redirectAttributes) {
+    @PostMapping("bookings/save")
+    public String saveBooking(Booking booking, RedirectAttributes redirectAttributes) {
         bookingService.saveBooking(booking);
         redirectAttributes.addFlashAttribute("message", "The booking has been saved successfully");
         return "redirect:/bookings/bookingPage";
     }
-    //save booking after editing
-
 
     @GetMapping("/bookings/addToNewBooking/{customerId}")
     public String addCustomerToBooking(
@@ -95,8 +93,6 @@ public class BookingController {
     @GetMapping("/update/{bookingId}")
     public String updateBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
         Booking booking = bookingService.findBookingById(bookingId);
-        //calculate the total price
-
 
         model.addAttribute("booking", booking);
         model.addAttribute("pageTitle", "Update Booking");
@@ -105,7 +101,6 @@ public class BookingController {
         model.addAttribute("pageTitle", "Update Booking with ID: " + bookingId);
 
         return "bookings/updateBookingForm";
-
     }
 
     @GetMapping("/bookings/delete/{id}")
