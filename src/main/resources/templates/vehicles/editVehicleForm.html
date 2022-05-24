@@ -7,7 +7,7 @@
           th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"/>
 </head>
 <body>
-
+<!--This page does not contain a navbar-->
 <div class="container-fluid">
     <form th:if="${pageTitle.contains('Add')}" th:action="@{/vehicles/save}" method="post" id="addForm"
           th:object="${newVehicle}"
