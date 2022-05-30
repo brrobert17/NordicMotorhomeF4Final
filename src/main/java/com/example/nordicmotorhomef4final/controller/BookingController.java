@@ -54,10 +54,11 @@ public class BookingController {
     @PostMapping("bookings/save")
     public String saveBooking(Booking booking, RedirectAttributes redirectAttributes) {
         bookingService.saveBooking(booking);
+
         redirectAttributes.addFlashAttribute("message", "The booking has been saved successfully");
         return "redirect:/bookings/bookingPage";
     }
-//
+// add a new customer to based on {customerId} return to new html page in newBookingForm
     @GetMapping("/bookings/addToNewBooking/{customerId}")
     public String addCustomerToBooking(
             @PathVariable("customerId") Integer customerId, Model model) {
@@ -68,7 +69,7 @@ public class BookingController {
 
         return "bookings/newBookingForm";
     }
-    //pathvariable is dinamic way of getting the value from the html form
+    //@pathvariable is dinamic way of getting the value from the html form
     //addCustomerToBooking is the name of the method for
     @GetMapping("/bookings/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
     public String addCustomerToBooking(
@@ -91,8 +92,11 @@ public class BookingController {
 //use @pathvariable to get the id from the url
     @GetMapping("/update/{bookingId}")
     public String updateBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
+        //get the booking from the database
         Booking booking = bookingService.findBookingById(bookingId);
+        //creat a booking list and put all booking id which have the same customer id
        List<Booking> checkregisrtationplate= bookingService.checkRegisrtationPlateIsAvailable(bookingId);
+       //check if its true or false for data collision
       boolean checkdate= bookingService.checkCollision(bookingId);
 
 
@@ -107,11 +111,12 @@ public class BookingController {
 
         return "bookings/updateBookingForm";
     }
-
+//delete booking from database and put in try and catch to make sure the id is exist
     @GetMapping("/bookings/delete/{id}")
     public String deleteBooking(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.deleteBookingById(id);
+            //redirectAttributes is used to add a message to the page after the delete
 
             redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been saved successfully.");
         } catch (Exception e) {
@@ -120,7 +125,7 @@ public class BookingController {
         }
         return "redirect:/bookings/bookingPage";
     }
-
+//print the booking and find the booking by id and find days and total price and add it to the html page
     @GetMapping("/bookings/print/{bookingId}")
     public String printBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
         Booking booking = bookingService.findBookingById(bookingId);

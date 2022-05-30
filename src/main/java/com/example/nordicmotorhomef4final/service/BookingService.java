@@ -9,16 +9,17 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-
+///@Service is a spring annotation that tells spring to inject the dependency of the BookingService class.
 @Service
 public class BookingService {
-
+//@Autowired is creat object of BookingRepo class
     @Autowired
     private BookingRepo bookingRepo;
-
+//find all is a inside method of cruudrepository which is used to find all the data in the database
     public List<Booking> showAllBookings() {
         return bookingRepo.findAll();
     }
+    //save the booking in the database
     @Transactional
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
@@ -27,7 +28,7 @@ public class BookingService {
     public void editBooking(Booking booking) {
         bookingRepo.save(booking);
     }
-
+//
     public Booking findBookingById(Integer id) {
         return bookingRepo.getBookingById(id);
     }

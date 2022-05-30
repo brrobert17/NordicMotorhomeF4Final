@@ -24,7 +24,7 @@
         <div class ="m-2">
             <a class="h3" th:href="@{/bookings/new}">Make a New Booking</a>
         </div>
-
+<!--th:if means if the following is true then it will execute the following-->
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
         </div>
@@ -66,6 +66,7 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Search Bookings</label>
                         <div class="col-8">
+<!--                            th: value means the value of the input field will be the value of the variable-->
                             <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
@@ -93,6 +94,7 @@
             <th>More</th>
             </thead>
             <tbody>
+<!--            //th:each="${bookingList}" means for each booking in the bookingList variable-->
             <tr th:each="booking : ${bookingList}">
                 <td th:text="${booking.getBookingId()}"></td>
                 <td th:text="${booking.getCustomer().getFirstName()}"></td>

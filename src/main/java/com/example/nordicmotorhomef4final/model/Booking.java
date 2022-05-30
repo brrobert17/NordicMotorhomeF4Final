@@ -20,6 +20,7 @@ public class Booking {
     private Vehicle vehicle;
 
     @ManyToOne
+    //@JoinColumn means that the foreign key is called "customerId"
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
