@@ -3,6 +3,9 @@ package com.example.nordicmotorhomef4final.controller;
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.service.BookingService;
 import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
+import lombok.var;
+import org.apache.tomcat.jni.FileInfo;
+import org.hibernate.result.Output;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,23 +16,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.awt.*;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-
+//Controller is a class that handles the requests from the user and returns a response to the user.
 @Controller
 public class BookingController {
+    //Autowired is a spring annotation that tells spring to inject the dependency of the BookingService class.
     @Autowired
     BookingService bookingService;
 
-    // Bookings html connector GET
+    // show all bookings in the database
     @GetMapping("bookings/bookingPage")
     public String showBooking(Model model) {
         List<Booking> bookingList = bookingService.showAllBookings();
         model.addAttribute("bookingList", bookingList);
         return "bookings/bookingPage";
     }
-
+//@Param is used to get the value from the html form and put it in the method.
+    //show all bookings in the database according to the "keyword"
+    //@postmapping is
     @PostMapping("bookings/bookingPage")
     public String filterBooking(Model model, @Param("keyword") String keyword) {
         // MAKE A DINAMIC FILTER FOR SEARCH WITH KEYWORD
@@ -41,10 +49,7 @@ public class BookingController {
         return "bookings/bookingPage";
     }
 
-    @GetMapping("bookings/update/{id}")
-    public String updateBooking() {
-        return "newBookingForm";
-    }
+//creat a new booking in the database
 
     @GetMapping("bookings/new")
     public String showNewBookingForm(Model model) {
@@ -52,14 +57,14 @@ public class BookingController {
         model.addAttribute("pageTitle", "Make New Booking");
         return "bookings/newBookingForm";
     }
-
+//@postmapping is save the booking in the database
     @PostMapping("bookings/save")
     public String saveBooking(Booking booking, RedirectAttributes redirectAttributes) {
         bookingService.saveBooking(booking);
         redirectAttributes.addFlashAttribute("message", "The booking has been saved successfully");
         return "redirect:/bookings/bookingPage";
     }
-
+//
     @GetMapping("/bookings/addToNewBooking/{customerId}")
     public String addCustomerToBooking(
             @PathVariable("customerId") Integer customerId, Model model) {
@@ -70,7 +75,8 @@ public class BookingController {
 
         return "bookings/newBookingForm";
     }
-
+    //pathvariable is dinamic way of getting the value from the html form
+    //addCustomerToBooking is the name of the method for
     @GetMapping("/bookings/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
     public String addCustomerToBooking(
             @PathVariable("customerId") Integer customerId,
@@ -89,13 +95,19 @@ public class BookingController {
 
         return "bookings/newBookingForm";
     }
-
+//use @pathvariable to get the id from the url
     @GetMapping("/update/{bookingId}")
     public String updateBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
         Booking booking = bookingService.findBookingById(bookingId);
+       List<Booking> checkregisrtationplate= bookingService.checkRegisrtationPlateIsAvailable(bookingId);
+      boolean checkdate= bookingService.checkCollision(bookingId);
 
+
+
+       model.addAttribute("checkVehicle", checkregisrtationplate);
         model.addAttribute("booking", booking);
-        model.addAttribute("pageTitle", "Update Booking");
+        model.addAttribute("checkdate", checkdate);
+
 
         model.addAttribute("newBooking", booking);
         model.addAttribute("pageTitle", "Update Booking with ID: " + bookingId);
@@ -131,4 +143,7 @@ public class BookingController {
         return "bookings/printBookingReceipt";
 
     }
+    
+
+
 }

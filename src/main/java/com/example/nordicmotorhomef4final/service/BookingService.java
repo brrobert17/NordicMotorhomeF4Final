@@ -32,7 +32,7 @@ public class BookingService {
         return bookingRepo.getBookingById(id);
     }
 
-    public List<Booking> showFilteredBookings(String keyword, Booking searchBooking) {
+    /*public List<Booking> showFilteredBookings(String keyword, Booking searchBooking) {
         if (searchBooking.getStartDate() == null || searchBooking.getEndDate() == null) {
             if (keyword == null) {
                 return bookingRepo.findAll();
@@ -46,14 +46,15 @@ public class BookingService {
                 return bookingRepo.searchBookingByDateAndKeyword(searchBooking.getStartDate(), searchBooking.getEndDate(), keyword);
             }
         }
-    }
+    }*/
 
-    //show only a booking by id
+    //show List of booking with keyword
     public List<Booking> showAllBookingKeyword(String keyword) {
         return bookingRepo.searchBookingByKeyword(keyword);
-
     }
+    //@Transactional is used to make sure that the database is updated
     @Transactional
+    //delete a booking by id
     public void deleteBookingById(Integer id) throws CustomerNotFoundException {
         Long count = bookingRepo.countByBookingId(id);
         if (count== null || count ==0) {
@@ -61,7 +62,7 @@ public class BookingService {
         }
         bookingRepo.deleteById(id);
     }
-
+//calulate the price of a booking by the number of days
     public int calculateDays(Booking booking) {
         LocalDate startDate = booking.getStartDate();
         LocalDate endDate = booking.getEndDate();
@@ -89,7 +90,45 @@ public class BookingService {
 
         return totalPrice;
     }
+
+
+
+    //return all booking id which is have same registration plate
+
+    public List<Booking> checkRegisrtationPlateIsAvailable(Integer bookingId) {
+        //find all same registration plate and cheack if the date is colliding
+        List<Booking> bookings = bookingRepo.findAll();
+        Booking plateOfCar = bookingRepo.getBookingById(bookingId);
+        for (Booking b : bookings) {
+            if (b.getVehicle().getRegistrationPlate().equals(plateOfCar.getVehicle().getRegistrationPlate())) {
+                return bookingRepo.findAllByVehicle_RegistrationPlate(plateOfCar.getVehicle().getRegistrationPlate());
+
+            }
+        }
+        return null;
+    }
+
+
+    //make  sure data of booking is not colliding with specific booking with same customer and vehicle id
+    public boolean checkCollision(Integer bookingId) {
+        List<Booking> cars = checkRegisrtationPlateIsAvailable(bookingId);
+        if (cars != null) {
+            for (Booking b : cars) {
+                if (b.getBookingId() != bookingId) {
+                    if (b.getStartDate().isBefore(bookingRepo.getBookingById(bookingId).getEndDate()) && b.getEndDate().isAfter(bookingRepo.getBookingById(bookingId).getStartDate())) {
+                        return false;
+                    }
+                }
+            }
+
+        }
+        return true;
+
+    }
 }
+
+
+
 
 
 

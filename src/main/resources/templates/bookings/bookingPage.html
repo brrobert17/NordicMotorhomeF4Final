@@ -35,23 +35,33 @@
         <form th:action="@{/bookings/bookingPage}" th:object="${keyword}" method="post"
               style="max-width: 600px; margin: 0 auto;">
 
-            <!--<form th:action="@{/bookings/bookingPage}" th:object="${bookingData}" method="post"
+
+
+
+
+            <!--<form th:action="@{/bookings/bookingPage}" th:object="${bookingListDate}" method="post"
                   style="max-width: 600px; margin: 0 auto;">
                 <div class="m-5">
                     &lt;!&ndash;start date&ndash;&gt;
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Start Date</label>
                         <div class="col-8">
-                            <input type="date" th:field="*{startDate}" class="form-control"/>
+                            <input type="date" th:field="*{}" class="form-control"/>
                         </div>
                     </div>
                     &lt;!&ndash;end date&ndash;&gt;
                     <div class="form-group row">
                         <label class="col-4 col-form-label">End Date</label>
                         <div class="col-8">
-                            <input type="date" th:field="*{endDate}" class="form-control"/>
+                            <input type="date" th:field="*{}" class="form-control"/>
                         </div>
-                    </div>-->
+                    </div>
+-->
+
+
+
+
+
                     <!--Search function-->
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Search Bookings</label>
@@ -60,6 +70,8 @@
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
                     </div>
+
+
             
             </form>
 
@@ -134,6 +146,7 @@
         font-size: 28px; /* Increased text to enable scrolling */
         padding: 0px 10px;
     }
+
 
     @media screen and (max-height: 450px) {
         .sideBnav {
