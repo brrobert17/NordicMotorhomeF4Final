@@ -15,25 +15,44 @@
     <a th:href="@{../customers/customerPage}">Customer</a>
     <a th:href="@{../bookings/bookingPage}">Booking</a>
 </div>
-<!-- Main content -->
+<!-- Page content -->
+<div>
 <div class="container text-center">
 
-    <div class="container-fluid text-center">
-        <div><h2>Show all bookings</h2></div>
-
-        <div class ="m-2">
-            <a class="h3" th:href="@{/bookings/new}">Make a New Booking</a>
+    <div class="text-center border border-secondary rounded p-3">
+        <div>
+            <h1 class="h2">Show all bookings</h1>
         </div>
-<!--th:if means if the following is true then it will execute the following-->
+        <!--th:if means if the following is true then it will execute the following-->
         <div th:if="${message}" class="alert alert-success text-center">
             [[${message}]]
         </div>
 
+
+        <div class="form-group row">
+
+            <form th:action="@{/bookings/bookingPage}" th:object="${keyword}" method="post"
+                    style="max-width: 600px; margin: 0 auto;">
+            <label class="col-4 col-form-label">
+                Search Bookings
+            </label>
+            <div class="m-2">
+                <!--                            th: value means the value of the input field will be the value of the variable-->
+                <input type="text" name="keyword" id="keyword"placeholder="Search All" size="50" th:value="${keyword}"/>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            </form>
+
+        </div>
+
+        <div class ="m-2">
+            <a class="h3 btn btn-primary" th:href="@{/bookings/new}">Make a New Booking</a>
+        </div>
+
+
     </div>
-    <!--        Div for Filter-->
-    <div class="container text-center">
-        <form th:action="@{/bookings/bookingPage}" th:object="${keyword}" method="post"
-              style="max-width: 600px; margin: 0 auto;">
+
+
 
 
 
@@ -63,21 +82,14 @@
 
 
                     <!--Search function-->
-                    <div class="form-group row">
-                        <label class="col-4 col-form-label">Search Bookings</label>
-                        <div class="col-8">
-<!--                            th: value means the value of the input field will be the value of the variable-->
-                            <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"/>
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                    </div>
+
 
 
             
-            </form>
+
 
 <!--        </form>&ndash;&gt;-->
-</div>
+
 
     <div>
         <table class="table table-striped table-bordered">
@@ -91,7 +103,9 @@
             <th>Registration Plate</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>More</th>
+            <th>Update</th>
+            <th>Delete</th>
+            <th>Print</th>
             </thead>
             <tbody>
 <!--            //th:each="${bookingList}" means for each booking in the bookingList variable-->
@@ -107,7 +121,11 @@
                 <td th:text="${booking.getEndDate()}"></td>
                 <td>
                     <a class="btn btn-info" th:href="@{'/update/' + ${booking.getBookingId()}}">Update</a>
+                    </td>
+                <td>
                     <a class="btn btn-info" th:href="@{'/bookings/delete/' + ${booking.getBookingId()}}">Delete</a>
+                </td>
+                <td>
                     <a class="btn btn-info" th:href="@{'/bookings/print/' + ${booking.getBookingId()}}">Print</a>
                 </td>
             </tr>
