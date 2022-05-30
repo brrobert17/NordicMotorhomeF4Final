@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
@@ -45,6 +46,7 @@ public class VehicleService {
 
 //    Saves a vehicle:
 //    We are using a RedirectAttribute so we can show a Success/Failure Message
+    @Transactional
     public RedirectAttributes saveVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
         if (vehicle.getcLicense() == null || vehicle.getBrand() == null || vehicle.getCapacity() == null || vehicle.getModel() == null) {
             return redirectAttributes.addFlashAttribute("alert", "Missing Fields");
@@ -56,7 +58,7 @@ public class VehicleService {
             return redirectAttributes.addFlashAttribute("alert", "Vehicle: " + vehicle.getRegistrationPlate() + " already exists");
         }
     }
-
+    @Transactional
     public RedirectAttributes editVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
         if (vehicle.getcLicense() == null || vehicle.getBrand() == null || vehicle.getCapacity() == null || vehicle.getModel() == null) {
             return redirectAttributes.addFlashAttribute("alert", "Missing Fields");
@@ -68,6 +70,7 @@ public class VehicleService {
 
 
 //    Deletes a Vehicle in the repository
+    @Transactional
     public void deleteVehicle(Vehicle vehicle) {
         vehicleRepo.delete(vehicle);
     }

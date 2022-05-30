@@ -5,6 +5,7 @@ import com.example.nordicmotorhomef4final.repo.BookingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -18,11 +19,11 @@ public class BookingService {
     public List<Booking> showAllBookings() {
         return bookingRepo.findAll();
     }
-
+    @Transactional
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
     }
-
+    @Transactional
     public void editBooking(Booking booking) {
         bookingRepo.save(booking);
     }
@@ -52,7 +53,7 @@ public class BookingService {
         return bookingRepo.searchBookingByKeyword(keyword);
 
     }
-
+    @Transactional
     public void deleteBookingById(Integer id) throws CustomerNotFoundException {
         Long count = bookingRepo.countByBookingId(id);
         if (count== null || count ==0) {

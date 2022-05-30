@@ -53,6 +53,7 @@
                             <input type="text" name="keyword" id="keyword" placeholder="Search a term" size="50"
                                    th:value="${keyword}"
                                    />
+                            <!-- the submit will work only if endDate is bigger than startdate-->
                             <button onclick="if (document.getElementById('startDate').value > document.getElementById('endDate').value) return false"
                                     type="submit" id="searchVehicle" class="btn btn-primary">Search</button>
                         </div>
@@ -96,7 +97,8 @@
 
                                 <input type="text" name="keyword" id="keywordForCustomer" size="50"
                                        th:value="${keyword}"/>
-                                <button onclick="if (document.getElementById('startDate').value > document.getElementById('endDate').value) return false"
+<!--                                the submit will work only if endDate is bigger than startdate-->
+                                <button onclick="if (document.getElementById('startDateCustomer').value > document.getElementById('endDateCustomer').value) return false"
                                         type="submit" id="searchVehicForCustomer" class="btn btn-primary">Search
                                 </button>
                             </div>

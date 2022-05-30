@@ -5,6 +5,7 @@ import com.example.nordicmotorhomef4final.repo.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ public class CustomerService {
     public List<Customer> listAll() {
         return (List<Customer>) customerRepo.findAll();
     }
-
+    @Transactional
     public void saveCustomer(Customer customer) {
         customerRepo.save(customer);
     }
@@ -28,7 +29,7 @@ public class CustomerService {
         }
         throw new CustomerNotFoundException("Could not find any customers with the ID: " + id);
     }
-
+    @Transactional
     public void deleteCustomerById(Integer id) throws CustomerNotFoundException {
         Long count = customerRepo.countByCustomerId(id);
         if (count== null || count ==0) {
