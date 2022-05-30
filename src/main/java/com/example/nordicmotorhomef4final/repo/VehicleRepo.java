@@ -14,6 +14,7 @@ import java.util.List;
 public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
 
 //    This query allows us retrieve a List of Vehicle objects if these contain a keyword in their attributes
+    // Concat is used to add two strings togheter
     @Query("SELECT van FROM Vehicle van WHERE van.registrationPlate LIKE %?1%"
             + " OR van.brand LIKE %?1%"
             + " OR van.model LIKE %?1%"
@@ -43,5 +44,7 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
 
 //    This query retieves a vehicle that has a given registration Plate
     Vehicle searchByRegistrationPlate(String registrationPlate);
+
+//    most of the times we won't need to write a query, the Jpa can access data automatically
 
 }

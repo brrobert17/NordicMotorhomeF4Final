@@ -13,8 +13,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
-//  TODO
-//  More information needed about @Service
+// we need this to inform spring that the business logig is here
 @Service
 public class VehicleService {
     //    Uses the vehicles repository
@@ -44,21 +43,6 @@ public class VehicleService {
         return vehicleRepo.findAll();
     }
 
-    //    TODO - Remove or Implement
-//    Shows a list of Brands - Iteration 2 Filter
-    public List<String> brandList() {
-        List<String> brandList = new ArrayList<String>() {
-        };
-        brandList.add("Brand");
-        for (Vehicle v : vehicleRepo.findAll()
-        ) {
-            if (!brandList.contains(v.getBrand()))
-                brandList.add(v.getBrand());
-        }
-        return brandList;
-    }
-
-    //    TODO Iteration 2 - Should throw exception?
 //    Saves a vehicle:
 //    We are using a RedirectAttribute so we can show a Success/Failure Message
     public RedirectAttributes saveVehicle(Vehicle vehicle, RedirectAttributes redirectAttributes) {
@@ -82,7 +66,7 @@ public class VehicleService {
         }
     }
 
-    //    TODO - Should it throw exception?
+
 //    Deletes a Vehicle in the repository
     public void deleteVehicle(Vehicle vehicle) {
         vehicleRepo.delete(vehicle);

@@ -1,25 +1,20 @@
 package com.example.nordicmotorhomef4final.controller;
 
 import com.example.nordicmotorhomef4final.model.Booking;
-import com.example.nordicmotorhomef4final.model.Customer;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 
+import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
 import com.example.nordicmotorhomef4final.service.CustomerService;
 import com.example.nordicmotorhomef4final.service.VehicleService;
 
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-
 import java.util.List;
 
 @Controller
@@ -40,20 +35,18 @@ public class VehicleController {
         String available = "Insert Date";
         String titlePage = "Nordic Motorhome Vehicles";
         List<Vehicle> vehiclesList = vehicleService.showAllVehicles();
-        List<String> brandList = vehicleService.brandList();
         model.addAttribute("titlePage", titlePage);
         model.addAttribute("vehiclesList", vehiclesList);
-        model.addAttribute("brandList", brandList);
         model.addAttribute("keyword", "");
         model.addAttribute("available", available);
         model.addAttribute("searchDateVehicle", new Booking());
         model.addAttribute("searchedBooking", new Booking());
         return "vehicles/vehiclePage";
     }
-
-
-
-    //   1st    Post Mapping for Vehicle Page from Index
+//    1st    Post Mapping for Vehicle Page from Index
+//    This postMapping will display information about availability
+//    and a keyword search of the vehicle. however, coming from a page where the customer was not selected,
+//    it will not allow the user to choose a vehicle.
     @PostMapping("/vehicles/vehiclePage")
     public String filterVehicles(Model model,
                                  @Param("keyword") String keyword,
@@ -79,20 +72,24 @@ public class VehicleController {
     }
 
 
-    //  Get Mapping for choosing Vehicle After having Chosen the Customer
-    @SneakyThrows//Find documentation for this shit
+//  Get Mapping for choosing Vehicle After having Chosen the Customer
+//  It is similar to the first one, but it will display a different form based on logic from
+//  Thymeleaf is our template engine https://en.wikipedia.org/wiki/Template_processor
     @GetMapping("vehicles/vehiclePage/{customerIdFromBooking}")
     public String selectVehiclesAfterCustomer(@PathVariable("customerIdFromBooking") Integer customerIdFromBooking,
-                                              Model model, RedirectAttributes redirectAttributes) {
+                                              Model model, RedirectAttributes redirectAttributes){
         String keyword = "";
-        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerIdFromBooking).getFirstName()
+        String titlePage = "Customer not found";
+        try{
+        titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerIdFromBooking).getFirstName()
                 + " " + customerService.getCustomerById(customerIdFromBooking).getLastName();
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+        }
         String available = "Insert Date";
-        Integer custPickId = 0;
         model.addAttribute("titlePage", titlePage);
         model.addAttribute("customerIdFromBooking", customerIdFromBooking);
         model.addAttribute("vehiclesList", vehicleService.showAllVehicles());
-        model.addAttribute("brandList", vehicleService.brandList());
         model.addAttribute("keyword", keyword);
         model.addAttribute("available", available);
         model.addAttribute("searchDateVehicle", new Booking());
@@ -100,24 +97,26 @@ public class VehicleController {
 
         return "vehicles/vehiclePage";
     }
-
-
-    //  2nd   Post Mapping for Vehicle Page [for choosing Vehicle After having Chosen the Customer]
-    @SneakyThrows//Find documentation for this shit
+//  Post Mapping for Vehicle Page for choosing a Vehicle After having Chosen the Customer
     @PostMapping("/vehicles/vehiclePageWithCustomer")
     public String filterVehiclesForCustomer(Model model,
                                             @Param("key") Integer customerId,
                                             @Param("keyword") String keyword,
                                             Booking searchBooking) {
         String available = "Insert Date";
+        String titlePage ="";
         //keyword is the search word, searchBooking is a booking object with Dates inside
         List<Vehicle> vehiclesList = vehicleService.showFilteredVehicles(keyword, searchBooking);
         //Passes the String Available to the page if the dates are not null
         if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
             available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
         }
-        String titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
-                + " " + customerService.getCustomerById(customerId).getLastName();
+        try {
+            titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
+                    + " " + customerService.getCustomerById(customerId).getLastName();
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+        }
         model.addAttribute("titlePage", titlePage);
         model.addAttribute("customerPickedId", customerId);
         model.addAttribute("vehiclesList", vehiclesList);
@@ -127,8 +126,8 @@ public class VehicleController {
         return "vehicles/vehiclePage";
     }
 
-
-    //  Get Mapping for Adding New Vehicle
+//  Get Mapping for Adding New Vehicle
+//    Just lets us add a new vehicle
     @GetMapping("vehicles/new")
     public String showNewCustomerForm(Model model) {
         model.addAttribute("newVehicle", new Vehicle());
@@ -152,8 +151,8 @@ public class VehicleController {
         return "redirect:vehiclePage";
     }
 
+//  Goes to editVehicleForm.html and allows you to edit a Vehicle
     @GetMapping("/edit/{registrationPlate}")
-    //Goes to editVehicleForm.html and allows you to edit a Vehicle
     public String editVehicle(@PathVariable("registrationPlate") String registrationPlate, Model model, RedirectAttributes redirectAttributes) {
         Vehicle vehicle = vehicleService.getVehicleById(registrationPlate);
         System.out.println("vehicle");
