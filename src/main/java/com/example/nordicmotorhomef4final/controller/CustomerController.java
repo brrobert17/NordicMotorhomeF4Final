@@ -75,12 +75,5 @@ public class CustomerController {
         return "redirect:/customers/customerPage";
     }
 
-    @GetMapping("customers/chooseCustomer")
-    public String chooseFromCustomerList(Model model) {
-
-        List<Customer> customerList = customerService.listAll();
-        model.addAttribute("customerList", customerList);
-        return "customers/chooseCustomer";
-    }
 
 }
