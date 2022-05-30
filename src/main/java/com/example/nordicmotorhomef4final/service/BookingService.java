@@ -55,10 +55,10 @@ public class BookingService {
     //@Transactional is used to make sure that the database is updated
     @Transactional
     //delete a booking by id
-    public void deleteBookingById(Integer id) throws CustomerNotFoundException {
+    public void deleteBookingById(Integer id) throws Exception {
         Long count = bookingRepo.countByBookingId(id);
         if (count== null || count ==0) {
-            throw new CustomerNotFoundException("Could not find any customers with the ID: " + id);
+            throw new Exception("Could not find any customers with the ID: " + id);
         }
         bookingRepo.deleteById(id);
     }

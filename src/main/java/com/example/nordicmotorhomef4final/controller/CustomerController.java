@@ -1,8 +1,6 @@
 package com.example.nordicmotorhomef4final.controller;
 
-import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Customer;
-import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
 import com.example.nordicmotorhomef4final.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +56,7 @@ public class CustomerController {
             model.addAttribute("pageTitle", "Edit customer (ID: " + id + " )");
             redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
             return "customers/newCustomerForm";
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/customers/customerPage";
@@ -70,7 +68,7 @@ public class CustomerController {
         try {
             customerService.deleteCustomerById(id);
             redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been saved successfully.");
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
@@ -99,7 +97,7 @@ public class CustomerController {
             model.addAttribute("customerToAdd", customer);
             redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been added to the booking successfully.");
             return "customers/addCustomerTest";
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/customers/customerPage";
@@ -114,7 +112,7 @@ public class CustomerController {
             Customer customer1 = customerService.getCustomerById(id);
             model.addAttribute("customerToAdd", customer1);
             return "customers/choose2CustomerTest";
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/customers/customerPage";
@@ -131,7 +129,7 @@ public class CustomerController {
             Customer customer2 = customerService.getCustomerById(id2);
             model.addAttribute("customerToAdd", customer);
             model.addAttribute("customerToAdd2", customer2);
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/customers/customerPage";

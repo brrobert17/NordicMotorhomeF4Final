@@ -262,10 +262,10 @@
 <script type="text/javascript">
     function checkDates(){
         if (document.getElementById('startDate').value > document.getElementById('endDate').value){
-            alert("End Date is before Startdate!")
             return false
+            alert("End Date is before Startdate!")
         }
-        return true
+        return false
     }
 
     function confirmDelete() {

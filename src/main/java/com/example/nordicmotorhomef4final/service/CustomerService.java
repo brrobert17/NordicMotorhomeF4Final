@@ -22,18 +22,18 @@ public class CustomerService {
         customerRepo.save(customer);
     }
 
-    public Customer getCustomerById(Integer id) throws CustomerNotFoundException {
+    public Customer getCustomerById(Integer id) throws Exception {
         Optional<Customer> customer = customerRepo.findById(id);
         if (customer.isPresent()) {
             return customer.get();
         }
-        throw new CustomerNotFoundException("Could not find any customers with the ID: " + id);
+        throw new Exception("Could not find any customers with the ID: " + id);
     }
     @Transactional
-    public void deleteCustomerById(Integer id) throws CustomerNotFoundException {
+    public void deleteCustomerById(Integer id) throws Exception {
         Long count = customerRepo.countByCustomerId(id);
         if (count== null || count ==0) {
-            throw new CustomerNotFoundException("Could not find any customers with the ID: " + id);
+            throw new Exception("Could not find any customers with the ID: " + id);
         }
         customerRepo.deleteById(id);
     }

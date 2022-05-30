@@ -3,7 +3,6 @@ package com.example.nordicmotorhomef4final.controller;
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.model.Vehicle;
 
-import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
 import com.example.nordicmotorhomef4final.service.CustomerService;
 import com.example.nordicmotorhomef4final.service.VehicleService;
 
@@ -83,7 +82,7 @@ public class VehicleController {
         try{
         titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerIdFromBooking).getFirstName()
                 + " " + customerService.getCustomerById(customerIdFromBooking).getLastName();
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         String available = "Insert Date";
@@ -114,7 +113,7 @@ public class VehicleController {
         try {
             titlePage = "Choose a vehicle for " + customerService.getCustomerById(customerId).getFirstName()
                     + " " + customerService.getCustomerById(customerId).getLastName();
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         model.addAttribute("titlePage", titlePage);
