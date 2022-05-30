@@ -9,6 +9,12 @@
 <body>
 <!--This page does not contain a navbar-->
 <div class="container-fluid">
+
+
+<!--    This page shows different form if it supposed to save or edit a booking
+          The logic for this uses the Pagetitle as a differentiator-->
+
+<!--    Form "addForm" adds a vehicle to the DB-->
     <form th:if="${pageTitle.contains('Add')}" th:action="@{/vehicles/save}" method="post" id="addForm"
           th:object="${newVehicle}"
           style="max-width: 500px; margin: 0 auto;">
@@ -64,6 +70,7 @@
         </div>
     </form>
 
+<!--    Form "editForm" edits a vehicle in the database-->
     <form th:if="${pageTitle.contains('Edit')}" th:action="@{/vehicles/edit}" method="post" id="editForm"
           th:object="${newVehicle}"
           style="max-width: 500px; margin: 0 auto;">
@@ -125,6 +132,7 @@
 
 <footer>
     <script type="text/javascript">
+        // We are using a little bit of Javascript to handle cancellation and confirmation
         function cancelForm() {
             window.location = "/vehicles/vehiclePage"
         }

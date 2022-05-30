@@ -2,10 +2,6 @@ package com.example.nordicmotorhomef4final.controller;
 
 import com.example.nordicmotorhomef4final.model.Booking;
 import com.example.nordicmotorhomef4final.service.BookingService;
-import com.example.nordicmotorhomef4final.service.CustomerNotFoundException;
-import lombok.var;
-import org.apache.tomcat.jni.FileInfo;
-import org.hibernate.result.Output;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,12 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.awt.*;
-import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
+
 //Controller is a class that handles the requests from the user and returns a response to the user.
 @Controller
 public class BookingController {
@@ -121,7 +114,7 @@ public class BookingController {
             bookingService.deleteBookingById(id);
 
             redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been saved successfully.");
-        } catch (CustomerNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
