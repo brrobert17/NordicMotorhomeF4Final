@@ -39,7 +39,7 @@
                 </form>
             </div>
             <div class="m-2">
-                <a class="btn btn-danger py-2" th:href="@{/customers/new}">
+                <a class="btn btn-info" th:href="@{/customers/new}">
                     Add New Customer
                 </a>
             </div>
@@ -74,7 +74,7 @@
                     <a class="btn btn-info" th:href="@{'/customers/delete/' + ${customer.customerId}}">Delete</a>
                 </td>
                 <td>
-                    <a class="btn btn-info" th:href="@{'/bookings/addToNewBooking/' + ${customer.customerId}}">Start Booking</a>
+                    <a class="btn btn-info" th:href="@{'/bookings/addToNewBooking/' + ${customer.customerId}}">Add to Booking</a>
                 </td>
             </tr>
             </tbody>
