@@ -23,7 +23,6 @@
   <form th:action="@{/bookings/save}" method="post" th:object="${booking}"
         style="max-width: 500px; margin: 0 auto;">
     <div class="text-center border border-secondary rounded p-3">
-
       <div class="form-group row">
         <label class="col-sm-4 col-form-label" >Booking ID</label>
         <div class="col-sm-8">
@@ -107,6 +106,7 @@
       }
 
 
+
       else if (document.getElementById('startDateBooking').value == document.getElementById('endDateBooking').value) {
         alert('Start date must be before end date');
         return false;
@@ -124,6 +124,7 @@
 </div>
 </body>
 
+<!--java script of redirecting to bookingPage-->
 <footer>
   <script type="text/javascript">
     function cancelForm() {

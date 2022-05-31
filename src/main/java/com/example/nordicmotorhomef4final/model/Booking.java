@@ -67,6 +67,7 @@ public class Booking {
     }
 
     ///*
+    //override is using in the unit test
     @Override
     public String toString() {
         return bookingId + " " + vehicle.getRegistrationPlate() + " " + customer.getCustomerId() + " " + startDate + " " + endDate;

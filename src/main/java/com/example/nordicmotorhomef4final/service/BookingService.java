@@ -12,10 +12,10 @@ import java.util.List;
 ///@Service is a spring annotation that tells spring to inject the dependency of the BookingService class.
 @Service
 public class BookingService {
-//@Autowired is creat object of BookingRepo class
+    //@Autowired is creat object of BookingRepo class
     @Autowired
     private BookingRepo bookingRepo;
-//find all is a inside method of cruudrepository which is used to find all the data in the database
+    //find all is a inside method of cruudrepository which is used to find all the data in the database
     public List<Booking> showAllBookings() {
         return bookingRepo.findAll();
     }
@@ -33,21 +33,6 @@ public class BookingService {
         return bookingRepo.getBookingById(id);
     }
 
-    /*public List<Booking> showFilteredBookings(String keyword, Booking searchBooking) {
-        if (searchBooking.getStartDate() == null || searchBooking.getEndDate() == null) {
-            if (keyword == null) {
-                return bookingRepo.findAll();
-            } else {
-                return bookingRepo.searchBookingByKeyword(keyword);
-            }
-        } else {
-            if (keyword == null) {
-                return bookingRepo.searchBookingByDate(searchBooking.getStartDate(), searchBooking.getEndDate());
-            } else {
-                return bookingRepo.searchBookingByDateAndKeyword(searchBooking.getStartDate(), searchBooking.getEndDate(), keyword);
-            }
-        }
-    }*/
 
     //show List of booking with keyword
     public List<Booking> showAllBookingKeyword(String keyword) {
