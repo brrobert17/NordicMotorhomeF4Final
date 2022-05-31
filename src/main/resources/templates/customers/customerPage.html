@@ -76,11 +76,11 @@
 <!--edit button                    -->
                     <a class="btn btn-info" th:href="@{'/customers/edit/' + ${customer.customerId}}">Edit</a>
 <!--delete button                    -->
-                    <a class="btn btn-info" th:href="@{'/customers/delete/' + ${customer.customerId}}">Delete</a>
+                    <a class="btn btn-info" onclick="return confirm('Are you sure?')" th:href="@{'/customers/delete/' + ${customer.customerId}}">Delete</a>
                 </td>
                 <td>
 <!--add customer to booking button                    -->
-                    <a class="btn btn-info" th:href="@{'/bookings/addToNewBooking/' + ${customer.customerId}}">Add to Booking</a>
+                    <a class="btn btn-info" onclick="return confirm('Are you sure?')" th:href="@{'/bookings/addToNewBooking/' + ${customer.customerId}}">Add to Booking</a>
                 </td>
             </tr>
             </tbody>

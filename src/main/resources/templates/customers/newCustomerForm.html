@@ -66,7 +66,7 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">C License</label>
                     <div class="col-sm-8">
-<!--the radio buttons are grupped and they pass the equivalent String value-->
+<!--the radio buttons are grouped, and they pass the equivalent String value-->
                         <input type="radio" name="radio" id="y" value="Yes" th:field="*{cLicense}">
                         <label for="y">Yes</label>
                         <input type="radio" name="radio" id="n" value="No" checked="checked" th:field="*{cLicense}">
@@ -76,7 +76,7 @@
             </div>
             <div class="text-center">
 <!--the form submitting button-->
-                <button type="submit" class="btn btn-primary m-2">save</button>
+                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary m-2">save</button>
 <!--the cancel button uses a basic javascript function because it's so neat-->
                 <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">cancel</button>
             </div>
