@@ -14,14 +14,16 @@ public class CustomerService {
 
     @Autowired private CustomerRepo customerRepo;
 
+    // returning all the customers
     public List<Customer> listAll() {
         return (List<Customer>) customerRepo.findAll();
     }
+    // saving a customer into the database
     @Transactional
     public void saveCustomer(Customer customer) {
         customerRepo.save(customer);
     }
-
+    // finding a customer by its customerId
     public Customer getCustomerById(Integer id) throws Exception {
         Optional<Customer> customer = customerRepo.findById(id);
         if (customer.isPresent()) {
@@ -29,6 +31,7 @@ public class CustomerService {
         }
         throw new Exception("Could not find any customers with the ID: " + id);
     }
+    // deleting a customer by its customerId
     @Transactional
     public void deleteCustomerById(Integer id) throws Exception {
         Long count = customerRepo.countByCustomerId(id);
@@ -37,7 +40,7 @@ public class CustomerService {
         }
         customerRepo.deleteById(id);
     }
-
+    // searching for a customer based on a submitted keyword
     public List<Customer> searchCustomer(String keyword) {
         return customerRepo.searchCustomer(keyword);
     }

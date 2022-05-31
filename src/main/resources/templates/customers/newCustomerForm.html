@@ -16,7 +16,9 @@
 <!--End of sidebar-->
 <div>
     <div class="container-fluid text-center">
+<!--the page title depends on which mapping method leads to this page-->
         <h2>[[${pageTitle}]]</h2>
+<!--the form with the Customer object's attributes-->
         <form th:action="@{/customers/save}" th:object="${newCustomer}" method="post"
               style="max-width: 500px; margin: 0 auto;">
             <input type="hidden" th:field="*{customerId}">
@@ -64,6 +66,7 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">C License</label>
                     <div class="col-sm-8">
+<!--the radio buttons are grupped and they pass the equivalent String value-->
                         <input type="radio" name="radio" id="y" value="Yes" th:field="*{cLicense}">
                         <label for="y">Yes</label>
                         <input type="radio" name="radio" id="n" value="No" checked="checked" th:field="*{cLicense}">
@@ -72,7 +75,9 @@
                 </div>
             </div>
             <div class="text-center">
+<!--the form submitting button-->
                 <button type="submit" class="btn btn-primary m-2">save</button>
+<!--the cancel button uses a basic javascript function because it's so neat-->
                 <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">cancel</button>
             </div>
         </form>
@@ -80,16 +85,14 @@
 </div>
 </body>
 <footer>
+<!--    the neat little javascript function-->
     <script type="text/javascript">
         function cancelForm() {
             window.location = "/customers/customerPage"
         }
     </script>
+<!--css style for the sidebar    -->
     <style>
-        .button-red {
-            background-color: red;
-        }
-
         .sideBnav {
             height: 100%;
             width: 160px;
@@ -112,12 +115,6 @@
 
         .sideBnav a:hover {
             color: #f1f1f1;
-        }
-
-        .main {
-            margin-left: 160px; /* Same as the width of the sidenav */
-            font-size: 28px; /* Increased text to enable scrolling */
-            padding: 0px 10px;
         }
 
         @media screen and (max-height: 450px) {

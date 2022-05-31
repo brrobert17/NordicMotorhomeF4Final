@@ -19,6 +19,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    // retrieving and passing the information needed for the customerPage.html
     @GetMapping("customers/customerPage")
     public String showCustomerList(Model model) {
 
@@ -27,6 +28,7 @@ public class CustomerController {
         return "customers/customerPage";
     }
 
+    // after submitting the 'keyword' of the search from, the results are handled and passed on
     @PostMapping("customers/search")
     public String searchCustomer(Model model, @RequestParam("keyword") String keyword) {
         List<Customer> searchResult = customerService.searchCustomer(keyword);
@@ -34,6 +36,7 @@ public class CustomerController {
         return "customers/customerPage";
     }
 
+    // mapping for the newCustomerForm.html page with an empty 'Customer' object that gets filled with information by the html form
     @GetMapping("/customers/new")
     public String showNewCustomerForm(Model model) {
         model.addAttribute("newCustomer", new Customer());
@@ -41,12 +44,17 @@ public class CustomerController {
         return "customers/newCustomerForm";
     }
 
+    // as the form of the newCustomerForm.html is submitted the complete 'Customer' object is saved
+    // the confirmation message gets passed onto the customerPage.html as a 'RedirectAttribute'
     @PostMapping("/customers/save")
     public String saveNewCustomer(Customer customer, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message", "Customer has been saved successfully.");
         customerService.saveCustomer(customer);
         return "redirect:/customers/customerPage";
     }
+
+    // as a 'Customer' object is chosen for editing its 'customerId' is passed on as a 'PathVariable'
+    // the 'Customer' object is retrieved by the 'id' and passed onto the form of the newCustomerForm.html file
 
     @GetMapping("/customers/edit/{id}")
     public String editCustomer(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
@@ -63,6 +71,8 @@ public class CustomerController {
         }
     }
 
+    // as a 'Customer' object is chosen for deleting its 'customerId' is passed on as a 'PathVariable'
+    // the 'Customer' object is deleted by the 'id' and a confirmation message is passed onto the customerPage.html file
     @GetMapping("/customers/delete/{id}")
     public String deleteCustomer(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {

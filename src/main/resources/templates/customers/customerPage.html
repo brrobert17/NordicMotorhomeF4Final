@@ -22,11 +22,12 @@
             <div>
                 <h1 class="h2">Customer Page</h1>
             </div>
+<!--the message is only shown when it's passed as a model attribute in the mapping method            -->
             <div th:if="${message}" class="alert alert-success text-center">
                 [[${message}]]
             </div>
             <div class="form-group row">
-
+<!--the form submitting the 'keyword' making the search possible-->
                 <form th:action="@{/customers/search}" method="post"
                       style="max-width: 600px; margin: 0 auto;">
                     <label class="col-4 col-form-label">
@@ -38,6 +39,7 @@
                     </div>
                 </form>
             </div>
+<!--the button to take us to the page where we register a new customer            -->
             <div class="m-2">
                 <a class="btn btn-info" th:href="@{/customers/new}">
                     Add New Customer
@@ -45,6 +47,7 @@
             </div>
         </div>
     </div>
+<!--    the table displaying all the customers' information-->
     <div class="container text-center">
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
@@ -70,10 +73,13 @@
                 <td th:text="${customer.getcLicense()}"></td>
                 <td th:text="${customer.getPhoneNumber()}"></td>
                 <td>
+<!--edit button                    -->
                     <a class="btn btn-info" th:href="@{'/customers/edit/' + ${customer.customerId}}">Edit</a>
+<!--delete button                    -->
                     <a class="btn btn-info" th:href="@{'/customers/delete/' + ${customer.customerId}}">Delete</a>
                 </td>
                 <td>
+<!--add customer to booking button                    -->
                     <a class="btn btn-info" th:href="@{'/bookings/addToNewBooking/' + ${customer.customerId}}">Add to Booking</a>
                 </td>
             </tr>
@@ -83,10 +89,6 @@
 </div>
 </body>
 <style>
-    .button-red {
-        background-color: red;
-    }
-
     .sideBnav {
         height: 100%;
         width: 160px;
@@ -109,12 +111,6 @@
 
     .sideBnav a:hover {
         color: #f1f1f1;
-    }
-
-    .main {
-        margin-left: 160px; /* Same as the width of the sidenav */
-        font-size: 28px; /* Increased text to enable scrolling */
-        padding: 0px 10px;
     }
 
     @media screen and (max-height: 450px) {
