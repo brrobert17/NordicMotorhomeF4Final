@@ -96,7 +96,7 @@ public class BookingController {
         Booking booking = bookingService.findBookingById(bookingId);
         //creat a booking list and put all booking id which have the same customer id
        List<Booking> checkregisrtationplate= bookingService.checkRegisrtationPlateIsAvailable(bookingId);
-       //check if its true or false for data collision
+
       boolean checkdate= bookingService.checkCollision(bookingId);
 
 
