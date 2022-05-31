@@ -54,7 +54,9 @@
                                    th:value="${keyword}"
                                    />
                             <!-- the submit will work only if endDate is bigger than startdate-->
-                            <button onclick="if (document.getElementById('startDate').value > document.getElementById('endDate').value) return false"
+                            <button onclick=" if (document.getElementById('startDate').value > document.getElementById('endDate').value);
+                            alert('The end date must come after the start date!');
+                                return false"
                                     type="submit" id="searchVehicle" class="btn btn-primary">Search</button>
                         </div>
                         <div class="form-group row">
@@ -98,7 +100,9 @@
                                 <input type="text" name="keyword" id="keywordForCustomer" size="50"
                                        th:value="${keyword}"/>
 <!--                                the submit will work only if endDate is bigger than startdate-->
-                                <button
+                                <button onclick="if (document.getElementById('startDateCustomer').value > document.getElementById('endDateCustomer').value);
+                                alert('The end date must come after the start date!');
+                                return false"
                                         type="submit" id="searchVehicForCustomer" class="btn btn-primary">Search
                                 </button>
                             </div>
@@ -262,10 +266,10 @@
 <script type="text/javascript">
     function checkDates(){
         if (document.getElementById('startDate').value > document.getElementById('endDate').value){
-            return false
-            alert("End Date is before Startdate!")
+            alert("End Date is before Startdate!");
+            return false;
         }
-        return false
+        return true;
     }
 
     function confirmDelete() {
