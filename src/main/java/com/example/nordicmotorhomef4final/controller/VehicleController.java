@@ -57,7 +57,8 @@ public class VehicleController {
         //Passes the String Available to the page if the dates are not null
         if (searchBooking.getStartDate() != null && searchBooking.getEndDate() != null) {
             available = "Available: " + searchBooking.getStartDate() + " " + searchBooking.getEndDate();
-        } else if ((searchBooking.getStartDate() != null && searchBooking.getEndDate() == null) ||(searchBooking.getStartDate() == null && searchBooking.getEndDate() != null)){
+        } else if ((searchBooking.getStartDate() != null && searchBooking.getEndDate() == null)
+                ||(searchBooking.getStartDate() == null && searchBooking.getEndDate() != null)){
             available = "Input Both Dates";
         }
         String titlePage = "Nordic Motorhome Vehicles";

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
-// we need this to inform spring that the business logig is here
+// we need this to inform spring that the business logic is here
 @Service
 public class VehicleService {
     //    Uses the vehicles repository
