@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS nordic_motorhome;
+USE nordic_motorhome;
 CREATE TABLE customers (
                            customer_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                            first_name VARCHAR(255) NOT NULL,
