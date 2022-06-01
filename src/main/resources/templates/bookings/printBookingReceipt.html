@@ -6,13 +6,15 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css}" />
 </head>
 <body>
-
+<!-- Side navigation -->
 <div class="sideBnav">
     <a th:href="@{/}">Home</a>
     <a th:href="@{/vehicles/vehiclePage}">Vehicles</a>
     <a th:href="@{/customers/customerPage}">Customer</a>
     <a th:href="@{/bookings/bookingPage}">Booking</a>
 </div>
+<!--End of sidebar-->
+<!-- Page content -->
 
 <div class="container-fluid text-center">
 
@@ -50,6 +52,9 @@
                     <input  disabled th:value="${booking.vehicle.capacity}" class="form-control">
                 </div>
             </div>
+
+            <!-- according to capacity show the price for each vehicle-->
+
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Vehicle price/day</label>
                 <div class="col-sm-8">
@@ -70,6 +75,7 @@
                     <input type="date" disabled th:value="${booking.startDate}" class="form-control">
                 </div>
             </div>
+            <!-- get the value of end date and start date from booking and make it disbale so no one can change it -->
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">End date</label>
                 <div class="col-sm-8">

@@ -21,26 +21,16 @@ public interface BookingRepo extends JpaRepository<Booking, Integer> {
             " LIKE %?1%")
     List<Booking> searchBookingByKeyword(String keyword);
 
-   /* @Query("SELECT b FROM Booking AS b WHERE b.startDate = ?1 AND b.endDate = ?2")
-    List<Booking> searchBookingByDate(LocalDate startDate, LocalDate endStart);*/
-//
-    /*@Query("SELECT b FROM Booking AS b WHERE b.startDate = ?1 AND b.endDate = ?2 AND CONCAT(b.bookingId, b.customer.firstName, b.customer.lastName," +
-            " b.customer.phoneNumber, b.vehicle.brand, b.vehicle.model, b.vehicle.registrationPlate) LIKE %?3%")
-    List<Booking> searchBookingByDateAndKeyword(LocalDate startDate, LocalDate endStart, String keyword);*/
+
 
 //find a bookingById and return it
     @Query("SELECT b FROM Booking AS b WHERE b.bookingId = ?1")
     Booking getBookingById(Integer id);
 
+
 //findAllByVehicle_RegistrationPlate in the database
     @Query("SELECT b FROM Booking AS b WHERE b.vehicle.registrationPlate = ?1")
     List<Booking> findAllByVehicle_RegistrationPlate(String registrationPlate);
-
-
-
-
-
-
 
 
 
