@@ -33,7 +33,6 @@ public class BookingService {
         return bookingRepo.getBookingById(id);
     }
 
-
     //show List of booking with keyword
     public List<Booking> showAllBookingKeyword(String keyword) {
         return bookingRepo.searchBookingByKeyword(keyword);
@@ -48,7 +47,7 @@ public class BookingService {
         }
         bookingRepo.deleteById(id);
     }
-//calulate the price of a booking by the number of days
+    //calulate the price of a booking by the number of days
     public int calculateDays(Booking booking) {
         LocalDate startDate = booking.getStartDate();
         LocalDate endDate = booking.getEndDate();
