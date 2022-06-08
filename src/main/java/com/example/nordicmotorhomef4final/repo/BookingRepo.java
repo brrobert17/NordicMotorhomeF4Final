@@ -32,6 +32,4 @@ public interface BookingRepo extends JpaRepository<Booking, Integer> {
     @Query("SELECT b FROM Booking AS b WHERE b.vehicle.registrationPlate = ?1")
     List<Booking> findAllByVehicle_RegistrationPlate(String registrationPlate);
 
-
-
 }

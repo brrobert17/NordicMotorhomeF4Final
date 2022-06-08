@@ -41,7 +41,7 @@
             </label>
             <div class="m-2">
                 <!--                            th: value means the value of the input field will be the value of the variable-->
-                <input type="text" name="keyword" id="keyword"placeholder="Search All" size="50" th:value="${keyword}"/>
+                <input type="text" name="keyword" id="keyword" placeholder="Search All" size="50" th:value="${keyword}"/>
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
             </form>
@@ -87,10 +87,10 @@
                 <td th:text="${booking.getEndDate()}"></td>
                 <td>
 <!--                    update-delete-print with the booking id-->
-                    <a class="btn btn-info" th:href="@{'/update/' + ${booking.getBookingId()}}">Update</a>
+                    <a class="btn btn-info"  th:href="@{'/update/' + ${booking.getBookingId()}}">Update</a>
                     </td>
                 <td>
-                    <a class="btn btn-info" th:href="@{'/bookings/delete/' + ${booking.getBookingId()}}">Delete</a>
+                    <a class="btn btn-info" onclick="return confirm('Are you sure?')" th:href="@{'/bookings/delete/' + ${booking.getBookingId()}}">Delete</a>
                 </td>
                 <td>
                     <a class="btn btn-info" th:href="@{'/bookings/print/' + ${booking.getBookingId()}}">Print</a>
@@ -103,6 +103,9 @@
 
 </body>
 <style>
+
+
+
 
     .sideBnav {
         height: 100%;
@@ -127,6 +130,7 @@
     .sideBnav a:hover {
         color: #f1f1f1;
     }
+
 
     .main {
         margin-left: 160px; /* Same as the width of the sidenav */

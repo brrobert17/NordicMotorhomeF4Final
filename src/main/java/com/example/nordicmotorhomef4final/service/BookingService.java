@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Calendar;
 import java.util.List;
 ///@Service is a spring annotation that tells spring to inject the dependency of the BookingService class.
 @Service
@@ -20,15 +21,13 @@ public class BookingService {
         return bookingRepo.findAll();
     }
     //save the booking in the database
+    //@Transactional is provid ACID characteristics
     @Transactional
     public void saveBooking(Booking booking) {
         bookingRepo.save(booking);
     }
-    @Transactional
-    public void editBooking(Booking booking) {
-        bookingRepo.save(booking);
-    }
-//
+
+
     public Booking findBookingById(Integer id) {
         return bookingRepo.getBookingById(id);
     }
@@ -47,14 +46,31 @@ public class BookingService {
         }
         bookingRepo.deleteById(id);
     }
-    //calulate the price of a booking by the number of days
+    //calulate the price of a booking by the number of days in calenders
+
+
+
     public int calculateDays(Booking booking) {
         LocalDate startDate = booking.getStartDate();
         LocalDate endDate = booking.getEndDate();
 
-        Period period = Period.between(startDate, endDate);
+        //calulate start dayt and endday and monthstart and month end
+        int startDay = startDate.getDayOfMonth();
+        int startMonth = startDate.getMonthValue();
+        int startYear = startDate.getYear();
 
-        return Math.abs(period.getDays());
+        int endDay = endDate.getDayOfMonth();
+        int endMonth = endDate.getMonthValue();
+        int endYear = endDate.getYear();
+
+        //calculate the days
+        int days = (endYear - startYear) * 365 + (endMonth - startMonth) * 30 + (endDay - startDay);
+
+        return days;
+
+
+
+
     }
 
     //calculate the total price of a booking
@@ -102,6 +118,7 @@ public class BookingService {
                 if (b.getBookingId() != bookingId) {
                     if (b.getStartDate().isBefore(bookingRepo.getBookingById(bookingId).getEndDate()) && b.getEndDate().isAfter(bookingRepo.getBookingById(bookingId).getStartDate())) {
                         return false;
+
                     }
                 }
             }
@@ -109,7 +126,13 @@ public class BookingService {
         }
         return true;
 
+
+
     }
+    //show the list of booking id with collision dates
+
+
+
 }
 
 

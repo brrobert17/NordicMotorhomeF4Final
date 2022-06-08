@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,6 +23,7 @@ public class BookingController {
     BookingService bookingService;
 
     // show all bookings in the database
+    //@GetMapping only apply only on class level and requestMapping apply on lass level and method level
     @GetMapping("bookings/bookingPage")
     public String showBooking(Model model) {
         List<Booking> bookingList = bookingService.showAllBookings();
@@ -30,9 +32,10 @@ public class BookingController {
     }
     //@Param is used to get the value from the html form and put it in the method.
     //show all bookings in the database according to the "keyword"
-    //@postmapping is
+    //@postmapping new annotation for spring mvc
+    //String, Intiger is a wrapper class and its not primitive
     @PostMapping("bookings/bookingPage")
-    public String filterBooking(Model model, @Param("keyword") String keyword) {
+    public String filterBooking(Model model, @RequestParam ("keyword") String keyword) {
         // MAKE A DINAMIC FILTER FOR SEARCH WITH KEYWORD
         List<Booking> bookingList = bookingService.showAllBookingKeyword(keyword);
         model.addAttribute("bookingList", bookingList);
@@ -61,7 +64,7 @@ public class BookingController {
 // add a new customer to based on {customerId} return to new html page in newBookingForm
     @GetMapping("/bookings/addToNewBooking/{customerId}")
     public String addCustomerToBooking(
-            @PathVariable("customerId") Integer customerId, Model model) {
+            @PathVariable Integer customerId, Model model) {
 
         model.addAttribute("customerId", customerId);
         model.addAttribute("newBooking", new Booking());
@@ -70,15 +73,17 @@ public class BookingController {
         return "bookings/newBookingForm";
     }
     //@pathvariable is dinamic way of getting the value from the html form
+    //@parthvariable "" key inside the curly braces should be the same in order to be matched and identified we dont need
+    // "customerId"or "registerationPlate" after @pathVariable since {customerId} is same as "customerId" after Integer
     //get the customerId, registrationPlate and stratDate and EndDate from the html form and put it in the make a new booking
     @GetMapping("/bookings/addToNewBooking/{customerId}/{registrationPlate}/{bookStart}/{bookEnd}")
     public String addCustomerToBooking(
-            @PathVariable("customerId") Integer customerId,
-            @PathVariable("registrationPlate") String registrationPlate,
+            @PathVariable Integer customerId,
+            @PathVariable String registrationPlate,
             @DateTimeFormat(pattern = "yyyy-MM-dd")
-            @PathVariable("bookStart") LocalDate bookStart,
+            @PathVariable LocalDate bookStart,
             @DateTimeFormat(pattern = "yyyy-MM-dd")
-            @PathVariable("bookEnd") LocalDate bookEnd,
+            @PathVariable LocalDate bookEnd,
             Model model) {
         model.addAttribute("customerId", customerId);
         model.addAttribute("registrationPlate", registrationPlate);
@@ -91,7 +96,7 @@ public class BookingController {
     }
 //use @pathvariable to get the id from the url
     @GetMapping("/update/{bookingId}")
-    public String updateBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
+    public String updateBooking(@PathVariable Integer bookingId, Model model) {
         //get the booking from the database
         Booking booking = bookingService.findBookingById(bookingId);
         //creat a booking list and put all booking id which have the same customer id
@@ -99,22 +104,27 @@ public class BookingController {
 
         boolean checkdate= bookingService.checkCollision(bookingId);
 
+
+
         model.addAttribute("checkVehicle", checkregisrtationplate);
         model.addAttribute("booking", booking);
-        model.addAttribute("checkdate", checkdate);
+
+        model.addAttribute("checkdate",  checkdate);
+
         model.addAttribute("newBooking", booking);
         model.addAttribute("pageTitle", "Update Booking with ID: " + bookingId);
+
 
         return "bookings/updateBookingForm";
     }
     //delete booking from database and put in try and catch to make sure the id is exist
     @GetMapping("/bookings/delete/{id}")
-    public String deleteBooking(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    public String deleteBooking(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.deleteBookingById(id);
             //redirectAttributes is used to add a message to the page after the delete
 
-            redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been saved successfully.");
+            redirectAttributes.addFlashAttribute("message", "Customer ID: " + id + " has been delete successfully.");
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", e.getMessage());
@@ -123,7 +133,7 @@ public class BookingController {
     }
     //print the booking and find the booking by id and find days and total price and add it to the html page
     @GetMapping("/bookings/print/{bookingId}")
-    public String printBooking(@PathVariable("bookingId") Integer bookingId, Model model) {
+    public String printBooking(@PathVariable Integer bookingId, Model model) {
         Booking booking = bookingService.findBookingById(bookingId);
 
         int days = bookingService.calculateDays(booking);
